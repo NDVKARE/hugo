@@ -1,0 +1,16 @@
+{{- $attributes := merge
+  (dict
+    "output" "mathml")
+  (cond .IsNamedParams .Params dict)
+-}}
+{{- if .Get "display" -}}
+  {{- warnf "KaTeX param 'display' is deprecated, use 'displayMode'"}}
+  {{- $attributes = merge $attributes (dict "displayMode" true) -}}
+{{- end -}}
+{{- if .Inner -}}
+  {{- transform.ToMath .Inner $attributes -}}
+{{- end -}}
+{{- if not (.Page.Store.Get "katex") -}}
+  <link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}" />
+  {{- .Page.Store.Set "katex" true -}}
+{{- end -}}

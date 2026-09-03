@@ -1,0 +1,34 @@
+/* Smooth expansion for the collapsible Hugo Book navigation tree. */
+:root {
+  interpolate-size: allow-keywords;
+}
+
+.book-menu input.toggle + label + ul {
+  display: block;
+  height: 0;
+  opacity: 0;
+  overflow: clip;
+  transform: translateY(-0.35rem);
+  transition:
+    height 240ms ease,
+    opacity 180ms ease,
+    transform 240ms ease;
+}
+
+.book-menu input.toggle:checked + label + ul {
+  display: block;
+  height: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.book-menu input.toggle + label > img:last-child {
+  transition: transform 240ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-menu input.toggle + label + ul,
+  .book-menu input.toggle + label > img:last-child {
+    transition: none;
+  }
+}

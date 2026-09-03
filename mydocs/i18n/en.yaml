@@ -1,0 +1,10 @@
+- id: bookSearchConfig
+  translation: |
+    {
+      "searchOptions": {
+        "boost": { "title": 2 },
+        "prefix": true,
+        "fuzzy": 0.2,
+        "combineWith": "OR"
+      }
+    }

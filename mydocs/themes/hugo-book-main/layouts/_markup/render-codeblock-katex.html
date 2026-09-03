@@ -1,0 +1,13 @@
+{{- $attributes := merge
+  (dict
+    "displayMode" true
+    "output" "mathml")
+  .Attributes
+-}}
+{{- if .Inner -}}
+  {{ transform.ToMath .Inner $attributes }}
+{{- end -}}
+{{- if not (.Page.Store.Get "katex") -}}
+  <link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}" />
+  {{- .Page.Store.Set "katex" true -}}
+{{- end -}}

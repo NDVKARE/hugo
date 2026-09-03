@@ -1,0 +1,4 @@
+<details>
+  <summary>{{ .Get "title" | .Page.RenderString }}</summary>
+  <div class="markdown-inner">{{ .Inner | safeHTML }}</div>
+</details>

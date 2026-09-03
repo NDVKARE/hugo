@@ -1,0 +1,15 @@
+baseURL = "/"
+relativeURLs = true
+
+locale = "vi-VN"
+title = "Technical Information Portal"
+theme = "hugo-book-main"
+
+[params]
+  BookTheme = "auto"
+  BookToC = true
+  BookSection = "*"
+  BookSearch = true
+
+[markup.goldmark.renderer]
+  unsafe = true

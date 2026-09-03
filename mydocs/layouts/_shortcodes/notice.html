@@ -1,0 +1,7 @@
+{{- $style := .Get "style" | default "default" -}}
+{{- $styles := dict "primary" "important" "warning" "warning" "tip" "tip" "note" "note" "caution" "caution" "success" "success" "info" "info" -}}
+{{- $class := index $styles $style | default "default" -}}
+<blockquote class="book-hint {{ $class }}">
+  {{- with .Get "title" }}<p><strong>{{ . }}</strong></p>{{ end -}}
+  {{ .Inner | safeHTML }}
+</blockquote>

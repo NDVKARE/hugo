@@ -1,0 +1,7 @@
+{{- $style := .Get "style" | default "default" -}}
+{{- $styles := dict "green" "success" "blue" "info" "orange" "warning" "red" "danger" -}}
+{{- $class := index $styles $style | default "default" -}}
+<span class="book-badge {{ $class }}">
+  {{- with .Get "title" }}<span>{{ . }}</span>{{ end -}}
+  <span class="book-badge-value">{{ .Inner }}</span>
+</span>
