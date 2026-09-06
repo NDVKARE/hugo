@@ -2,10 +2,12 @@ baseURL = "/"
 relativeURLs = true
 
 locale = "vi-VN"
-title = "Technical Information Portal"
+title = "SOVRA Portal"
 theme = "hugo-book-main"
 
 [params]
+  BookFavicon = "images/icon.jpg"
+  BookLogo = "images/icon.jpg"
   BookTheme = "auto"
   BookToC = true
   BookSection = "*"

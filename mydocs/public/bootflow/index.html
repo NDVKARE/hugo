@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=" Tổng quan Boot flow
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/bootflow/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="1. Boot flow - Quá trình khởi động">
+	<meta property="og:description" content="Tổng quan Boot flow">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="1. Boot flow - Quá trình khởi động">
+	<meta itemprop="description" content="Tổng quan Boot flow">
+	<meta itemprop="wordCount" content="1049">
+
+<title>1. Boot flow - Quá trình khởi động • SOVRA Portal</title>
+<link rel="icon" href="../images/icon.jpg" >
+<link rel="manifest" href="../manifest.json">
+<link rel="canonical" href="//localhost:1313/bootflow/">
+<link rel="stylesheet" href="../book.min.9c37bdf3cf8a886ecee2142706b66cbe3e65a2b68f4ddffbb6734bac14789248.css" integrity="sha256-nDe988&#43;KiG7O4hQnBrZsvj5loraPTd/7tnNLrBR4kkg=" crossorigin="anonymous">
+
+
+<script type="module" src="../en.search.min.5259454c5895c22438a716f4fd51564b74f56a9a5833f144f8d6ecc670da970c.js" integrity="sha256-UllFTFiVwiQ4pxb0/VFWS3T1appYM/FE&#43;NbsxnDalww=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/bootflow/index.xml" title="1. Boot flow - Quá trình khởi động" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-bootflow">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../"><img src="../images/icon.jpg" alt="Logo" /><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/" class="active">
+      1. Boot flow - Quá trình khởi động</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/pmu/" class="">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/csu/" class="">
+      CSU - Control and Security Unit</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/csu/rot/" class="">
+      ROT - Root of trust</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/fsbl/" class="">
+      FSBL - First state bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/opensbi/" class="">
+      OpenSBI - Open serial binary interface</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/uboot/" class="">
+      U-boot - Univeral bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/linux/" class="">
+      Linux - Operating System</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../bootflow/rpu/" class="">
+      RPU - Real time processor unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-aa63412394048b972c434aecf347fb2d" class="toggle"  />
+    <label for="section-aa63412394048b972c434aecf347fb2d" class="flex">
+      <a href="../processing/" class="">
+        2. Sub module - DSP, NPU, LPU</a>
+      <img src="../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../processing/dsp/" class="">
+      DSP</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../processing/npu/" class="">
+      NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../processing/lpu/" class="">
+      LPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../questions/" class="">
+      3. Câu hỏi vướng mắc</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>1. Boot flow - Quá trình khởi động</h3>
+
+  <label for="toc-control">
+    
+    <img src="../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#tổng-quan">Tổng quan</a></li>
+    <li><a href="#sơ-đồ-khởi-động-và-vùng-nhớ-thực-thi">Sơ đồ khởi động và vùng nhớ thực thi</a></li>
+    <li><a href="#flash-emmc-partition-và-rootfs">Flash, eMMC, partition và rootfs</a></li>
+    <li><a href="#khái-niệm-tổng-quát">Khái niệm tổng quát</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><style>
+.sovra-home{--violet:#7c3aed;--cyan:#06b6d4;--pink:#ec4899;--amber:#f59e0b;--ink:#eef2ff;position:relative;isolation:isolate;overflow:hidden;margin:-1rem 0 2rem;border:1px solid #7c3aed55;border-radius:28px;padding:clamp(1.25rem,4vw,3.5rem);color:var(--ink);background:radial-gradient(circle at 10% 10%,#7c3aed66 0,transparent 32%),radial-gradient(circle at 90% 15%,#06b6d455 0,transparent 28%),radial-gradient(circle at 65% 90%,#ec489944 0,transparent 32%),linear-gradient(145deg,#080b1a,#111735 58%,#17102c);box-shadow:0 24px 80px #11182733}
+.sovra-home::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.16;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 82%)}
+.sovra-orb{position:absolute;width:220px;height:220px;right:-85px;top:28%;z-index:-1;border-radius:50%;background:conic-gradient(from 45deg,var(--cyan),var(--violet),var(--pink),var(--amber),var(--cyan));filter:blur(38px);opacity:.32;animation:sovra-spin 14s linear infinite}
+@keyframes sovra-spin{to{transform:rotate(360deg) scale(1.15)}}
+.sovra-kicker{display:inline-flex;gap:.55rem;align-items:center;margin-bottom:1rem;padding:.45rem .8rem;border:1px solid #a5b4fc66;border-radius:999px;color:#c7d2fe;background:#ffffff0d;font:700 .72rem/1 sans-serif;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(12px)}
+.sovra-kicker::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:#22d3ee;box-shadow:0 0 14px #22d3ee}
+.sovra-title{max-width:850px;margin:0!important;color:#fff!important;font-size:clamp(2.7rem,8vw,6.4rem)!important;font-weight:900!important;line-height:.92!important;letter-spacing:-.065em}
+.sovra-title span{color:transparent;background:linear-gradient(90deg,#67e8f9,#a78bfa 48%,#f9a8d4);background-clip:text;-webkit-background-clip:text}
+.sovra-lead{max-width:680px;margin:1.4rem 0 1.8rem!important;color:#cbd5e1;font-size:clamp(1rem,2vw,1.2rem);line-height:1.75}
+.sovra-actions{display:flex;flex-wrap:wrap;gap:.75rem}.sovra-actions a{display:inline-flex;align-items:center;gap:.55rem;padding:.78rem 1.05rem;border-radius:12px;color:#fff!important;font-weight:750;text-decoration:none!important;transition:transform .2s ease,box-shadow .2s ease}.sovra-actions a:first-child{background:linear-gradient(120deg,var(--violet),var(--pink));box-shadow:0 10px 28px #7c3aed55}.sovra-actions a:last-child{border:1px solid #94a3b855;background:#ffffff0d}.sovra-actions a:hover{transform:translateY(-3px);box-shadow:0 14px 34px #06b6d444}
+.sovra-section{margin-top:clamp(2.5rem,6vw,5rem)}.sovra-eyebrow{margin:0 0 .4rem!important;color:#67e8f9;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem}.sovra-heading{margin:0 0 1.3rem!important;color:#fff!important;font-size:clamp(1.6rem,4vw,2.4rem)!important}
+.sovra-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.sovra-card{--card-color:var(--cyan);position:relative;overflow:hidden;min-height:175px;padding:1.25rem;border:1px solid #ffffff1f;border-radius:18px;color:#e2e8f0!important;background:linear-gradient(145deg,#ffffff10,#ffffff06);text-decoration:none!important;backdrop-filter:blur(14px);transition:transform .25s ease,border-color .25s ease,background .25s ease}.sovra-card::after{content:"";position:absolute;width:120px;height:120px;right:-45px;bottom:-55px;border-radius:50%;background:var(--card-color);filter:blur(36px);opacity:.32}.sovra-card:hover{transform:translateY(-6px);border-color:var(--card-color);background:#ffffff14}.sovra-card:nth-child(2){--card-color:var(--violet)}.sovra-card:nth-child(3){--card-color:var(--pink)}
+.sovra-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:1rem;border-radius:12px;background:#ffffff18;font-size:1.25rem}.sovra-card strong{display:block;margin-bottom:.35rem;color:#fff;font-size:1.05rem}.sovra-card small{color:#94a3b8;line-height:1.55}
+.sovra-flow{display:grid;grid-template-columns:repeat(8,minmax(80px,1fr));align-items:center;overflow-x:auto;padding:.6rem .25rem 1rem;scrollbar-color:#7c3aed #ffffff0d}.sovra-node{position:relative;padding-right:1rem;text-align:center;color:#cbd5e1;font-size:.72rem;font-weight:700}.sovra-node::before{content:"";display:block;width:34px;height:34px;margin:0 auto .6rem;border:5px solid #151a35;border-radius:50%;background:var(--node);box-shadow:0 0 20px var(--node)}.sovra-node::after{content:"→";position:absolute;top:7px;right:-.25rem;color:#64748b;font-size:1.1rem}.sovra-node:last-child::after{display:none}.sovra-node:nth-child(4n+1){--node:#22d3ee}.sovra-node:nth-child(4n+2){--node:#8b5cf6}.sovra-node:nth-child(4n+3){--node:#ec4899}.sovra-node:nth-child(4n+4){--node:#f59e0b}
+.sovra-footer{margin-top:3.5rem;padding:1.1rem 1.25rem;border:1px solid #ffffff1a;border-radius:16px;color:#94a3b8;background:#02061755;text-align:center}
+@media(max-width:800px){.sovra-grid{grid-template-columns:1fr}.sovra-card{min-height:auto}}@media(prefers-reduced-motion:reduce){.sovra-orb{animation:none}.sovra-card,.sovra-actions a{transition:none}}
+.sovra-flow{grid-template-columns:repeat(8,minmax(0,1fr));align-items:start;gap:.35rem}
+.sovra-flow .sovra-node{padding-right:.4rem;font-size:.7rem;line-height:1.5;overflow-wrap:break-word}
+.sovra-flow .sovra-node::before{width:22px;height:22px;border-width:3px;box-shadow:0 0 12px var(--node)}
+.sovra-flow .sovra-node::after{top:0;color:#94a3b8}
+.sovra-home > .sovra-section:first-child{margin-top:.5rem}
+@media(max-width:600px){.sovra-flow{grid-template-columns:1fr;gap:1rem;overflow:visible}.sovra-flow .sovra-node{padding:0 0 1rem 2rem;text-align:left}.sovra-flow .sovra-node::before{position:absolute;left:0;top:0;margin:0}.sovra-flow .sovra-node::after{content:"↓";top:auto;bottom:-.7rem;left:.3rem;right:auto}.sovra-flow .sovra-flow-link{align-items:flex-start;margin:.5rem 0}.sovra-flow .sovra-flow-child{text-align:left}.sovra-flow .sovra-flow-child::before{display:inline-block;margin:0 .5rem 0 0;vertical-align:middle}}
+.sovra-node small{display:block;margin-top:.4rem;color:#cbd5e1;font-size:.72rem;font-weight:400;line-height:1.5}
+.sovra-flow-link{display:flex;flex-direction:column;align-items:center;margin:.75rem 0;color:#67e8f9;font-size:.72rem;font-weight:400;line-height:1.5}
+.sovra-flow-link::before{content:"";height:12px;border-left:2px solid #22d3ee}
+.sovra-flow-link::after{content:"";width:0;height:0;margin-top:4px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #22d3ee}
+.sovra-flow-child{color:#cbd5e1;line-height:1.5;text-align:center}
+.sovra-flow-child::before{content:"";display:block;width:22px;height:22px;margin:0 auto .6rem;border:3px solid #151a35;border-radius:50%;background:#22d3ee;box-shadow:0 0 12px #22d3ee}
+.sovra-branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}
+.sovra-branch{padding:1rem;border:1px solid #475569;border-top:3px solid #22d3ee;border-radius:12px;background:#111827;color:#e2e8f0;font-size:.85rem;line-height:1.6}
+.sovra-branch strong{display:block;color:#67e8f9}
+.sovra-branch small{display:block;color:#cbd5e1;font-size:.8rem}
+.sovra-flow-note{color:#cbd5e1;font-size:.85rem;line-height:1.7}
+.sovra-flow:focus-visible{outline:2px solid #67e8f9;outline-offset:4px}
+@media(max-width:800px){.sovra-branches{grid-template-columns:1fr}}
+.sovra-home .sovra-segments{overflow-x:auto;border:1px solid #475569;border-radius:16px;background:#111827;scrollbar-color:#7c3aed #111827}
+.sovra-home .sovra-segments table{display:table;width:100%;table-layout:fixed;margin:0;border-collapse:collapse;font-size:.75rem;line-height:1.45;color:#e2e8f0;background:#111827}
+.sovra-home .sovra-segments table th,.sovra-home .sovra-segments table td{padding:.4rem .35rem;border:0;border-bottom:1px solid #334155;text-align:left;vertical-align:top;white-space:normal;overflow-wrap:anywhere;color:#e2e8f0;background:transparent}
+.sovra-home .sovra-segments table th:nth-child(1){width:25%}
+.sovra-home .sovra-segments table th:nth-child(2){width:10%}
+.sovra-home .sovra-segments table th:nth-child(3){width:23%}
+.sovra-home .sovra-segments table th:nth-child(4){width:23%}
+.sovra-home .sovra-segments table th:nth-child(5){width:19%}
+.sovra-home .sovra-segments table thead tr{background:#1e293b}
+.sovra-home .sovra-segments table th{color:#67e8f9;font-weight:700}
+.sovra-home .sovra-segments table tbody tr{background:#111827}
+.sovra-home .sovra-segments table tbody tr:nth-child(even){background:#1e293b}
+.sovra-home .sovra-segments table tbody tr:last-child td{border-bottom:0}
+.sovra-home .sovra-segments table td:first-child{font-weight:700}
+.sovra-home .sovra-segments:focus-visible{outline:2px solid #67e8f9;outline-offset:4px}
+</style>
+<h2 id="tổng-quan">Tổng quan<a class="anchor" href="#t%e1%bb%95ng-quan"></a></h2>
+<br>
+ <div class="sovra-home">
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Boot flow</p>
+    <div class="sovra-flow" role="region" aria-label="Luồng khởi động chính" tabindex="0">
+      <div class="sovra-node">Power On</div>
+      <div class="sovra-node">PMU BootROM</div>
+      <div class="sovra-node">CSU BootROM</div>
+      <div class="sovra-node">CSU Runtime FW<div class="sovra-flow-link"></div><div class="sovra-flow-child">PMU Runtime FW</div></div>
+      <div class="sovra-node">FSBL</div>
+      <div class="sovra-node">OpenSBI</div>
+      <div class="sovra-node">U-Boot</div>
+      <div class="sovra-node">Linux</div>
+    </div>
+  </section>
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Thành phần firmware</p>
+    <div class="sovra-segments" role="region" aria-labelledby="sovra-firmware-title" tabindex="0">
+      <table>
+        <thead>
+          <tr><th scope="col">Thành phần</th><th scope="col">Cố định</th><th scope="col">Lưu trữ</th><th scope="col">Thực thi</th><th scope="col">Đội phụ trách</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PMU BootROM</td><td>Có</td><td>Mask ROM của PMU</td><td>Tại chỗ (XIP)</td><td>Nhúng + PMU</td></tr>
+          <tr><td>PMU Runtime FW</td><td>Không</td><td>OSPI NOR / eMMC</td><td>PMU RAM / TCM</td><td>PMU</td></tr>
+          <tr><td>CSU BootROM</td><td>Có</td><td>Mask ROM của CSU</td><td>Tại chỗ (XIP)</td><td>Nhúng</td></tr>
+          <tr><td>CSU Runtime FW</td><td>Không</td><td>OSPI NOR / eMMC</td><td>CSU RAM / TCM</td><td>CSU</td></tr>
+          <tr><td>FSBL</td><td>Không</td><td>OSPI NOR / eMMC</td><td>System SRAM</td><td>Nhúng + HW</td></tr>
+          <tr><td>OpenSBI</td><td>Không</td><td>OSPI NOR / eMMC</td><td>DDR (M-mode)</td><td>Nhúng + HW</td></tr>
+          <tr><td>U-Boot</td><td>Không</td><td>OSPI NOR / eMMC</td><td>DDR (S-mode)</td><td>Nhúng + HW</td></tr>
+          <tr><td>Linux</td><td>Không</td><td>eMMC</td><td>DDR (S-mode)</td><td>Nhúng</td></tr>
+          <tr><td>RPU FW</td><td>Không</td><td>eMMC</td><td>TCM của RPU</td><td>Nhúng + CPU</td></tr>
+          <tr><td>NPU / DSP / LPU FW</td><td>Không</td><td>eMMC</td><td>SRAM cục bộ + DDR</td><td>Đội sub-module</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+<h2 id="sơ-đồ-khởi-động-và-vùng-nhớ-thực-thi">Sơ đồ khởi động và vùng nhớ thực thi<a class="anchor" href="#s%c6%a1-%c4%91%e1%bb%93-kh%e1%bb%9fi-%c4%91%e1%bb%99ng-v%c3%a0-v%c3%b9ng-nh%e1%bb%9b-th%e1%bb%b1c-thi"></a></h2>
+<pre class="mermaid">flowchart LR
+    subgraph HW[&#34;HW&#34;]
+        POWER[&#34;Power On&#34;]
+    end
+    subgraph PMU[&#34;PMU&#34;]
+        PMU_ROM[&#34;PMU · BootROM&#34;]
+        RESET[&#34;Power / clock&lt;br/&gt;Reset sequence&#34;]
+        PMU_FW[&#34;PMU FW&lt;br/&gt;Hoàn thiện power / clock / reset&lt;br/&gt;Watchdog và dịch vụ nền hệ thống&#34;]
+    end
+    subgraph CSU[&#34;CSU / Root of Trust&#34;]
+        CSU_ROM[&#34;CSU · BootROM&#34;]
+        CSU_INIT[&#34;Đọc boot mode và eFuse / OTP&lt;br/&gt;Khởi tạo SRAM, xác thực CSU FW&#34;]
+        CSU_FW[&#34;CSU Runtime FW&#34;]
+    end
+    subgraph APU[&#34;APU · 4× CVA6&#34;]
+        FSBL[&#34;FSBL · M-mode&lt;br/&gt;Khởi tạo pinmux / clock / DDR controller&lt;br/&gt;DDR PHY training&lt;br/&gt;Yêu cầu CSU xác thực các image&lt;br/&gt;Thiết lập địa chỉ, device tree&lt;br/&gt;Memory reservation và release reset&#34;]
+        SBI[&#34;APU · OpenSBI&lt;br/&gt;SBI Service&lt;br/&gt;M-mode resident firmware&#34;]
+        UBOOT[&#34;APU · U-Boot · S-mode&lt;br/&gt;Load kernel, DTB và initramfs&#34;]
+        LINUX[&#34;APU · Linux OS&#34;]
+    end
+    subgraph RPU[&#34;RPU&#34;]
+        RPU_FW[&#34;RPU FW&lt;br/&gt;RTOS&#34;]
+    end
+    subgraph ACCEL[&#34;NPU / DSP / LPU&#34;]
+        SUB_FW[&#34;Subsystem FW&lt;br/&gt;NPU / DSP / LPU&#34;]
+    end
+    subgraph MEM[&#34;Vùng nhớ thực thi&#34;]
+        PMU_RAM[&#34;PMU RAM&#34;]
+        CSU_RAM[&#34;CSU RAM&#34;]
+        SRAM[&#34;System SRAM&lt;br/&gt;Dùng trước khi DDR sẵn sàng&#34;]
+        DDR[&#34;External DDR&#34;]
+        TCM[&#34;TCM&#34;]
+        SUB_MEM[&#34;DDR / System SRAM&#34;]
+    end
+
+    POWER --&gt;|&#34;1a&#34;| PMU_ROM
+    POWER --&gt;|&#34;1b&#34;| CSU_ROM
+    PMU_ROM --&gt; RESET
+    RESET --&gt;|&#34;2&#34;| CSU_ROM
+    CSU_ROM --&gt; CSU_INIT
+    CSU_INIT --&gt;|&#34;3&#34;| CSU_FW
+    CSU_FW --&gt;|&#34;4a · Xác thực / nạp PMU FW từ OSPI NOR / eMMC&#34;| PMU_FW
+    CSU_FW --&gt;|&#34;4b · Xác thực / nạp FSBL từ OSPI NOR / eMMC&#34;| FSBL
+    FSBL --&gt;|&#34;5a · Xác thực / nạp OpenSBI từ OSPI NOR / eMMC&#34;| SBI
+    FSBL --&gt;|&#34;5b · Xác thực / nạp U-Boot từ eMMC&#34;| UBOOT
+    FSBL --&gt;|&#34;5c · Xác thực / nạp RPU FW từ eMMC&#34;| RPU_FW
+    FSBL --&gt;|&#34;5d · Xác thực / nạp subsystem FW từ eMMC&#34;| SUB_FW
+    SBI --&gt;|&#34;Chuyển quyền&#34;| UBOOT
+    UBOOT --&gt;|&#34;6a · Nạp Linux từ eMMC / Ethernet&#34;| LINUX
+
+    PMU_FW -.-&gt; PMU_RAM
+    CSU_FW -.-&gt; CSU_RAM
+    FSBL -.-&gt; SRAM
+    SBI -.-&gt; DDR
+    UBOOT -.-&gt; DDR
+    LINUX -.-&gt; DDR
+    RPU_FW -.-&gt; TCM
+    SUB_FW -.-&gt; SUB_MEM
+
+    classDef power fill:#fff2cc,stroke:#d68b24,color:#302613
+    classDef secure fill:#ead0c8,stroke:#c5653e,color:#38251f
+    classDef app fill:#c5e5ed,stroke:#d68b24,color:#18333d
+    classDef realtime fill:#ddd3cb,stroke:#c5653e,color:#38251f
+    classDef accelerator fill:#0bb8dc,stroke:#d68b24,color:#102d36
+    classDef memory fill:#f1f5f9,stroke:#64748b,stroke-dasharray:5 5,color:#1e293b
+    class POWER,PMU_ROM,RESET,PMU_FW power
+    class CSU_ROM,CSU_INIT,CSU_FW secure
+    class FSBL,SBI,UBOOT,LINUX app
+    class RPU_FW realtime
+    class SUB_FW accelerator
+    class PMU_RAM,CSU_RAM,SRAM,DDR,TCM,SUB_MEM memory
+    style HW fill:#f8fafc,stroke:#64748b,stroke-width:3px,color:#1e293b
+    style PMU fill:#fff8db,stroke:#ca8a04,stroke-width:3px,color:#713f12
+    style CSU fill:#fff1ed,stroke:#dc6245,stroke-width:3px,color:#7c2d12
+    style APU fill:#eaf6ff,stroke:#0284c7,stroke-width:3px,color:#0c4a6e
+    style RPU fill:#f4edff,stroke:#9333ea,stroke-width:3px,color:#581c87
+    style ACCEL fill:#e0fbf5,stroke:#0d9488,stroke-width:3px,color:#134e4a
+    style MEM fill:#f1f5f9,stroke:#64748b,stroke-width:3px,color:#1e293b</pre><script src="../mermaid.min.js"></script><script>mermaid.initialize({"flowchart":{"useMaxWidth":true},"theme":"default"})</script><h2 id="flash-emmc-partition-và-rootfs">Flash, eMMC, partition và rootfs<a class="anchor" href="#flash-emmc-partition-v%c3%a0-rootfs"></a></h2>
+<pre class="mermaid">flowchart LR
+    subgraph FLASH[&#34;FLASH · OSPI NOR&#34;]
+        NOR_BOOT[&#34;Vùng boot image&lt;br/&gt;Header / manifest / chữ ký&lt;br/&gt;CSU FW + PMU FW + FSBL&#34;]
+        NOR_NEXT[&#34;Vùng firmware tiếp theo&lt;br/&gt;OpenSBI / U-Boot&#34;]
+    end
+    subgraph EMMC[&#34;eMMC&#34;]
+          subgraph USER[&#34;User area · Bảng phân vùng, ví dụ GPT&#34;]
+            FW_PART[&#34;Partition firmware&lt;br/&gt;OpenSBI / U-Boot&lt;br/&gt;RPU FW / NPU / DSP / LPU FW&#34;]
+            BOOT_PART[&#34;Partition boot&lt;br/&gt;Linux kernel + DTB&lt;br/&gt;initramfs nếu sử dụng&#34;]
+            ROOT_PART[&#34;Partition rootfs&lt;br/&gt;Ví dụ ext4&lt;br/&gt;/sbin/init, thư viện, ứng dụng&#34;]
+            DATA_PART[&#34;Partition data · Tùy chọn&lt;br/&gt;Cấu hình và dữ liệu ứng dụng&#34;]
+        end
+    end
+    subgraph CSU_LOAD[&#34;CSU · Nạp và xác thực giai đoạn đầu&#34;]
+        ROM_LOAD[&#34;CSU BootROM&lt;br/&gt;Đọc boot image, xác thực CSU FW&#34;]
+        CSU_LOAD_FW[&#34;CSU Runtime FW&lt;br/&gt;Xác thực / nạp PMU FW và FSBL&#34;]
+    end
+    subgraph APU_LOAD[&#34;APU · Nạp hệ điều hành&#34;]
+        FSBL_LOAD[&#34;FSBL trong System SRAM&lt;br/&gt;Khởi tạo DDR&lt;br/&gt;Yêu cầu CSU xác thực image&#34;]
+        NEXT_LOAD[&#34;OpenSBI → U-Boot&lt;br/&gt;Thực thi trong DDR&#34;]
+        KERNEL_LOAD[&#34;U-Boot nạp kernel + DTB&lt;br/&gt;và initramfs vào DDR&#34;]
+        LINUX_MOUNT[&#34;Linux · Chọn root theo bootargs&lt;br/&gt;Mount rootfs trên eMMC&lt;br/&gt;Qua initramfs nếu sử dụng&#34;]
+        USERSPACE[&#34;Userspace&lt;br/&gt;Chạy init và ứng dụng&#34;]
+    end
+    subgraph SUBSYSTEM[&#34;RPU / NPU / DSP / LPU&#34;]
+        SUB_LOAD[&#34;Firmware đã xác thực&lt;br/&gt;RPU → TCM&lt;br/&gt;NPU / DSP / LPU → SRAM / DDR&#34;]
+    end
+    NOR_BOOT --&gt;|&#34;Nguồn boot Flash&#34;| ROM_LOAD
+ 
+    ROM_LOAD --&gt; CSU_LOAD_FW
+    CSU_LOAD_FW --&gt; FSBL_LOAD
+    NOR_NEXT --&gt;|&#34;Nguồn image thay thế&#34;| FSBL_LOAD
+    FW_PART --&gt;|&#34;Đọc image firmware&#34;| FSBL_LOAD
+    FSBL_LOAD --&gt; NEXT_LOAD
+    FSBL_LOAD --&gt; SUB_LOAD
+    NEXT_LOAD --&gt; KERNEL_LOAD
+    BOOT_PART --&gt;|&#34;Đọc kernel / DTB / initramfs&#34;| KERNEL_LOAD
+    KERNEL_LOAD --&gt; LINUX_MOUNT
+    ROOT_PART --&gt;|&#34;Mount làm hệ thống tệp gốc&#34;| LINUX_MOUNT
+    LINUX_MOUNT --&gt; USERSPACE
+    DATA_PART -.-&gt;|&#34;Mount khi hệ thống chạy&#34;| USERSPACE
+    style FLASH fill:#fff8db,stroke:#ca8a04,stroke-width:3px,color:#713f12
+    style EMMC fill:#f4edff,stroke:#9333ea,stroke-width:3px,color:#581c87
+    style USER fill:#faf5ff,stroke:#a855f7,color:#581c87
+    style CSU_LOAD fill:#fff1ed,stroke:#dc6245,stroke-width:3px,color:#7c2d12
+    style APU_LOAD fill:#eaf6ff,stroke:#0284c7,stroke-width:3px,color:#0c4a6e
+    style SUBSYSTEM fill:#e0fbf5,stroke:#0d9488,stroke-width:3px,color:#134e4a</pre><h2 id="khái-niệm-tổng-quát">Khái niệm tổng quát<a class="anchor" href="#kh%c3%a1i-ni%e1%bb%87m-t%e1%bb%95ng-qu%c3%a1t"></a></h2>
+<p><a href="PMU/"><strong>PMU</strong> - (Platform Management Unit – khối quản lý nền tảng)</a> quản lý các trạng thái nguồn nội bộ của SoC bằng phần cứng power-control nằm ngay trong SoC.<br>
+│                                  <br>
+├────► Full-Power Domain           <br>
+├────► Low-Power Domain            <br>
+├────► clock                       <br>
+├────► reset                       <br>
+└────► isolation</p>
+<p><a href="CSU/"><strong>CSU</strong> - (Control and Security Unit - khối điều khiển và bảo mật)</a> thực hiện các chức năng boot và bảo mật của SoC                             <br>
+│                                  <br>
+├────► boot controller, boot ROM       <br>
+├────► DMA (Direct Memory Access – truy cập bộ nhớ trực tiếp)       <br>
+├────► SHA (Secure Hash Algorithm – thuật toán băm bảo mật)                    <br>
+├────► AES (Advanced Encryption Standard – chuẩn mã hóa nâng cao)                    <br>
+├────► Public-key verification như RSA hoặc ECC (Elliptic Curve Cryptography – mật mã đường cong elliptic)
+├────► Key storage/eFuse, anti-rollback counter<br>
+├────► Đọc boot source như QSPI, eMMC, SD hoặc SPI NOR<br>
+└────► Secure boot state machine</p>
+<p><a href="FSBL/"><strong>FSBL</strong> - (First Stage Boot Loader - bộ nạp khởi động giai đoạn đầu)</a> khởi tạo DDR, chuẩn bị nền tảng và phối hợp CSU xác thực các image trước khi chuyển quyền cho OpenSBI.<br>
+│                                    <br>
+├────► load OpenSBI ─► handoff to OpenSBI<br>
+└────► Load U-boot</p>
+<p><a href="OPENSBI/"><strong>OpenSBI</strong> - (Open Source Supervisor Binary Interface - firmware cung cấp SBI)</a> chạy ở M-mode, cung cấp dịch vụ nền tảng cho phần mềm S-mode và chuyển quyền cho U-Boot.<br>
+│<br>
+├────► SBI interface              <br>
+└────► handoff to U-boot</p>
+<p><a href="UBOOT/"><strong>U-Boot</strong> - (Universal Boot Loader - bộ nạp khởi động)</a> nạp Linux kernel, device tree và initramfs, chuẩn bị tham số boot rồi chuyển quyền cho kernel.<br>
+│<br>
+├────► load Linux kernel, initramfs, device tree<br>
+└────► Boot to linux</p>
+<p><a href="Linux/"><strong>Linux</strong> - (Hệ điều hành Linux)</a> khởi tạo driver, mount rootfs và chạy các dịch vụ, ứng dụng của hệ thống.<br>
+│<br>
+└────► run Application</p>
+<p><a href="RPU/"><strong>RPU</strong> - (Real-Time Processing Unit - khối xử lý thời gian thực)</a> thực thi firmware hoặc RTOS cho các tác vụ điều khiển cần đáp ứng thời gian thực.<br>
+│<br>
+└────► run Realtime function</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../" class="flex align-center">
+        <img src="../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Giới thiệu SOVRA</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../bootflow/pmu/" class="flex align-center">
+        <span>PMU - Platform Management Unit</span>
+        <img src="../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#tổng-quan">Tổng quan</a></li>
+    <li><a href="#sơ-đồ-khởi-động-và-vùng-nhớ-thực-thi">Sơ đồ khởi động và vùng nhớ thực thi</a></li>
+    <li><a href="#flash-emmc-partition-và-rootfs">Flash, eMMC, partition và rootfs</a></li>
+    <li><a href="#khái-niệm-tổng-quát">Khái niệm tổng quát</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+<script>
+(() => {
+  const diagrams = document.querySelectorAll('pre.mermaid');
+  if (!diagrams.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-viewer';
+  dialog.setAttribute('aria-label', 'Xem sơ đồ phóng to');
+  dialog.innerHTML = '<div class="diagram-toolbar"><button type="button" data-action="out" aria-label="Thu nhỏ">−</button><output aria-live="polite"></output><button type="button" data-action="in" aria-label="Phóng to">+</button><button type="button" data-action="fit">Vừa màn hình</button><button type="button" data-action="close">Đóng (Esc)</button></div><div class="diagram-viewport" tabindex="0" aria-label="Sơ đồ, cuộn để xem các phần"></div>';
+  document.body.append(dialog);
+  const viewport = dialog.querySelector('.diagram-viewport');
+  const output = dialog.querySelector('output');
+  let active, origin, oldStyle, zoom = 1, width = 1, height = 1;
+  function resize(next) {
+    zoom = Math.max(0.1, Math.min(4, next));
+    active.style.width = `${width * zoom}px`;
+    active.style.height = `${height * zoom}px`;
+    active.style.maxWidth = 'none';
+    output.textContent = `${Math.round(zoom * 100)}%`;
+  }
+  function fit() {
+    resize(Math.min((viewport.clientWidth - 40) / width, (viewport.clientHeight - 40) / height, 1));
+  }
+  diagrams.forEach(diagram => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'diagram-open';
+    button.textContent = '⛶ Phóng to sơ đồ';
+    diagram.before(button);
+    button.addEventListener('click', () => {
+      const svg = diagram.querySelector('svg');
+      if (!svg) return;
+      active = svg;
+      origin = diagram;
+      oldStyle = svg.getAttribute('style');
+      width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      height = svg.viewBox.baseVal.height || svg.getBoundingClientRect().height;
+      viewport.append(svg);
+      dialog.showModal();
+      fit();
+    });
+  });
+  dialog.addEventListener('click', event => {
+    const action = event.target.closest('button')?.dataset.action;
+    if (!active) return;
+    if (action === 'in') resize(zoom * 1.25);
+    if (action === 'out') resize(zoom / 1.25);
+    if (action === 'fit') fit();
+    if (action === 'close') dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (!active) return;
+    if (oldStyle === null) active.removeAttribute('style');
+    else active.setAttribute('style', oldStyle);
+    origin.append(active);
+    active = null;
+  });
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

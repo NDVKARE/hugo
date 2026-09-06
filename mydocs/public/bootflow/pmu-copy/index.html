@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PMU - Platform Management Unit PMU là khối quản lý nền tảng hệ thống SoC, quản lý các trạng thái nguồn nội bộ bằng phần cứng power-control nằm ngay trong SoC.
+Kiến trúc là một RISC-V core Ibex có ROM, RAM, timer, interrupt, reset controller, power-domain controller, clock controller, mailbox/inter-p.rocessor interrupt. PMU BootROM và PMU Firmware cùng chạy trên Ibex của PMU nhưng đảm nhiệm các giai đoạn khác nhau. Thành phần Nơi thực thi Vai trò PMU BootROM ROM tích hợp Pre-boot: kiểm tra nguồn, clock, RAM nội, power domain, reset state, rồi nhả reset cho CSU boot/security subsystem, sau đó phục vụ các dịch vụ ROM. PMU Firmware (PMUFW) PMU RAM Framework module, xử lý yêu cầu quản lý nền tảng khi hệ thống chạy. 1. PMU BootROM PMU BootROM là firmware bring-up silicon cấp thấp nhất: sau giai đoạn FSM, nó thiết lập và kiểm tra trạng thái nguồn, clock, RAM, power domain và reset cần thiết; khi điều kiện pre-boot đạt yêu cầu, nó nhả reset cho CSU để CSU BootROM bắt đầu quá trình nạp boot image.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/bootflow/pmu-copy/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="PMU - Platform Management Unit">
+	<meta property="og:description" content="PMU - Platform Management Unit PMU là khối quản lý nền tảng hệ thống SoC, quản lý các trạng thái nguồn nội bộ bằng phần cứng power-control nằm ngay trong SoC.
+Kiến trúc là một RISC-V core Ibex có ROM, RAM, timer, interrupt, reset controller, power-domain controller, clock controller, mailbox/inter-p.rocessor interrupt. PMU BootROM và PMU Firmware cùng chạy trên Ibex của PMU nhưng đảm nhiệm các giai đoạn khác nhau. Thành phần Nơi thực thi Vai trò PMU BootROM ROM tích hợp Pre-boot: kiểm tra nguồn, clock, RAM nội, power domain, reset state, rồi nhả reset cho CSU boot/security subsystem, sau đó phục vụ các dịch vụ ROM. PMU Firmware (PMUFW) PMU RAM Framework module, xử lý yêu cầu quản lý nền tảng khi hệ thống chạy. 1. PMU BootROM PMU BootROM là firmware bring-up silicon cấp thấp nhất: sau giai đoạn FSM, nó thiết lập và kiểm tra trạng thái nguồn, clock, RAM, power domain và reset cần thiết; khi điều kiện pre-boot đạt yêu cầu, nó nhả reset cho CSU để CSU BootROM bắt đầu quá trình nạp boot image.">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="PMU - Platform Management Unit">
+	<meta itemprop="description" content="PMU - Platform Management Unit PMU là khối quản lý nền tảng hệ thống SoC, quản lý các trạng thái nguồn nội bộ bằng phần cứng power-control nằm ngay trong SoC.
+Kiến trúc là một RISC-V core Ibex có ROM, RAM, timer, interrupt, reset controller, power-domain controller, clock controller, mailbox/inter-p.rocessor interrupt. PMU BootROM và PMU Firmware cùng chạy trên Ibex của PMU nhưng đảm nhiệm các giai đoạn khác nhau. Thành phần Nơi thực thi Vai trò PMU BootROM ROM tích hợp Pre-boot: kiểm tra nguồn, clock, RAM nội, power domain, reset state, rồi nhả reset cho CSU boot/security subsystem, sau đó phục vụ các dịch vụ ROM. PMU Firmware (PMUFW) PMU RAM Framework module, xử lý yêu cầu quản lý nền tảng khi hệ thống chạy. 1. PMU BootROM PMU BootROM là firmware bring-up silicon cấp thấp nhất: sau giai đoạn FSM, nó thiết lập và kiểm tra trạng thái nguồn, clock, RAM, power domain và reset cần thiết; khi điều kiện pre-boot đạt yêu cầu, nó nhả reset cho CSU để CSU BootROM bắt đầu quá trình nạp boot image.">
+	<meta itemprop="wordCount" content="2045">
+
+<title>PMU - Platform Management Unit • SOVRA Portal</title>
+<link rel="icon" href="../../favicon.png" >
+<link rel="manifest" href="../../manifest.json">
+<link rel="canonical" href="//localhost:1313/bootflow/pmu-copy/">
+<link rel="stylesheet" href="../../book.min.ff94c41f2c8536f928f6b30b868d29681dabb2880bb56153ecf2104f879e37d5.css" integrity="sha256-/5TEHyyFNvko9rMLho0paB2rsogLtWFT7PIQT4eeN9U=" crossorigin="anonymous">
+
+
+<script type="module" src="../../en.search.min.998e20674c5967eb09d15f505c9489c0dc06a0916f3bb1eb6b3ee588a16751e1.js" integrity="sha256-mY4gZ0xZZ&#43;sJ0V9QXJSJwNwGoJFvO7Hraz7liKFnUeE=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/bootflow/pmu-copy/index.xml" title="PMU - Platform Management Unit" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-bootflow">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../"><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/" class="">
+      Boot flow - Quá trình khởi động</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/pmu-copy/" class="active">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/pmu/" class="">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>PMU - Platform Management Unit</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-pmu-bootrom">1. PMU BootROM</a>
+      <ul>
+        <li><a href="#luồng-pre-boot">Luồng pre-boot</a></li>
+        <li><a href="#giải-thích-các-bước-pre-boot">Giải thích các bước pre-boot</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-pmu-firmware">2. PMU Firmware</a>
+      <ul>
+        <li><a href="#luồng-khởi-tạo">Luồng khởi tạo</a></li>
+        <li><a href="#luồng-phục-vụ-khi-hệ-thống-chạy">Luồng phục vụ khi hệ thống chạy</a></li>
+        <li><a href="#giải-thích-các-bước-pmu-firmware">Giải thích các bước PMU Firmware</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-các-dịch-vụ-và-api-pmufw">3. Các dịch vụ và API PMUFW</a>
+      <ul>
+        <li><a href="#bộ-xử-lý-và-tài-nguyên">Bộ xử lý và tài nguyên</a></li>
+        <li><a href="#điều-khiển-phần-cứng">Điều khiển phần cứng</a></li>
+        <li><a href="#dịch-vụ-cấp-hệ-thống">Dịch vụ cấp hệ thống</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-ví-dụ-quản-lý-tài-nguyên-uart">4. Ví dụ quản lý tài nguyên UART</a></li>
+    <li><a href="#5-thuật-ngữ">5. Thuật ngữ</a></li>
+    <li><a href="#6-tài-liệu-tham-khảo">6. Tài liệu tham khảo</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="pmu---platform-management-unit">PMU - Platform Management Unit<a class="anchor" href="#pmu---platform-management-unit"></a></h1>
+<p><strong>PMU</strong> là khối quản lý nền tảng hệ thống SoC, quản lý các trạng thái nguồn nội bộ bằng phần cứng power-control nằm ngay trong SoC.</p>
+<ul>
+<li>Kiến trúc là một RISC-V core Ibex có ROM, RAM, timer, interrupt, reset controller, power-domain controller, clock controller, mailbox/inter-p.rocessor interrupt.</li>
+<li>PMU BootROM và PMU Firmware cùng chạy trên Ibex của PMU nhưng đảm nhiệm các giai đoạn khác nhau.</li>
+</ul>
+<table>
+	<thead>
+			<tr>
+					<th>Thành phần</th>
+					<th>Nơi thực thi</th>
+					<th>Vai trò</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>PMU BootROM</strong></td>
+					<td>ROM tích hợp</td>
+					<td>Pre-boot: kiểm tra nguồn, clock, RAM nội, power domain, reset state, rồi nhả reset cho CSU boot/security subsystem, sau đó phục vụ các dịch vụ ROM.</td>
+			</tr>
+			<tr>
+					<td><strong>PMU Firmware (PMUFW)</strong></td>
+					<td>PMU RAM</td>
+					<td>Framework module, xử lý yêu cầu quản lý nền tảng khi hệ thống chạy.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="1-pmu-bootrom">1. PMU BootROM<a class="anchor" href="#1-pmu-bootrom"></a></h2>
+<p><strong>PMU BootROM</strong> là firmware bring-up silicon cấp thấp nhất: sau giai đoạn FSM, nó thiết lập và kiểm tra trạng thái nguồn, clock, RAM, power domain và reset cần thiết; khi điều kiện pre-boot đạt yêu cầu, nó nhả reset cho CSU để CSU BootROM bắt đầu quá trình nạp boot image.</p>
+<p>Các đặc điểm chính:</p>
+<ul>
+<li>Là chương trình cố định, nằm trong Mask ROM của PMU, không thể cập nhật sau khi sản xuất.</li>
+<li>PMU processor fetch và thực thi trực tiếp mã lệnh từ PMU Mask ROM trên die (XIP).</li>
+<li>Là mã đầu tiên được thực thi trong hệ thống sau khi FSM phần cứng đã cấp nguồn, clock và thoát reset cho PMU core.</li>
+<li>Cấp nguồn, clock và giải phóng reset cho miền bảo mật (CSU).</li>
+</ul>
+<p><strong>FSM</strong> (Finite State Machine – máy trạng thái hữu hạn) là phần logic phần cứng thực hiện trình tự ban đầu trước khi PMU chạy mã BootROM.
+Luồng bắt đầu là <strong>POR → FSM → PMU BootROM</strong>.</p>
+<h3 id="luồng-pre-boot">Luồng pre-boot<a class="anchor" href="#lu%e1%bb%93ng-pre-boot"></a></h3>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;diagramPadding&#34;: 8, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    POR[&#34;POR&lt;br/&gt;(Power-On Reset – reset cấp nguồn)&#34;] --&gt; FSM[&#34;FSM&lt;br/&gt;Trình tự phần cứng ban đầu&#34;]
+    FSM --&gt; ROM[&#34;PMU BootROM&#34;]
+    ROM --&gt; INIT
+
+    subgraph PREBOOT[&#34; &#34;]
+        direction TB
+        INIT[&#34;0. Ibex init&#34;] --&gt; CLEAR[&#34;1. LPD/FPD clear&#34;]
+        CLEAR --&gt; MONITOR[&#34;System Monitor&#34;]
+        MONITOR --&gt; PLL[&#34;PLL init&#34;]
+        PLL --&gt; RAM[&#34;PMU RAM clear&#34;]
+        RAM --&gt; VALIDATE[&#34;PLL validation&#34;]
+        VALIDATE --&gt; POWER[&#34;POWER check&#34;]
+        POWER --&gt; REPAIR[&#34;Memory repair&#34;]
+        REPAIR --&gt; SELFTEST[&#34;Memory selftest&#34;]
+        SELFTEST --&gt; DISABLE[&#34;disable unused&lt;br/&gt;IP blocks&#34;]
+    end
+
+    DISABLE --&gt; CHECK{&#34;OK?&#34;}
+    CHECK --&gt;|NO| ERROR[&#34;ERROR&#34;]
+    CHECK --&gt;|YES| RELEASE[&#34;RELEASE CSU&#34;]
+    RELEASE --&gt; SERVICE[&#34;PMU BootROM&lt;br/&gt;SERVICE MODE&#34;]
+    RELEASE --&gt; CSU[&#34;CSU BootROM&#34;]
+    CSU --&gt; NEXT[&#34;Tiếp tục boot image&lt;br/&gt;Xem luồng nạp PMUFW bên dưới&#34;]
+
+    classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef handoff fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef optional fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-dasharray:5 5
+    class ERROR error
+    class RELEASE,SERVICE,CSU handoff</pre><script src="../../mermaid.min.js"></script><script>mermaid.initialize({"flowchart":{"useMaxWidth":true},"theme":"default"})</script><h3 id="giải-thích-các-bước-pre-boot">Giải thích các bước pre-boot<a class="anchor" href="#gi%e1%ba%a3i-th%c3%adch-c%c3%a1c-b%c6%b0%e1%bb%9bc-pre-boot"></a></h3>
+<p>Giai đoạn <strong>FSM</strong> nằm trước các bước BootROM trong bảng; giữ nguyên số bước <strong>0–11</strong> để đối chiếu tài liệu AMD.</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">Bước</th>
+					<th>AMD ghi</th>
+					<th>Hiểu theo phần cứng/firmware</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>0</strong></td>
+					<td>Initialize MicroBlaze, capture key states</td>
+					<td>Khởi tạo bộ xử lý <strong>MicroBlaze của PMU</strong>, lưu các trạng thái quan trọng khi vừa reset</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>1</strong></td>
+					<td>Scan and clear LPD and FPD</td>
+					<td>Quét và clear trạng thái <strong>LPD (Low-Power Domain – miền nguồn công suất thấp)</strong> và <strong>FPD (Full-Power Domain – miền nguồn công suất đầy đủ)</strong></td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>2</strong></td>
+					<td>Initialize System Monitor</td>
+					<td>Khởi tạo <strong>System Monitor – khối giám sát hệ thống</strong>, phục vụ giám sát nguồn/trạng thái chip</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>3</strong></td>
+					<td>Initialize PLL used for MBIST clocks</td>
+					<td>Khởi tạo <strong>PLL (Phase-Locked Loop – vòng khóa pha)</strong> dùng làm clock cho kiểm tra bộ nhớ</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>4</strong></td>
+					<td>Zero out PMU RAM</td>
+					<td>Ghi 0 vào <strong>RAM của PMU</strong></td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>5</strong></td>
+					<td>Validate PLL, configure MBIST clock</td>
+					<td>Kiểm tra <strong>PLL</strong> đã hoạt động đúng/lock và cấu hình clock cho kiểm tra bộ nhớ</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>6</strong></td>
+					<td>Validate power supply</td>
+					<td>Kiểm tra các nguồn điện cần thiết của chip có hợp lệ</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>7</strong></td>
+					<td>Repair FPD memory if required</td>
+					<td>Thực hiện sửa chữa bộ nhớ thuộc <strong>FPD (Full-Power Domain – miền nguồn công suất đầy đủ)</strong> nếu cần</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>8</strong></td>
+					<td>Zeroize LPD/FPD and initialize memory self-test</td>
+					<td>Xóa/đưa bộ nhớ về trạng thái xác định và bắt đầu <strong>MBIST (Memory Built-In Self-Test – cơ chế tự kiểm tra bộ nhớ tích hợp)</strong></td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>9</strong></td>
+					<td>Power-down disabled IPs</td>
+					<td>Tắt nguồn các <strong>IP (Intellectual Property – khối phần cứng chức năng)</strong> bị cấu hình disable</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>10</strong></td>
+					<td>Release CSU or enter error state</td>
+					<td>Nếu các điều kiện đạt → <strong>nhả reset CSU</strong>; nếu không → vào trạng thái lỗi</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>11</strong></td>
+					<td>Enter service mode</td>
+					<td><strong>PMU BootROM đi vào service mode – chế độ phục vụ</strong></td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="2-pmu-firmware">2. PMU Firmware<a class="anchor" href="#2-pmu-firmware"></a></h2>
+<p><strong>PMU Firmware (PMUFW)</strong> là chương trình bare-metal chạy trên <strong>Ibex của PMU</strong>, được nạp vào PMU RAM bởi CSU BootROM</p>
+<p>Đặc điểm:</p>
+<ul>
+<li>Là firmware có thể cập nhật, khác hoàn toàn với PMU BootROM.</li>
+<li>Được lưu trữ ở QSPI NOR FLASH</li>
+<li>Được thực thi ở PMU RAM, chạy resident trong suốt vòng đời hệ thống.</li>
+<li>CSU BootRom xác thực và nạp FW này vào PMU RAM.<br>
+Trách nhiệm (tùy thiết kế của đội PMU), thông thường gồm:</li>
+<li>Quản lý các miền nguồn và miền clock trong giai đoạn boot và giai đoạn vận hành.</li>
+<li>Thực hiện yêu cầu cấp nguồn/clock cho từng subsystem theo yêu cầu của FSBL hoặc của phần mềm chạy trên CPU.</li>
+<li>Quản lý watchdog hệ thống (xem Q-15 về quyền sở hữu watchdog theo giai đoạn);</li>
+<li>Xử lý sự kiện nhiệt độ, quá dòng và các sự kiện bảo vệ;</li>
+<li>Tham gia luồng phục hồi khi một subsystem không phản hồi.</li>
+</ul>
+<h3 id="luồng-khởi-tạo">Luồng khởi tạo<a class="anchor" href="#lu%e1%bb%93ng-kh%e1%bb%9fi-t%e1%ba%a1o"></a></h3>
+<p>Sơ đồ tóm lược mã nguồn AMD; số bước dùng để đối chiếu bảng, không phải thứ tự đánh số chính thức. Các tính năng tùy chọn phụ thuộc cấu hình build.</p>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;diagramPadding&#34;: 8, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    LOAD[&#34;0. Nạp PMUFW vào PMU RAM&#34;] --&gt; MAIN[&#34;1. XPfw_Main&#34;]
+    subgraph STARTUP[&#34;KHỞI TẠO&#34;]
+        MAIN --&gt; CORE[&#34;2. XPfw_CoreInit&#34;]
+        CORE --&gt; COREOK{&#34;Thành công?&#34;}
+        COREOK --&gt;|YES| MODULES[&#34;3. XPfw_UserStartUp&lt;br/&gt;Đăng ký module / handler&#34;]
+        MODULES --&gt; CONFIG[&#34;4. XPfw_CoreConfigure&lt;br/&gt;Gọi CfgInitHandler&#34;]
+        CONFIG --&gt; CFGOK{&#34;Cấu hình thành công?&#34;}
+        CFGOK --&gt;|YES| READY[&#34;5. Bật ngắt&lt;br/&gt;Đặt FW_IS_PRESENT&#34;]
+        READY --&gt; HOOK[&#34;6. Hook khởi động / resume&lt;br/&gt;nếu được bật&#34;]
+        HOOK --&gt; INITOK{&#34;Thành công?&#34;}
+    end
+    COREOK --&gt;|NO| FAIL[&#34;Báo lỗi / trả trạng thái lỗi&#34;]
+    CFGOK --&gt;|NO| FAIL
+    INITOK --&gt;|NO| FAIL
+    INITOK --&gt;|YES| LOOP[&#34;7. XPfw_CoreLoop&lt;br/&gt;Chạy liên tục&#34;]
+
+    classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef runtime fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef optional fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-dasharray:5 5
+    class FAIL error
+    class LOOP runtime
+    class HOOK optional</pre><p><strong>Bước 4–5 nằm trong <code>XPfw_CoreConfigure()</code></strong>; sơ đồ tách ra để dễ đọc. Các nhánh tùy chọn như kiểm thử chèn lỗi ECC không được vẽ ở đây.</p>
+<h3 id="luồng-phục-vụ-khi-hệ-thống-chạy">Luồng phục vụ khi hệ thống chạy<a class="anchor" href="#lu%e1%bb%93ng-ph%e1%bb%a5c-v%e1%bb%a5-khi-h%e1%bb%87-th%e1%bb%91ng-ch%e1%ba%a1y"></a></h3>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    subgraph IRQ[&#34;NGỮ CẢNH NGẮT&#34;]
+        IPI[&#34;8. IPI message&#34;] --&gt; DISPATCH[&#34;Chọn module theo ID&#34;] --&gt; IH[&#34;IpiHandler&#34;]
+        EVENT[&#34;9. Sự kiện phần cứng&#34;] --&gt; EH[&#34;EventHandler đã đăng ký&#34;]
+        TIMER[&#34;Timer tick&#34;] --&gt; TICK[&#34;Cập nhật scheduler tick&#34;]
+    end
+    subgraph MAINLOOP[&#34;VÒNG LẶP CHÍNH&#34;]
+        LOOP[&#34;7. XPfw_CoreLoop&#34;] --&gt; SLEEP[&#34;Sleep nếu bật SLEEP_WHEN_IDLE&lt;br/&gt;Thức dậy khi có ngắt&#34;]
+        SLEEP --&gt; TASK[&#34;10. SchedulerProcess&lt;br/&gt;Chạy task đến hạn nếu bật&#34;]
+        TASK --&gt; LOOP
+    end
+    TICK -.-&gt;|Thông tin thời gian| TASK</pre><h3 id="giải-thích-các-bước-pmu-firmware">Giải thích các bước PMU Firmware<a class="anchor" href="#gi%e1%ba%a3i-th%c3%adch-c%c3%a1c-b%c6%b0%e1%bb%9bc-pmu-firmware"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">Bước</th>
+					<th>Hàm / giai đoạn</th>
+					<th>Hiểu theo phần cứng/firmware</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>0</strong></td>
+					<td>Load PMUFW</td>
+					<td>CSU BootROM hoặc FSBL nạp firmware để PMU thực thi.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>1</strong></td>
+					<td><code>XPfw_Main()</code></td>
+					<td>In phiên bản, xóa lỗi firmware cũ, đăng ký callback cho assert.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>2</strong></td>
+					<td><code>XPfw_CoreInit()</code></td>
+					<td>Chuẩn bị ngắt, danh sách module, scheduler và bộ quản lý <strong>IPI (Inter-Processor Interrupt)</strong>.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>3</strong></td>
+					<td><code>XPfw_UserStartUp()</code></td>
+					<td>Đăng ký module, handler và task của bản build.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>4</strong></td>
+					<td><code>XPfw_CoreConfigure()</code></td>
+					<td>Gọi <strong>CfgInitHandler</strong> để khởi tạo từng module.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>5</strong></td>
+					<td>Interrupt / ready</td>
+					<td>Bật IPI0, ngắt ECC và đặt <strong>FW_IS_PRESENT</strong> báo firmware sẵn sàng.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>6</strong></td>
+					<td>Startup / resume hooks</td>
+					<td>Chạy hook tùy cấu hình, gồm khôi phục sau Power-Off Suspend; lỗi được trả về.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>7</strong></td>
+					<td><code>XPfw_CoreLoop()</code></td>
+					<td>Vòng lặp thường trực; có thể sleep khi rảnh.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>8</strong></td>
+					<td><code>XPfw_CoreDispatchIpi()</code></td>
+					<td>Đọc message và gọi <strong>IpiHandler</strong> đúng module trong ngữ cảnh ngắt.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>9</strong></td>
+					<td><code>XPfw_CoreDispatchEvent()</code></td>
+					<td>Gọi <strong>EventHandler</strong> của module đã đăng ký sự kiện, trong ngữ cảnh ngắt.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>10</strong></td>
+					<td>Scheduler</td>
+					<td>Khi bật, xử lý task đến hạn trong vòng lặp chính.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>Bước 8–10 là các nhánh phục vụ khi chạy</strong>, không phải ba bước khởi động nối tiếp. <code>CfgInitHandler</code> khởi tạo module; PM Configuration Object là dữ liệu cấu hình quản lý nguồn riêng, thường do FSBL cung cấp.</p>
+<h2 id="3-các-dịch-vụ-và-api-pmufw">3. Các dịch vụ và API PMUFW<a class="anchor" href="#3-c%c3%a1c-d%e1%bb%8bch-v%e1%bb%a5-v%c3%a0-api-pmufw"></a></h2>
+<p>Bảng dùng tên hàm <strong>XilPM phía client</strong>, phân biệt với handler nội bộ. Khả năng thực tế phụ thuộc bản build, node và quyền bên gọi. Tham khảo <a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_services/xilpm/src/zynqmp/client/common/pm_api_sys.h">AMD – pm_api_sys.h</a>.</p>
+<h3 id="bộ-xử-lý-và-tài-nguyên">Bộ xử lý và tài nguyên<a class="anchor" href="#b%e1%bb%99-x%e1%bb%ad-l%c3%bd-v%c3%a0-t%c3%a0i-nguy%c3%aan"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>Nhóm</th>
+					<th>API tiêu biểu</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Suspend / wakeup</td>
+					<td><code>XPm_SelfSuspend()</code>, <code>XPm_RequestSuspend()</code>, <code>XPm_AbortSuspend()</code>, <code>XPm_RequestWakeUp()</code></td>
+					<td>Tự suspend, yêu cầu suspend, hủy hoặc đánh thức.</td>
+			</tr>
+			<tr>
+					<td>Power-down</td>
+					<td><code>XPm_ForcePowerDown()</code></td>
+					<td>Tắt node được hỗ trợ.</td>
+			</tr>
+			<tr>
+					<td>Resource</td>
+					<td><code>XPm_RequestNode()</code>, <code>XPm_ReleaseNode()</code></td>
+					<td>Xin sử dụng / trả tài nguyên.</td>
+			</tr>
+			<tr>
+					<td>Requirement</td>
+					<td><code>XPm_SetRequirement()</code>, <code>XPm_SetMaxLatency()</code></td>
+					<td>Cập nhật nhu cầu, giới hạn độ trễ.</td>
+			</tr>
+			<tr>
+					<td>Trạng thái</td>
+					<td><code>XPm_GetApiVersion()</code>, <code>XPm_GetNodeStatus()</code>, <code>XPm_GetOpCharacteristic()</code></td>
+					<td>Đọc phiên bản, trạng thái, đặc tính.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>Node</strong> định danh tài nguyên; mỗi API chỉ áp dụng cho loại node phù hợp. PMU quản lý trạng thái nền tảng, còn driver ngoại vi thực hiện các tác vụ như cấu hình baud rate và truyền dữ liệu UART.</p>
+<h3 id="điều-khiển-phần-cứng">Điều khiển phần cứng<a class="anchor" href="#%c4%91i%e1%bb%81u-khi%e1%bb%83n-ph%e1%ba%a7n-c%e1%bb%a9ng"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>Nhóm</th>
+					<th>API tiêu biểu</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Reset</td>
+					<td><code>XPm_ResetAssert()</code>, <code>XPm_ResetGetStatus()</code></td>
+					<td>Action chọn assert, release hoặc pulse; đọc trạng thái.</td>
+			</tr>
+			<tr>
+					<td>Clock</td>
+					<td><code>XPm_ClockEnable()</code>, <code>XPm_ClockDisable()</code>, <code>XPm_ClockGetStatus()</code></td>
+					<td>Bật, tắt, đọc trạng thái clock.</td>
+			</tr>
+			<tr>
+					<td>Clock tree</td>
+					<td><code>XPm_ClockSetDivider()</code>, <code>XPm_ClockGetDivider()</code>, <code>XPm_ClockSetParent()</code>, <code>XPm_ClockGetParent()</code></td>
+					<td>Đọc / đặt bộ chia và nguồn clock.</td>
+			</tr>
+			<tr>
+					<td>PLL</td>
+					<td><code>XPm_PllSetParameter()</code>, <code>XPm_PllGetParameter()</code>, <code>XPm_PllSetMode()</code>, <code>XPm_PllGetMode()</code></td>
+					<td>Tham số và chế độ PLL.</td>
+			</tr>
+			<tr>
+					<td>Pin control</td>
+					<td><code>XPm_PinCtrlRequest()</code>, <code>XPm_PinCtrlRelease()</code>, <code>XPm_PinCtrlSetFunction()</code>, <code>XPm_PinCtrlSetParameter()</code></td>
+					<td>Quản lý chân, chức năng, đặc tính.</td>
+			</tr>
+			<tr>
+					<td>MMIO</td>
+					<td><code>XPm_MmioRead()</code>, <code>XPm_MmioWrite()</code></td>
+					<td>Đọc / ghi thanh ghi qua firmware.</td>
+			</tr>
+	</tbody>
+</table>
+<p>Assert/release/pulse là <strong>action của API reset</strong>, không phải ba API độc lập. Xem <a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_services/xilpm/src/zynqmp/client/common/pm_defs.h">AMD – pm_defs.h</a>.</p>
+<h3 id="dịch-vụ-cấp-hệ-thống">Dịch vụ cấp hệ thống<a class="anchor" href="#d%e1%bb%8bch-v%e1%bb%a5-c%e1%ba%a5p-h%e1%bb%87-th%e1%bb%91ng"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>Nhóm</th>
+					<th>API / cơ chế</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Shutdown / restart</td>
+					<td><code>XPm_SystemShutdown(type, subtype)</code></td>
+					<td>Chọn shutdown hoặc reset và phạm vi tác động.</td>
+			</tr>
+			<tr>
+					<td>Notification</td>
+					<td><code>XPm_RegisterNotifier()</code>, <code>XPm_UnregisterNotifier()</code></td>
+					<td>Đăng ký / hủy thông báo.</td>
+			</tr>
+			<tr>
+					<td>Cấu hình PM</td>
+					<td><code>XPm_SetConfiguration()</code>, <code>XPm_InitFinalize()</code></td>
+					<td>Cấu hình và hoàn tất khởi tạo.</td>
+			</tr>
+			<tr>
+					<td>Mở rộng</td>
+					<td>Module / thư viện tùy build</td>
+					<td>FPGA configuration, bảo mật, eFuse, PUF, watchdog, error management, RTC, safety test, quản lý RPU.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>Restart dùng tham số reset của <code>XPm_SystemShutdown()</code></strong>; không ghi <code>SYSTEM_RESTART</code> như một API riêng. Phạm vi có subsystem, PS-only hoặc system theo <a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_services/xilpm/src/zynqmp/client/common/pm_defs.h">pm_defs.h</a>.</p>
+<p>Cấu hình PM mô tả master, resource, pre-allocation, power, reset và shutdown. Các dịch vụ mở rộng phụ thuộc tùy chọn build; xem <a href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841724/PMU%2BFirmware">AMD Wiki – PMU Firmware</a>.</p>
+<h2 id="4-ví-dụ-quản-lý-tài-nguyên-uart">4. Ví dụ quản lý tài nguyên UART<a class="anchor" href="#4-v%c3%ad-d%e1%bb%a5-qu%e1%ba%a3n-l%c3%bd-t%c3%a0i-nguy%c3%aan-uart"></a></h2>
+<p>Luồng này minh họa request/release, không phải chuỗi thao tác thanh ghi bắt buộc cho mọi ngoại vi.</p>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    CLIENT[&#34;Client yêu cầu UART0&#34;] --&gt; REQUEST[&#34;XPm_RequestNode&#34;]
+    REQUEST --&gt; CHECK{&#34;Yêu cầu hợp lệ&lt;br/&gt;và được phép?&#34;}
+    CHECK --&gt;|Không| ERROR[&#34;Trả lỗi&#34;]
+    CHECK --&gt;|Có| TRACK[&#34;Ghi nhận nhu cầu sử dụng&lt;br/&gt;Điều phối trạng thái tài nguyên&#34;]
+    TRACK --&gt; DRIVER[&#34;Driver cấu hình và sử dụng UART&#34;]
+    DRIVER --&gt; RELEASE[&#34;XPm_ReleaseNode&#34;]
+    RELEASE --&gt; UPDATE[&#34;Bỏ yêu cầu của client&lt;br/&gt;Đánh giá nhu cầu còn lại&#34;]</pre><p><strong>Release không đồng nghĩa với tắt nguồn ngay</strong>: còn phải xét các bên sử dụng và chính sách nguồn. Không nên áp một chuỗi cố định “Power → PLL → Clock → Peripheral” cho mọi request.</p>
+<h2 id="5-thuật-ngữ">5. Thuật ngữ<a class="anchor" href="#5-thu%e1%ba%adt-ng%e1%bb%af"></a></h2>
+<table>
+	<thead>
+			<tr>
+					<th>Viết tắt</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>LPD / FPD</td>
+					<td>Low-Power Domain / Full-Power Domain – các miền nguồn.</td>
+			</tr>
+			<tr>
+					<td>FSM</td>
+					<td>Finite State Machine – máy trạng thái hữu hạn; ở luồng này là logic phần cứng trước BootROM.</td>
+			</tr>
+			<tr>
+					<td>CSU</td>
+					<td>Configuration Security Unit – khối cấu hình và bảo mật.</td>
+			</tr>
+			<tr>
+					<td>FSBL</td>
+					<td>First Stage Boot Loader – bộ nạp khởi động giai đoạn đầu.</td>
+			</tr>
+			<tr>
+					<td>IPI</td>
+					<td>Inter-Processor Interrupt – ngắt liên bộ xử lý.</td>
+			</tr>
+			<tr>
+					<td>MBIST</td>
+					<td>Memory Built-In Self-Test – tự kiểm tra bộ nhớ tích hợp.</td>
+			</tr>
+			<tr>
+					<td>ECC</td>
+					<td>Error-Correcting Code – mã sửa lỗi.</td>
+			</tr>
+			<tr>
+					<td>PLL</td>
+					<td>Phase-Locked Loop – vòng khóa pha.</td>
+			</tr>
+			<tr>
+					<td>MMIO</td>
+					<td>Memory-Mapped I/O – thanh ghi I/O ánh xạ bộ nhớ.</td>
+			</tr>
+			<tr>
+					<td>FPGA</td>
+					<td>Field-Programmable Gate Array – mảng cổng logic lập trình được.</td>
+			</tr>
+			<tr>
+					<td>eFuse / PUF</td>
+					<td>Electronic Fuse / Physically Unclonable Function.</td>
+			</tr>
+			<tr>
+					<td>RPU</td>
+					<td>Real-Time Processing Unit – khối xử lý thời gian thực.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="6-tài-liệu-tham-khảo">6. Tài liệu tham khảo<a class="anchor" href="#6-t%c3%a0i-li%e1%bb%87u-tham-kh%e1%ba%a3o"></a></h2>
+<ul>
+<li><a href="https://docs.amd.com/r/2024.2-English/ug1137-zynq-ultrascale-mpsoc-swdev/Pre-Boot-Sequence">AMD UG1137 – Pre-Boot Sequence</a>.</li>
+<li><a href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841724/PMU%2BFirmware">AMD Wiki – PMU Firmware</a>.</li>
+<li><a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_apps/zynqmp_pmufw/src/xpfw_main.c">xpfw_main.c – trình tự khởi tạo</a>.</li>
+<li><a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_apps/zynqmp_pmufw/src/xpfw_core.c">xpfw_core.c – ngắt, dispatch và scheduler</a>.</li>
+<li><a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_services/xilpm/src/zynqmp/client/common/pm_api_sys.h">pm_api_sys.h – API XilPM phía client</a>.</li>
+<li><a href="https://github.com/Xilinx/embeddedsw/blob/master/lib/sw_services/xilpm/src/zynqmp/client/common/pm_defs.h">pm_defs.h – node, reset action và shutdown type</a>.</li>
+</ul>
+<p>Mã nguồn tham khảo dùng nhánh master; khi triển khai, đối chiếu tag của phiên bản BSP/firmware đang sử dụng.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../bootflow/" class="flex align-center">
+        <img src="../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Boot flow - Quá trình khởi động</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../bootflow/pmu/" class="flex align-center">
+        <span>PMU - Platform Management Unit</span>
+        <img src="../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-pmu-bootrom">1. PMU BootROM</a>
+      <ul>
+        <li><a href="#luồng-pre-boot">Luồng pre-boot</a></li>
+        <li><a href="#giải-thích-các-bước-pre-boot">Giải thích các bước pre-boot</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-pmu-firmware">2. PMU Firmware</a>
+      <ul>
+        <li><a href="#luồng-khởi-tạo">Luồng khởi tạo</a></li>
+        <li><a href="#luồng-phục-vụ-khi-hệ-thống-chạy">Luồng phục vụ khi hệ thống chạy</a></li>
+        <li><a href="#giải-thích-các-bước-pmu-firmware">Giải thích các bước PMU Firmware</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-các-dịch-vụ-và-api-pmufw">3. Các dịch vụ và API PMUFW</a>
+      <ul>
+        <li><a href="#bộ-xử-lý-và-tài-nguyên">Bộ xử lý và tài nguyên</a></li>
+        <li><a href="#điều-khiển-phần-cứng">Điều khiển phần cứng</a></li>
+        <li><a href="#dịch-vụ-cấp-hệ-thống">Dịch vụ cấp hệ thống</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-ví-dụ-quản-lý-tài-nguyên-uart">4. Ví dụ quản lý tài nguyên UART</a></li>
+    <li><a href="#5-thuật-ngữ">5. Thuật ngữ</a></li>
+    <li><a href="#6-tài-liệu-tham-khảo">6. Tài liệu tham khảo</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

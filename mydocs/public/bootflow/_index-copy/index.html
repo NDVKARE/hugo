@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RISC-V Embedded System Cổng tài liệu kỹ thuật mô tả toàn bộ hệ thống từ kiến trúc silicon đến phần mềm vận hành sản phẩm.
+Luồng hệ thống flowchart LR A[Power On] --&gt; B[BootROM] B --&gt; C[CSU / Secure Boot] C --&gt; D[OpenSBI] D --&gt; E[U-Boot] E --&gt; F[Linux Kernel] F --&gt; G[Root Filesystem] G --&gt; H[Applications]Cây tài liệu RISC-V Architecture Boot Flow Interrupt &amp; Timer Memory System Interconnect &amp; DMA Peripherals Storage Network Linux Software Stack Security &amp; Secure Boot Debug &amp; Test Firmware, RTOS &amp; IPC System Management Phạm vi Hardware: CPU, accelerator, memory, bus và peripheral. Boot firmware: BootROM, CSU, OpenSBI và U-Boot. Operating systems: Linux, bare-metal, FreeRTOS và Zephyr. Product lifecycle: secure boot, update, recovery, logging và diagnostics. ">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/bootflow/_index-copy/">
+	<meta property="og:site_name" content="Technical Information Portal">
+	<meta property="og:title" content="RISC-V Embedded System">
+	<meta property="og:description" content="RISC-V Embedded System Cổng tài liệu kỹ thuật mô tả toàn bộ hệ thống từ kiến trúc silicon đến phần mềm vận hành sản phẩm.
+Luồng hệ thống flowchart LR A[Power On] --&gt; B[BootROM] B --&gt; C[CSU / Secure Boot] C --&gt; D[OpenSBI] D --&gt; E[U-Boot] E --&gt; F[Linux Kernel] F --&gt; G[Root Filesystem] G --&gt; H[Applications]Cây tài liệu RISC-V Architecture Boot Flow Interrupt &amp; Timer Memory System Interconnect &amp; DMA Peripherals Storage Network Linux Software Stack Security &amp; Secure Boot Debug &amp; Test Firmware, RTOS &amp; IPC System Management Phạm vi Hardware: CPU, accelerator, memory, bus và peripheral. Boot firmware: BootROM, CSU, OpenSBI và U-Boot. Operating systems: Linux, bare-metal, FreeRTOS và Zephyr. Product lifecycle: secure boot, update, recovery, logging và diagnostics.">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="bootflow">
+
+
+	<meta itemprop="name" content="RISC-V Embedded System">
+	<meta itemprop="description" content="RISC-V Embedded System Cổng tài liệu kỹ thuật mô tả toàn bộ hệ thống từ kiến trúc silicon đến phần mềm vận hành sản phẩm.
+Luồng hệ thống flowchart LR A[Power On] --&gt; B[BootROM] B --&gt; C[CSU / Secure Boot] C --&gt; D[OpenSBI] D --&gt; E[U-Boot] E --&gt; F[Linux Kernel] F --&gt; G[Root Filesystem] G --&gt; H[Applications]Cây tài liệu RISC-V Architecture Boot Flow Interrupt &amp; Timer Memory System Interconnect &amp; DMA Peripherals Storage Network Linux Software Stack Security &amp; Secure Boot Debug &amp; Test Firmware, RTOS &amp; IPC System Management Phạm vi Hardware: CPU, accelerator, memory, bus và peripheral. Boot firmware: BootROM, CSU, OpenSBI và U-Boot. Operating systems: Linux, bare-metal, FreeRTOS và Zephyr. Product lifecycle: secure boot, update, recovery, logging và diagnostics.">
+	<meta itemprop="wordCount" content="122">
+
+<title>RISC-V Embedded System • Technical Information Portal</title>
+<link rel="icon" href="../../favicon.png" >
+<link rel="manifest" href="../../manifest.json">
+<link rel="canonical" href="//localhost:1313/bootflow/_index-copy/">
+<link rel="stylesheet" href="../../book.min.ff94c41f2c8536f928f6b30b868d29681dabb2880bb56153ecf2104f879e37d5.css" integrity="sha256-/5TEHyyFNvko9rMLho0paB2rsogLtWFT7PIQT4eeN9U=" crossorigin="anonymous">
+
+
+<script type="module" src="../../en.search.min.7c12d95b1e31568e1d2919ba08a84ae46ae3445379dcb1cf770ec7a7f0bbc92e.js" integrity="sha256-fBLZWx4xVo4dKRm6CKhK5GrjRFN53LHPdw7Hp/C7yS4=" crossorigin="anonymous"></script>
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-bootflow">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../"><span>Technical Information Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/" class="">
+      RISC-V Embedded System</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/_index-copy/" class="active">
+      RISC-V Embedded System</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>RISC-V Embedded System</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#luồng-hệ-thống">Luồng hệ thống</a></li>
+    <li><a href="#cây-tài-liệu">Cây tài liệu</a></li>
+    <li><a href="#phạm-vi">Phạm vi</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="risc-v-embedded-system">RISC-V Embedded System<a class="anchor" href="#risc-v-embedded-system"></a></h1>
+<p>Cổng tài liệu kỹ thuật mô tả toàn bộ hệ thống từ kiến trúc silicon đến phần mềm vận hành sản phẩm.</p>
+<h2 id="luồng-hệ-thống">Luồng hệ thống<a class="anchor" href="#lu%e1%bb%93ng-h%e1%bb%87-th%e1%bb%91ng"></a></h2>
+<pre class="mermaid">flowchart LR
+    A[Power On] --&gt; B[BootROM]
+    B --&gt; C[CSU / Secure Boot]
+    C --&gt; D[OpenSBI]
+    D --&gt; E[U-Boot]
+    E --&gt; F[Linux Kernel]
+    F --&gt; G[Root Filesystem]
+    G --&gt; H[Applications]</pre><script src="../../mermaid.min.js"></script><script>mermaid.initialize({"flowchart":{"useMaxWidth":true},"theme":"default"})</script><h2 id="cây-tài-liệu">Cây tài liệu<a class="anchor" href="#c%c3%a2y-t%c3%a0i-li%e1%bb%87u"></a></h2>
+<ol>
+<li><a href="01-architecture/">RISC-V Architecture</a></li>
+<li><a href="02-boot/">Boot Flow</a></li>
+<li><a href="03-interrupt-timer/">Interrupt &amp; Timer</a></li>
+<li><a href="04-memory/">Memory System</a></li>
+<li><a href="05-interconnect/">Interconnect &amp; DMA</a></li>
+<li><a href="06-peripherals/">Peripherals</a></li>
+<li><a href="07-storage/">Storage</a></li>
+<li><a href="08-network/">Network</a></li>
+<li><a href="09-linux-software/">Linux Software Stack</a></li>
+<li><a href="10-security/">Security &amp; Secure Boot</a></li>
+<li><a href="11-debug-test/">Debug &amp; Test</a></li>
+<li><a href="12-rtos-ipc/">Firmware, RTOS &amp; IPC</a></li>
+<li><a href="13-system-management/">System Management</a></li>
+</ol>
+<h2 id="phạm-vi">Phạm vi<a class="anchor" href="#ph%e1%ba%a1m-vi"></a></h2>
+<ul>
+<li>Hardware: CPU, accelerator, memory, bus và peripheral.</li>
+<li>Boot firmware: BootROM, CSU, OpenSBI và U-Boot.</li>
+<li>Operating systems: Linux, bare-metal, FreeRTOS và Zephyr.</li>
+<li>Product lifecycle: secure boot, update, recovery, logging và diagnostics.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../bootflow/" class="flex align-center">
+        <img src="../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>RISC-V Embedded System</span>
+      </a>
+    
+    </span>
+    <span>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#luồng-hệ-thống">Luồng hệ thống</a></li>
+    <li><a href="#cây-tài-liệu">Cây tài liệu</a></li>
+    <li><a href="#phạm-vi">Phạm vi</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

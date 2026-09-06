@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CSU - Control and Security Unit CSU (Control and Security Unit) là khối điều khiển và bảo mật của SoC. Kiến trúc trình bày ở đây gồm Secure ROM cố định và Secure Firmware có thể cập nhật:
+Secure ROM chịu trách nhiệm kiểm tra image CSU firmware lúc khởi động Secure Firmware tiếp nhận và xử lý request khi hệ thống vận hành Đóng vai trò Root-of-Trust của toàn hệ thống Đặc điểm:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/bootflow/csu-copy/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="CSU - Control and Security Unit">
+	<meta property="og:description" content="CSU - Control and Security Unit CSU (Control and Security Unit) là khối điều khiển và bảo mật của SoC. Kiến trúc trình bày ở đây gồm Secure ROM cố định và Secure Firmware có thể cập nhật:
+Secure ROM chịu trách nhiệm kiểm tra image CSU firmware lúc khởi động Secure Firmware tiếp nhận và xử lý request khi hệ thống vận hành Đóng vai trò Root-of-Trust của toàn hệ thống Đặc điểm:">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="CSU - Control and Security Unit">
+	<meta itemprop="description" content="CSU - Control and Security Unit CSU (Control and Security Unit) là khối điều khiển và bảo mật của SoC. Kiến trúc trình bày ở đây gồm Secure ROM cố định và Secure Firmware có thể cập nhật:
+Secure ROM chịu trách nhiệm kiểm tra image CSU firmware lúc khởi động Secure Firmware tiếp nhận và xử lý request khi hệ thống vận hành Đóng vai trò Root-of-Trust của toàn hệ thống Đặc điểm:">
+	<meta itemprop="wordCount" content="2669">
+
+<title>CSU - Control and Security Unit • SOVRA Portal</title>
+<link rel="icon" href="../../images/icon.jpg" >
+<link rel="manifest" href="../../manifest.json">
+<link rel="canonical" href="//localhost:1313/bootflow/csu-copy/">
+<link rel="stylesheet" href="../../book.min.9c37bdf3cf8a886ecee2142706b66cbe3e65a2b68f4ddffbb6734bac14789248.css" integrity="sha256-nDe988&#43;KiG7O4hQnBrZsvj5loraPTd/7tnNLrBR4kkg=" crossorigin="anonymous">
+
+
+<script type="module" src="../../en.search.min.a084a7616f9c9c73a116373ddfe8685b98852de8e4605218f8a4bd7144037997.js" integrity="sha256-oISnYW&#43;cnHOhFjc93&#43;hoW5iFLejkYFIY&#43;KS9cUQDeZc=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/bootflow/csu-copy/index.xml" title="CSU - Control and Security Unit" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-bootflow">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../"><img src="../../images/icon.jpg" alt="Logo" /><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/" class="">
+      1. Boot flow - Quá trình khởi động</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/pmu/" class="">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/csu-copy/" class="active">
+      CSU - Control and Security Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/csu/" class="">
+      CSU - Control and Security Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/fsbl/" class="">
+      FSBL - First state bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/opensbi/" class="">
+      OpenSBI - Open serial binary interface</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/uboot/" class="">
+      U-boot - Univeral bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/linux/" class="">
+      Linux - Operating System</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/rpu/" class="">
+      RPU - Real time processor unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-aa63412394048b972c434aecf347fb2d" class="toggle"  />
+    <label for="section-aa63412394048b972c434aecf347fb2d" class="flex">
+      <a href="../../processing/" class="">
+        2. Sub module - DSP, NPU, LPU</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../processing/dsp/" class="">
+      DSP</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../processing/npu/" class="">
+      NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../processing/lpu/" class="">
+      LPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../questions/" class="">
+      3. Câu hỏi vướng mắc</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>CSU - Control and Security Unit</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-kiến-trúc-csu">1. Kiến trúc CSU</a></li>
+    <li><a href="#2-luồng-nạp-và-xác-thực-secure-firmware">2. Luồng nạp và xác thực Secure Firmware</a>
+      <ul>
+        <li><a href="#giải-thích-các-bước">Giải thích các bước</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-luồng-cập-nhật-secure-firmware">3. Luồng cập nhật Secure Firmware</a></li>
+    <li><a href="#4-dịch-vụ-của-secure-firmware">4. Dịch vụ của Secure Firmware</a></li>
+    <li><a href="#5-luồng-yêu-cầu-bảo-mật-từ-ap">5. Luồng yêu cầu bảo mật từ AP</a>
+      <ul>
+        <li><a href="#flow-request--response">Flow request / response</a></li>
+        <li><a href="#giải-thích-các-bước-1">Giải thích các bước</a></li>
+        <li><a href="#nội-dung-request-và-response">Nội dung request và response</a></li>
+        <li><a href="#ví-dụ-ap-yêu-cầu-xác-thực-chữ-ký">Ví dụ: AP yêu cầu xác thực chữ ký</a></li>
+        <li><a href="#flow-fsbl-yêu-cầu-xác-thực-opensbi-và-u-boot">Flow: FSBL yêu cầu xác thực OpenSBI và U-Boot</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-thuật-ngữ">6. Thuật ngữ</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="csu---control-and-security-unit">CSU - Control and Security Unit<a class="anchor" href="#csu---control-and-security-unit"></a></h1>
+<p><strong>CSU</strong> (Control and Security Unit)  là khối điều khiển và bảo mật của SoC. Kiến trúc trình bày ở đây gồm <strong>Secure ROM cố định</strong> và <strong>Secure Firmware có thể cập nhật</strong>:</p>
+<ul>
+<li>Secure ROM chịu trách nhiệm kiểm tra image CSU firmware lúc khởi động</li>
+<li>Secure Firmware tiếp nhận và xử lý request khi hệ thống vận hành</li>
+<li>Đóng vai trò Root-of-Trust của toàn hệ thống</li>
+</ul>
+<p>Đặc điểm:</p>
+<ul>
+<li>CSU processor fetch và thực thi trực tiếp mã lệnh từ CSU Mask ROM trên die (XIP).</li>
+<li>Thời điểm chạy: sau khi miền PMU giải phóng reset cho CSU</li>
+<li>Đọc cấu hình boot mode và các trường cấu hình trong eFuse/OTP.</li>
+<li>Khởi tạo CSU SRAM và khối Crypto Engine.</li>
+<li>Khởi tạo controller của thiết bị lưu trữ khởi động (QSPI FLASH / eMMC).</li>
+<li>Đọc khóa gốc hoặc hash của khóa gốc từ OTP/eFuse.</li>
+<li>Xác thực CSU Runtime Firmware và nạp vào CSU RAM.</li>
+<li>Chuyển quyền điều khiển cho CSU Runtime Firmware.</li>
+</ul>
+<h2 id="1-kiến-trúc-csu">1. Kiến trúc CSU<a class="anchor" href="#1-ki%e1%ba%bfn-tr%c3%bac-csu"></a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>CSU
+</span></span><span style="display:flex;"><span>├── Immutable Secure ROM              Cố định trong silicon
+</span></span><span style="display:flex;"><span>│   ├── Đọc và kiểm tra firmware image
+</span></span><span style="display:flex;"><span>│   ├── Xác thực chữ ký
+</span></span><span style="display:flex;"><span>│   ├── Kiểm tra phiên bản được phép
+</span></span><span style="display:flex;"><span>│   └── Cho phép thực thi khi hợp lệ
+</span></span><span style="display:flex;"><span>├── Secure SRAM                       Chứa firmware khi thực thi
+</span></span><span style="display:flex;"><span>├── Secure CPU                        Thực thi ROM / Secure Firmware
+</span></span><span style="display:flex;"><span>├── Secure Firmware                   Có thể cập nhật
+</span></span><span style="display:flex;"><span>│   ├── Secure boot policy
+</span></span><span style="display:flex;"><span>│   ├── Key management
+</span></span><span style="display:flex;"><span>│   ├── Crypto service
+</span></span><span style="display:flex;"><span>│   ├── Anti-rollback policy
+</span></span><span style="display:flex;"><span>│   └── Runtime security
+</span></span><span style="display:flex;"><span>├── Các tài nguyên bảo mật
+</span></span><span style="display:flex;"><span>│   ├── AES / SHA / RSA
+</span></span><span style="display:flex;"><span>│   ├── Key storage
+</span></span><span style="display:flex;"><span>│   ├── eFuse
+</span></span><span style="display:flex;"><span>│   └── PUF
+</span></span><span style="display:flex;"><span>└── Thanh ghi điều khiển và trạng thái</span></span></code></pre></div><table>
+	<thead>
+			<tr>
+					<th>Thành phần</th>
+					<th>Vai trò trong luồng</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Secure ROM</strong></td>
+					<td>Giữ phần kiểm tra ban đầu tối thiểu, quyết định firmware nào được phép chạy.</td>
+			</tr>
+			<tr>
+					<td><strong>QSPI Flash</strong></td>
+					<td>Lưu Secure Firmware Image; đây là phần được thay đổi khi cập nhật firmware.</td>
+			</tr>
+			<tr>
+					<td><strong>Secure SRAM</strong></td>
+					<td>Chứa mã firmware được nạp để thực thi.</td>
+			</tr>
+			<tr>
+					<td><strong>Secure CPU</strong></td>
+					<td>Bắt đầu với ROM, sau đó chuyển quyền điều khiển cho firmware hợp lệ.</td>
+			</tr>
+			<tr>
+					<td><strong>Secure Firmware</strong></td>
+					<td>Cung cấp chính sách và dịch vụ bảo mật có thể cập nhật.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="2-luồng-nạp-và-xác-thực-secure-firmware">2. Luồng nạp và xác thực Secure Firmware<a class="anchor" href="#2-lu%e1%bb%93ng-n%e1%ba%a1p-v%c3%a0-x%c3%a1c-th%e1%bb%b1c-secure-firmware"></a></h2>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    START[&#34;CSU bắt đầu thực thi Secure ROM&#34;] --&gt; READ[&#34;0. Đọc Secure Firmware Image&#34;]
+    FLASH[&#34;QSPI Flash&lt;br/&gt;Binary · Version · Signature · Metadata&#34;] --&gt; READ
+    READ --&gt; FORMAT[&#34;1. Kiểm tra cấu trúc image&#34;]
+    FORMAT --&gt; SIGN[&#34;2. Xác thực chữ ký&#34;]
+    SIGN --&gt; VERSION[&#34;3. Kiểm tra phiên bản&#34;]
+    VERSION --&gt; VALID{&#34;4. Image được chấp nhận?&#34;}
+    VALID --&gt;|Không| REJECT[&#34;Từ chối thực thi&lt;br/&gt;Chuyển xử lý lỗi / phục hồi&#34;]
+    VALID --&gt;|Có| COPY[&#34;5. Nạp firmware vào Secure SRAM&#34;]
+    COPY --&gt; HANDOFF[&#34;6. Chuyển quyền điều khiển&lt;br/&gt;Secure CPU chạy firmware&#34;]
+    HANDOFF --&gt; SERVICES[&#34;7. Secure Firmware hoạt động&lt;br/&gt;Policy · Keys · Crypto · Runtime security&#34;]
+    classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef ready fill:#dcfce7,stroke:#16a34a,color:#14532d
+    class REJECT error
+    class HANDOFF,SERVICES ready</pre><script src="../../mermaid.min.js"></script><script>mermaid.initialize({"flowchart":{"useMaxWidth":true},"theme":"default"})</script><p>Sơ đồ mô tả các bước logic; bất kỳ kiểm tra bắt buộc nào thất bại đều dẫn đến từ chối. Khi triển khai, dữ liệu được thực thi phải chính là dữ liệu đã được xác thực, kể cả khi việc đọc, copy và kiểm tra được thực hiện xen kẽ.</p>
+<h3 id="giải-thích-các-bước">Giải thích các bước<a class="anchor" href="#gi%e1%ba%a3i-th%c3%adch-c%c3%a1c-b%c6%b0%e1%bb%9bc"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">Bước</th>
+					<th>Công việc</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>0</strong></td>
+					<td>Đọc image</td>
+					<td>ROM lấy firmware binary và thông tin đi kèm từ QSPI Flash.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>1</strong></td>
+					<td>Kiểm tra cấu trúc</td>
+					<td>Kiểm tra định dạng, kích thước, địa chỉ nạp và điểm vào theo quy ước image.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>2</strong></td>
+					<td>Xác thực chữ ký</td>
+					<td>Kiểm tra tính xác thực và toàn vẹn bằng khóa tin cậy của hệ thống.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>3</strong></td>
+					<td>Kiểm tra phiên bản</td>
+					<td>So sánh phiên bản với chính sách cho phép, từ chối phiên bản đã bị loại bỏ.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>4</strong></td>
+					<td>Quyết định</td>
+					<td>Chỉ cho phép tiếp tục khi tất cả kiểm tra bắt buộc đạt yêu cầu.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>5</strong></td>
+					<td>Nạp Secure SRAM</td>
+					<td>Đặt mã firmware hợp lệ vào vùng nhớ thực thi được bảo vệ.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>6</strong></td>
+					<td>Handoff</td>
+					<td>Secure CPU chuyển từ mã ROM sang điểm vào của Secure Firmware.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>7</strong></td>
+					<td>Cung cấp dịch vụ</td>
+					<td>Firmware khởi tạo và phục vụ các chức năng bảo mật khi hệ thống chạy.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="3-luồng-cập-nhật-secure-firmware">3. Luồng cập nhật Secure Firmware<a class="anchor" href="#3-lu%e1%bb%93ng-c%e1%ba%adp-nh%e1%ba%adt-secure-firmware"></a></h2>
+<p>Cập nhật thay đổi <strong>firmware image trong flash</strong>. Secure ROM vẫn cố định và kiểm tra lại image khi khởi động. Quy trình dưới đây mô tả nguyên tắc; bố trí slot, cơ chế ghi flash và đường phục hồi cần được xác định trong thiết kế cập nhật.</p>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    PACKAGE[&#34;Nhận gói Secure Firmware mới&#34;] --&gt; CHECK[&#34;Kiểm tra gói cập nhật&lt;br/&gt;Chữ ký · Phiên bản · Tương thích&#34;]
+    CHECK --&gt; OK{&#34;Chấp nhận cập nhật?&#34;}
+    OK --&gt;|Không| STOP[&#34;Từ chối gói cập nhật&#34;]
+    OK --&gt;|Có| WRITE[&#34;Ghi image vào vùng cập nhật QSPI&#34;]
+    WRITE --&gt; VERIFY[&#34;Kiểm tra dữ liệu đã ghi&#34;]
+    VERIFY --&gt; WRITTEN{&#34;Ghi đầy đủ và hợp lệ?&#34;}
+    WRITTEN --&gt;|Không| RECOVER[&#34;Báo lỗi / phục hồi&lt;br/&gt;Không kích hoạt image lỗi&#34;]
+    WRITTEN --&gt;|Có| ACTIVATE[&#34;Kích hoạt image theo cơ chế cập nhật&#34;]
+    ACTIVATE --&gt; REBOOT[&#34;Khởi động lại CSU / hệ thống&lt;br/&gt;theo thiết kế reset&#34;]
+    REBOOT --&gt; ROM[&#34;Secure ROM kiểm tra lại image&#34;]
+    ROM --&gt; BOOT{&#34;Đạt kiểm tra boot?&#34;}
+    BOOT --&gt;|Có| RUN[&#34;Nạp Secure SRAM&lt;br/&gt;Chạy Secure Firmware mới&#34;]
+    BOOT --&gt;|Không| RECOVER</pre><table>
+	<thead>
+			<tr>
+					<th>Giai đoạn</th>
+					<th>Trách nhiệm</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Chuẩn bị gói</strong></td>
+					<td>Đóng gói binary, version, metadata và chữ ký theo định dạng được ROM hỗ trợ.</td>
+			</tr>
+			<tr>
+					<td><strong>Kiểm tra trước ghi</strong></td>
+					<td>Thành phần xử lý cập nhật kiểm tra gói và điều kiện tương thích.</td>
+			</tr>
+			<tr>
+					<td><strong>Ghi và kích hoạt</strong></td>
+					<td>Chỉ kích hoạt image sau khi ghi thành công; quy định cách xử lý mất nguồn hoặc ghi lỗi.</td>
+			</tr>
+			<tr>
+					<td><strong>Kiểm tra lúc boot</strong></td>
+					<td>ROM vẫn thực hiện xác thực độc lập trước khi cho phép chạy firmware mới.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="4-dịch-vụ-của-secure-firmware">4. Dịch vụ của Secure Firmware<a class="anchor" href="#4-d%e1%bb%8bch-v%e1%bb%a5-c%e1%bb%a7a-secure-firmware"></a></h2>
+<table>
+	<thead>
+			<tr>
+					<th>Chức năng</th>
+					<th>Phạm vi</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Secure boot policy</strong></td>
+					<td>Quản lý điều kiện cho phép các thành phần tiếp theo được nạp hoặc chạy.</td>
+			</tr>
+			<tr>
+					<td><strong>Key management</strong></td>
+					<td>Quản lý việc sử dụng khóa và quyền truy cập tài nguyên khóa.</td>
+			</tr>
+			<tr>
+					<td><strong>Crypto service</strong></td>
+					<td>Cung cấp thao tác mật mã qua các khối AES, SHA, RSA theo giao diện thiết kế.</td>
+			</tr>
+			<tr>
+					<td><strong>Anti-rollback</strong></td>
+					<td>Áp dụng chính sách phiên bản và phối hợp với cơ chế kiểm tra của ROM.</td>
+			</tr>
+			<tr>
+					<td><strong>Runtime security</strong></td>
+					<td>Xử lý yêu cầu và sự kiện bảo mật trong quá trình vận hành.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="5-luồng-yêu-cầu-bảo-mật-từ-ap">5. Luồng yêu cầu bảo mật từ AP<a class="anchor" href="#5-lu%e1%bb%93ng-y%c3%aau-c%e1%ba%a7u-b%e1%ba%a3o-m%e1%ba%adt-t%e1%bb%ab-ap"></a></h2>
+<p><strong>AP (Application Processor – bộ xử lý ứng dụng)</strong> gửi request đến <strong>Secure Firmware đang chạy trên CSU</strong> để sử dụng dịch vụ bảo mật.</p>
+<p>Luồng dưới đây mô tả giao diện logic của kiến trúc này. Kênh truyền có thể là mailbox kết hợp shared memory và ngắt thông báo; cơ chế cụ thể, định dạng message và tên API cần được xác định trong đặc tả AP–CSU.</p>
+<h3 id="flow-request--response">Flow request / response<a class="anchor" href="#flow-request--response"></a></h3>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;12px&#34;}, &#34;flowchart&#34;: {&#34;nodeSpacing&#34;: 16, &#34;rankSpacing&#34;: 18, &#34;padding&#34;: 6, &#34;useMaxWidth&#34;: true}}}%%
+flowchart TD
+    APP[&#34;0. Ứng dụng / OS trên AP&#34;] --&gt; DRIVER[&#34;1. Driver tạo request&lt;br/&gt;ID · Service · Tham số · Buffer&#34;]
+    DRIVER --&gt; SEND[&#34;2. Gửi qua kênh AP–CSU&lt;br/&gt;Thông báo có request&#34;]
+    SEND --&gt; RECEIVE[&#34;3. Secure Firmware tiếp nhận&lt;br/&gt;Chụp nội dung request&#34;]
+    RECEIVE --&gt; VALIDATE[&#34;4. Kiểm tra nguồn gọi, quyền&lt;br/&gt;Service · Key handle · Buffer&#34;]
+    VALIDATE --&gt; ALLOW{&#34;Request hợp lệ&lt;br/&gt;và được phép?&#34;}
+    ALLOW --&gt;|Không| DENY[&#34;Tạo phản hồi lỗi&lt;br/&gt;Không thực hiện dịch vụ&#34;]
+    ALLOW --&gt;|Có| DISPATCH[&#34;5. Chuyển đến service handler&#34;]
+    DISPATCH --&gt; EXEC[&#34;6. Thực hiện dịch vụ&lt;br/&gt;Firmware / AES / SHA / RSA&#34;]
+    EXEC --&gt; DONE{&#34;Hoàn tất thành công?&#34;}
+    DONE --&gt;|Không| FAIL[&#34;Ghi nhận lỗi / timeout&lt;br/&gt;Dọn trạng thái tác vụ&#34;]
+    DONE --&gt;|Có| RESULT[&#34;7. Chuẩn bị kết quả được phép trả&#34;]
+    DENY --&gt; RESPONSE[&#34;8. Response&lt;br/&gt;Request ID · Status · Result&#34;]
+    FAIL --&gt; RESPONSE
+    RESULT --&gt; RESPONSE
+    RESPONSE --&gt; NOTIFY[&#34;Thông báo hoàn tất cho AP&#34;]
+    NOTIFY --&gt; CONSUME[&#34;9. Driver đối chiếu request ID&lt;br/&gt;Trả kết quả cho bên gọi&#34;]
+    classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef success fill:#dcfce7,stroke:#16a34a,color:#14532d
+    class DENY,FAIL error
+    class RESULT,CONSUME success</pre><h3 id="giải-thích-các-bước-1">Giải thích các bước<a class="anchor" href="#gi%e1%ba%a3i-th%c3%adch-c%c3%a1c-b%c6%b0%e1%bb%9bc-1"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">Bước</th>
+					<th>Bên thực hiện</th>
+					<th>Công việc</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>0</strong></td>
+					<td>Ứng dụng / OS</td>
+					<td>Yêu cầu dịch vụ như băm, xác thực chữ ký hoặc mã hóa.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>1</strong></td>
+					<td>Driver AP</td>
+					<td>Đóng gói service ID, request ID và tham số; chuẩn bị buffer theo giao thức.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>2</strong></td>
+					<td>Kênh AP–CSU</td>
+					<td>Công bố request rồi thông báo cho CSU; đồng bộ cache/bộ nhớ nếu dùng vùng chia sẻ không coherent.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>3</strong></td>
+					<td>Secure Firmware</td>
+					<td>Tiếp nhận và chụp descriptor vào vùng CSU quản lý để tránh AP đổi tham số trong lúc kiểm tra.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>4</strong></td>
+					<td>Bộ kiểm tra request</td>
+					<td>Kiểm tra danh tính nguồn gọi từ ngữ cảnh tin cậy, quyền dùng service/khóa, địa chỉ, độ dài và quyền truy cập buffer.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>5</strong></td>
+					<td>Dispatcher</td>
+					<td>Chọn handler của dịch vụ được hỗ trợ; quản lý hàng đợi nếu CSU đang bận.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>6</strong></td>
+					<td>Service handler</td>
+					<td>Thực hiện thuật toán bằng firmware hoặc phần cứng mật mã; theo dõi trạng thái và timeout.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>7</strong></td>
+					<td>Secure Firmware</td>
+					<td>Ghi kết quả vào vùng đầu ra hợp lệ; không trả khóa bí mật nội bộ cho AP.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>8</strong></td>
+					<td>CSU</td>
+					<td>Công bố response trước khi thông báo hoàn tất; trả mã lỗi khi request bị từ chối hoặc xử lý thất bại.</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>9</strong></td>
+					<td>Driver AP</td>
+					<td>Ghép response với request đang chờ, kiểm tra status và độ dài kết quả trước khi trả cho bên gọi.</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="nội-dung-request-và-response">Nội dung request và response<a class="anchor" href="#n%e1%bb%99i-dung-request-v%c3%a0-response"></a></h3>
+<p>Các trường sau là <strong>đề xuất giao diện</strong>, chưa phải layout thanh ghi hay ABI cố định.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Message</th>
+					<th>Trường</th>
+					<th>Mục đích</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Request</td>
+					<td><code>request_id</code>, <code>service_id</code></td>
+					<td>Nhận diện tác vụ và dịch vụ cần gọi.</td>
+			</tr>
+			<tr>
+					<td>Request</td>
+					<td><code>parameters</code>, <code>key_handle</code> nếu cần</td>
+					<td>Tham số thuật toán và tham chiếu khóa; handle không thay thế kiểm tra quyền.</td>
+			</tr>
+			<tr>
+					<td>Request</td>
+					<td><code>input_buffer</code>, <code>input_length</code></td>
+					<td>Vị trí và kích thước dữ liệu đầu vào.</td>
+			</tr>
+			<tr>
+					<td>Request</td>
+					<td><code>output_buffer</code>, <code>output_capacity</code></td>
+					<td>Vùng nhận kết quả và sức chứa tối đa.</td>
+			</tr>
+			<tr>
+					<td>Response</td>
+					<td><code>request_id</code>, <code>status</code>, <code>result_length</code></td>
+					<td>Ghép tác vụ, báo thành công/lỗi và độ dài kết quả hợp lệ.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>Ranh giới bảo mật:</strong> AP gửi yêu cầu sử dụng dịch vụ; CSU quyết định quyền thực hiện. Danh tính do AP tự ghi trong payload không đủ để xác thực nguồn gọi. Với dữ liệu chia sẻ, cần copy vào vùng bảo vệ hoặc cơ chế sở hữu buffer phù hợp để dữ liệu không bị thay đổi giữa lúc kiểm tra và sử dụng.</p>
+<h3 id="ví-dụ-ap-yêu-cầu-xác-thực-chữ-ký">Ví dụ: AP yêu cầu xác thực chữ ký<a class="anchor" href="#v%c3%ad-d%e1%bb%a5-ap-y%c3%aau-c%e1%ba%a7u-x%c3%a1c-th%e1%bb%b1c-ch%e1%bb%af-k%c3%bd"></a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>AP → CSU: request_id, dịch vụ VERIFY_SIGNATURE,
+</span></span><span style="display:flex;"><span>          dữ liệu, chữ ký, key_handle
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CSU: kiểm tra request và quyền sử dụng khóa
+</span></span><span style="display:flex;"><span>     → xác thực chữ ký bằng thuật toán được chọn
+</span></span><span style="display:flex;"><span>     → trả request_id + trạng thái xác thực
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>AP: nhận kết quả hợp lệ / không hợp lệ / lỗi xử lý</span></span></code></pre></div><p>Request ID dùng để ghép phản hồi, không tự cung cấp cơ chế chống phát lại. Các yêu cầu thay đổi trạng thái bảo mật, chẳng hạn cập nhật firmware hoặc chính sách khóa, cần quy tắc cấp quyền và kiểm soát phiên giao dịch riêng trong đặc tả dịch vụ.</p>
+<h3 id="flow-fsbl-yêu-cầu-xác-thực-opensbi-và-u-boot">Flow: FSBL yêu cầu xác thực OpenSBI và U-Boot<a class="anchor" href="#flow-fsbl-y%c3%aau-c%e1%ba%a7u-x%c3%a1c-th%e1%bb%b1c-opensbi-v%c3%a0-u-boot"></a></h3>
+<p>FSBL điều phối việc đọc image và yêu cầu xác thực; CSU Runtime FW thực hiện kiểm tra mật mã và chính sách bảo mật. Luồng dưới đây là <strong>đề xuất chi tiết</strong> dùng mailbox và vùng nhớ chia sẻ; định dạng image, thuật toán chữ ký, thanh ghi và ABI cần được chốt trong đặc tả FSBL–CSU.</p>
+<pre class="mermaid">sequenceDiagram
+    participant F as FSBL
+    participant S as OSPI NOR / eMMC
+    participant C as CSU Runtime FW
+    participant K as Gốc tin cậy / Crypto
+    loop Từng image: OpenSBI, sau đó U-Boot
+        F-&gt;&gt;S: Đọc header, manifest, chữ ký và payload
+        S--&gt;&gt;F: Image trong vùng đệm chưa tin cậy
+        F-&gt;&gt;F: Kiểm tra giới hạn kích thước, địa chỉ và tràn số
+        F-&gt;&gt;F: Chuẩn bị descriptor, đồng bộ cache / bộ nhớ
+        F-&gt;&gt;C: Mailbox: VERIFY_IMAGE + request_id + buffer + length
+        C-&gt;&gt;C: Kiểm tra bên gọi, descriptor và phạm vi buffer
+        C-&gt;&gt;C: Chụp metadata, giữ payload ổn định khi xác thực
+        C-&gt;&gt;K: Lấy khóa tin cậy hoặc kiểm tra chuỗi khóa về OTP
+        K--&gt;&gt;C: Khóa được phép theo chính sách
+        C-&gt;&gt;C: Kiểm tra chữ ký manifest bằng khóa tin cậy
+        C-&gt;&gt;C: Kiểm tra loại image, phiên bản và địa chỉ đích
+        C-&gt;&gt;K: Tính hash payload theo thuật toán được phép
+        K--&gt;&gt;C: Hash payload thực tế
+        C-&gt;&gt;C: So sánh với hash trong manifest đã xác thực
+        alt Một bước lỗi hoặc không hợp lệ
+            C--&gt;&gt;F: request_id + FAIL + mã lỗi
+            F-&gt;&gt;F: Hủy image, dừng luồng boot
+        else Tất cả kiểm tra hợp lệ
+            C--&gt;&gt;F: request_id + OK + thông tin image đã xác thực
+            F-&gt;&gt;F: Đối chiếu request_id, status và image
+            F-&gt;&gt;F: Nạp đúng payload đã xác thực vào DDR
+        end
+    end
+    Note over F,C: Chỉ tiếp tục khi cả hai image thành công&lt;br/&gt;Lỗi hoặc timeout kết thúc luồng
+    F-&gt;&gt;F: Đồng bộ bộ nhớ / lệnh, chuẩn bị tham số handoff
+    F-&gt;&gt;F: Chuyển quyền đến entry-point OpenSBI đã xác thực</pre><p><strong>Dữ liệu gửi sang CSU</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>Trường đề xuất</th>
+					<th>Nội dung</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>request_id</code></td>
+					<td>Ghép phản hồi với đúng yêu cầu đang chờ.</td>
+			</tr>
+			<tr>
+					<td><code>service</code></td>
+					<td>Dịch vụ xác thực image, ví dụ <code>VERIFY_IMAGE</code>.</td>
+			</tr>
+			<tr>
+					<td><code>image_type</code></td>
+					<td>OpenSBI hoặc U-Boot; CSU đối chiếu với metadata có chữ ký.</td>
+			</tr>
+			<tr>
+					<td><code>buffer</code>, <code>length</code></td>
+					<td>Địa chỉ và kích thước image; CSU kiểm tra lại phạm vi truy cập.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>CSU kiểm tra gì?</strong></p>
+<ol>
+<li><strong>Định dạng và phạm vi:</strong> header/manifest phải hợp lệ, các offset và độ dài nằm trong image; không cho phép đọc hoặc ghi ngoài vùng được cấp.</li>
+<li><strong>Khóa và chữ ký:</strong> khóa xác thực phải được neo vào gốc tin cậy đã cấu hình. Nếu image kèm khóa hoặc chứng thư, CSU phải kiểm tra chuỗi tin cậy trước khi dùng; không tin khóa chỉ vì nó nằm trong image.</li>
+<li><strong>Metadata có chữ ký:</strong> trong định dạng đề xuất, manifest chứa loại image, độ dài, hash payload, phiên bản, địa chỉ nạp và entry-point. CSU kiểm tra chữ ký manifest, chính sách phiên bản/anti-rollback nếu được cấu hình, và giới hạn vùng nhớ/entry-point.</li>
+<li><strong>Nội dung payload:</strong> CSU tính hash từ chính payload rồi so sánh với hash trong manifest đã xác thực. Chỉ so sánh hash với một giá trị không có chữ ký là chưa đủ để xác thực nguồn gốc image.</li>
+<li><strong>Phản hồi:</strong> chỉ trả <code>OK</code> khi toàn bộ kiểm tra thành công; các trường hợp sai chữ ký, sai hash, khóa không hợp lệ hoặc vi phạm chính sách trả lỗi.</li>
+</ol>
+<p><strong>FSBL xử lý kết quả thế nào?</strong></p>
+<ul>
+<li>Chờ phản hồi với timeout, đối chiếu <code>request_id</code> và trạng thái; không tiếp tục khi lỗi hoặc thiếu phản hồi.</li>
+<li>Giữ nguyên payload từ lúc CSU kiểm tra đến lúc nạp vào DDR. Cần chốt cơ chế bảo vệ buffer trước ghi từ core/DMA khác, hoặc để CSU quản lý việc sao chép vào vùng đích được bảo vệ. Không đọc lại một bản image khác từ thiết bị lưu trữ sau khi đã xác thực.</li>
+<li>Chỉ dùng địa chỉ nạp và entry-point đã được kiểm tra. Khi cả hai image đã hợp lệ và được nạp, đồng bộ bộ nhớ/cache lệnh theo nền tảng, chuẩn bị tham số rồi chuyển quyền cho OpenSBI; OpenSBI tiếp tục chuyển quyền cho U-Boot.</li>
+</ul>
+<h2 id="6-thuật-ngữ">6. Thuật ngữ<a class="anchor" href="#6-thu%e1%ba%adt-ng%e1%bb%af"></a></h2>
+<table>
+	<thead>
+			<tr>
+					<th>Thuật ngữ</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>AP</strong></td>
+					<td>Application Processor – bộ xử lý ứng dụng gửi yêu cầu đến CSU.</td>
+			</tr>
+			<tr>
+					<td><strong>Mailbox / shared memory</strong></td>
+					<td>Kênh thông báo / vùng nhớ chia sẻ để trao đổi request và response.</td>
+			</tr>
+			<tr>
+					<td><strong>Key handle</strong></td>
+					<td>Định danh tham chiếu đến khóa do CSU quản lý, không phải nội dung khóa.</td>
+			</tr>
+			<tr>
+					<td><strong>Immutable ROM</strong></td>
+					<td>Mã ROM cố định, không thay đổi qua cập nhật firmware.</td>
+			</tr>
+			<tr>
+					<td><strong>Secure SRAM</strong></td>
+					<td>Vùng SRAM dành cho thực thi và dữ liệu bảo mật, có cơ chế bảo vệ truy cập.</td>
+			</tr>
+			<tr>
+					<td><strong>AES</strong></td>
+					<td>Advanced Encryption Standard – chuẩn mã hóa đối xứng.</td>
+			</tr>
+			<tr>
+					<td><strong>SHA</strong></td>
+					<td>Secure Hash Algorithm – thuật toán băm.</td>
+			</tr>
+			<tr>
+					<td><strong>RSA</strong></td>
+					<td>Rivest–Shamir–Adleman – thuật toán mật mã khóa công khai.</td>
+			</tr>
+			<tr>
+					<td><strong>eFuse</strong></td>
+					<td>Electronic Fuse – phần tử lưu cấu hình lập trình một lần.</td>
+			</tr>
+			<tr>
+					<td><strong>PUF</strong></td>
+					<td>Physically Unclonable Function – cơ chế khai thác đặc tính vật lý riêng của chip.</td>
+			</tr>
+	</tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../bootflow/pmu/" class="flex align-center">
+        <img src="../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>PMU - Platform Management Unit</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../bootflow/csu/" class="flex align-center">
+        <span>CSU - Control and Security Unit</span>
+        <img src="../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-kiến-trúc-csu">1. Kiến trúc CSU</a></li>
+    <li><a href="#2-luồng-nạp-và-xác-thực-secure-firmware">2. Luồng nạp và xác thực Secure Firmware</a>
+      <ul>
+        <li><a href="#giải-thích-các-bước">Giải thích các bước</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-luồng-cập-nhật-secure-firmware">3. Luồng cập nhật Secure Firmware</a></li>
+    <li><a href="#4-dịch-vụ-của-secure-firmware">4. Dịch vụ của Secure Firmware</a></li>
+    <li><a href="#5-luồng-yêu-cầu-bảo-mật-từ-ap">5. Luồng yêu cầu bảo mật từ AP</a>
+      <ul>
+        <li><a href="#flow-request--response">Flow request / response</a></li>
+        <li><a href="#giải-thích-các-bước-1">Giải thích các bước</a></li>
+        <li><a href="#nội-dung-request-và-response">Nội dung request và response</a></li>
+        <li><a href="#ví-dụ-ap-yêu-cầu-xác-thực-chữ-ký">Ví dụ: AP yêu cầu xác thực chữ ký</a></li>
+        <li><a href="#flow-fsbl-yêu-cầu-xác-thực-opensbi-và-u-boot">Flow: FSBL yêu cầu xác thực OpenSBI và U-Boot</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-thuật-ngữ">6. Thuật ngữ</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+<script>
+(() => {
+  const diagrams = document.querySelectorAll('pre.mermaid');
+  if (!diagrams.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-viewer';
+  dialog.setAttribute('aria-label', 'Xem sơ đồ phóng to');
+  dialog.innerHTML = '<div class="diagram-toolbar"><button type="button" data-action="out" aria-label="Thu nhỏ">−</button><output aria-live="polite"></output><button type="button" data-action="in" aria-label="Phóng to">+</button><button type="button" data-action="fit">Vừa màn hình</button><button type="button" data-action="close">Đóng (Esc)</button></div><div class="diagram-viewport" tabindex="0" aria-label="Sơ đồ, cuộn để xem các phần"></div>';
+  document.body.append(dialog);
+  const viewport = dialog.querySelector('.diagram-viewport');
+  const output = dialog.querySelector('output');
+  let active, origin, oldStyle, zoom = 1, width = 1, height = 1;
+  function resize(next) {
+    zoom = Math.max(0.1, Math.min(4, next));
+    active.style.width = `${width * zoom}px`;
+    active.style.height = `${height * zoom}px`;
+    active.style.maxWidth = 'none';
+    output.textContent = `${Math.round(zoom * 100)}%`;
+  }
+  function fit() {
+    resize(Math.min((viewport.clientWidth - 40) / width, (viewport.clientHeight - 40) / height, 1));
+  }
+  diagrams.forEach(diagram => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'diagram-open';
+    button.textContent = '⛶ Phóng to sơ đồ';
+    diagram.before(button);
+    button.addEventListener('click', () => {
+      const svg = diagram.querySelector('svg');
+      if (!svg) return;
+      active = svg;
+      origin = diagram;
+      oldStyle = svg.getAttribute('style');
+      width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      height = svg.viewBox.baseVal.height || svg.getBoundingClientRect().height;
+      viewport.append(svg);
+      dialog.showModal();
+      fit();
+    });
+  });
+  dialog.addEventListener('click', event => {
+    const action = event.target.closest('button')?.dataset.action;
+    if (!active) return;
+    if (action === 'in') resize(zoom * 1.25);
+    if (action === 'out') resize(zoom / 1.25);
+    if (action === 'fit') fit();
+    if (action === 'close') dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (!active) return;
+    if (oldStyle === null) active.removeAttribute('style');
+    else active.setAttribute('style', oldStyle);
+    origin.append(active);
+    active = null;
+  });
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

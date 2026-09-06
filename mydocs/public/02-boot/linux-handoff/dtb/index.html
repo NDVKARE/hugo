@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tài liệu kỹ thuật: DTB.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/02-boot/linux-handoff/dtb/">
+	<meta property="og:site_name" content="Technical Information Portal">
+	<meta property="og:title" content="DTB">
+	<meta property="og:description" content="Tài liệu kỹ thuật: DTB.">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="02-boot">
+
+
+	<meta itemprop="name" content="DTB">
+	<meta itemprop="description" content="Tài liệu kỹ thuật: DTB.">
+	<meta itemprop="wordCount" content="19">
+
+<title>DTB • Technical Information Portal</title>
+<link rel="icon" href="../../../favicon.png" >
+<link rel="manifest" href="../../../manifest.json">
+<link rel="canonical" href="//localhost:1313/02-boot/linux-handoff/dtb/">
+<link rel="stylesheet" href="../../../book.min.ff94c41f2c8536f928f6b30b868d29681dabb2880bb56153ecf2104f879e37d5.css" integrity="sha256-/5TEHyyFNvko9rMLho0paB2rsogLtWFT7PIQT4eeN9U=" crossorigin="anonymous">
+
+
+<script type="module" src="../../../en.search.min.48d5b2b9af9a815699453f7ffd53023c560be6ee50dbe285fb9bccdb6c27f57e.js" integrity="sha256-SNWyua&#43;agVaZRT9//VMCPFYL5u5Q2&#43;KF&#43;5vM22wn9X4=" crossorigin="anonymous"></script>
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-02-boot">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../../"><span>Technical Information Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/" class="">
+      RISC-V Embedded System</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/pmu/" class="">
+      PMU-Plaform manager unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-ba6cd6a8e6f7c38f0cf6637acd3d1e58" class="toggle"  />
+    <label for="section-ba6cd6a8e6f7c38f0cf6637acd3d1e58" class="flex">
+      <a href="../../../01-architecture/" class="">
+        1. RISC-V Architecture</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39e09f9306f091d68b5b7a65fba666e2" class="toggle"  />
+    <label for="section-39e09f9306f091d68b5b7a65fba666e2" class="flex">
+      <a href="../../../01-architecture/core/" class="">
+        CPU &amp; ISA</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/core/cpu/" class="">
+      CPU Core Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/core/isa/" class="">
+      RISC-V ISA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/core/privilege-modes/" class="">
+      Privilege Modes</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/core/csr/" class="">
+      CSR</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/core/exceptions/" class="">
+      Exceptions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/core/multicore/" class="">
+      Multi-core &amp; SMP</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-746cdf5ca3ea06a9d6b0cb45bd622644" class="toggle"  />
+    <label for="section-746cdf5ca3ea06a9d6b0cb45bd622644" class="flex">
+      <a href="../../../01-architecture/memory-protection/" class="">
+        Memory Protection</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/memory-protection/mmu/" class="">
+      MMU</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/memory-protection/pmp/" class="">
+      PMP</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8933b2dda913c677e6b7c2dc306c8850" class="toggle"  />
+    <label for="section-8933b2dda913c677e6b7c2dc306c8850" class="flex">
+      <a href="../../../01-architecture/compute-engines/" class="">
+        Compute Engines</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/compute-engines/npu/" class="">
+      NPU</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/compute-engines/dsp/" class="">
+      DSP</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/compute-engines/lpu/" class="">
+      LPU</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/compute-engines/rpu/" class="">
+      RPU</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../01-architecture/compute-engines/accelerator/" class="">
+      Accelerators</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c816d9946ea5ee78c43f9f6cd413eb3a" class="toggle" checked />
+    <label for="section-c816d9946ea5ee78c43f9f6cd413eb3a" class="flex">
+      <a href="../../../02-boot/" class="">
+        2. Boot Flow</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-04787e3c68539cf5d7968865eaea71a1" class="toggle"  />
+    <label for="section-04787e3c68539cf5d7968865eaea71a1" class="flex">
+      <a href="../../../02-boot/platform-init/" class="">
+        Platform Initialization</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/platform-init/power-on/" class="">
+      Power On</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/platform-init/reset-clock/" class="">
+      Reset &amp; Clock</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/platform-init/bootrom/" class="">
+      BootROM</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/platform-init/csu/" class="">
+      CSU</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/platform-init/pmu/" class="">
+      PMU</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c142833f42c604322978839ca2b38627" class="toggle"  />
+    <label for="section-c142833f42c604322978839ca2b38627" class="flex">
+      <a href="../../../02-boot/firmware/" class="">
+        Boot Firmware</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/firmware/opensbi/" class="">
+      OpenSBI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/firmware/uboot/" class="">
+      U-Boot</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1daa5a4dc75111c0818c22893e3707d1" class="toggle" checked />
+    <label for="section-1daa5a4dc75111c0818c22893e3707d1" class="flex">
+      <a href="../../../02-boot/linux-handoff/" class="">
+        Linux Handoff</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/linux-handoff/kernel/" class="">
+      Linux Kernel</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/linux-handoff/dtb/" class="active">
+      DTB</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/linux-handoff/initramfs/" class="">
+      Initramfs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/linux-handoff/rootfs/" class="">
+      Root Filesystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../02-boot/linux-handoff/userspace/" class="">
+      User Space</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>DTB</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#nội-dung-chính">Nội dung chính</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="dtb">DTB<a class="anchor" href="#dtb"></a></h1>
+<p>Device Tree Blob mô tả phần cứng cho kernel.</p>
+<h2 id="nội-dung-chính">Nội dung chính<a class="anchor" href="#n%e1%bb%99i-dung-ch%c3%adnh"></a></h2>
+<ul>
+<li>CPU.</li>
+<li>memory.</li>
+<li>interrupt controller.</li>
+<li>peripheral nodes.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../../02-boot/linux-handoff/kernel/" class="flex align-center">
+        <img src="../../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Linux Kernel</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../../02-boot/linux-handoff/initramfs/" class="flex align-center">
+        <span>Initramfs</span>
+        <img src="../../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#nội-dung-chính">Nội dung chính</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

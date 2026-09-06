@@ -1,45 +1,173 @@
 +++
-title = "RISC-V Embedded System"
+title = "Giới thiệu SOVRA"
+description = "Nền tảng SOVRA với CPU CVA6, AI và DSP cho UAV, camera thông minh, robot và kết nối 5G/RedCap."
 weight = 1
-
 +++
 
-# RISC-V Embedded System
+<style>
+.sovra-home{--violet:#7c3aed;--cyan:#06b6d4;--pink:#ec4899;--amber:#f59e0b;--ink:#eef2ff;position:relative;isolation:isolate;overflow:hidden;margin:-1rem 0 2rem;border:1px solid #7c3aed55;border-radius:28px;padding:clamp(1.25rem,4vw,3.5rem);color:var(--ink);background:radial-gradient(circle at 10% 10%,#7c3aed66 0,transparent 32%),radial-gradient(circle at 90% 15%,#06b6d455 0,transparent 28%),radial-gradient(circle at 65% 90%,#ec489944 0,transparent 32%),linear-gradient(145deg,#080b1a,#111735 58%,#17102c);box-shadow:0 24px 80px #11182733}
+.sovra-home::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.16;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 82%)}
+.sovra-orb{position:absolute;width:220px;height:220px;right:-85px;top:28%;z-index:-1;border-radius:50%;background:conic-gradient(from 45deg,var(--cyan),var(--violet),var(--pink),var(--amber),var(--cyan));filter:blur(38px);opacity:.32;animation:sovra-spin 14s linear infinite}
+@keyframes sovra-spin{to{transform:rotate(360deg) scale(1.15)}}
+.sovra-kicker{display:inline-flex;gap:.55rem;align-items:center;margin-bottom:1rem;padding:.45rem .8rem;border:1px solid #a5b4fc66;border-radius:999px;color:#c7d2fe;background:#ffffff0d;font:700 .72rem/1 sans-serif;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(12px)}
+.sovra-kicker::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:#22d3ee;box-shadow:0 0 14px #22d3ee}
+.sovra-kicker--internal{margin-left:.75rem;color:#fca5a5;border-color:#ef444499;background:#ef444418;box-shadow:0 0 16px #ef444433;text-shadow:0 0 10px #ef444466}
+.sovra-kicker--internal::before{background:#f87171;box-shadow:0 0 14px #ef4444}
+.sovra-title{max-width:850px;margin:0!important;color:#fff!important;font-size:clamp(2.7rem,8vw,6.4rem)!important;font-weight:900!important;line-height:.92!important;letter-spacing:-.065em}
+.sovra-title span{color:transparent;background:linear-gradient(90deg,#67e8f9,#a78bfa 48%,#f9a8d4);background-clip:text;-webkit-background-clip:text}
+.sovra-lead{max-width:680px;margin:1.4rem 0 1.8rem!important;color:#cbd5e1;font-size:clamp(1rem,2vw,1.2rem);line-height:1.75}
+.sovra-actions{display:flex;flex-wrap:wrap;gap:.75rem}.sovra-actions a{display:inline-flex;align-items:center;gap:.55rem;padding:.78rem 1.05rem;border-radius:12px;color:#fff!important;font-weight:750;text-decoration:none!important;transition:transform .2s ease,box-shadow .2s ease}.sovra-actions a:first-child{background:linear-gradient(120deg,var(--violet),var(--pink));box-shadow:0 10px 28px #7c3aed55}.sovra-actions a:last-child{border:1px solid #94a3b855;background:#ffffff0d}.sovra-actions a:hover{transform:translateY(-3px);box-shadow:0 14px 34px #06b6d444}
+.sovra-section{margin-top:clamp(2.5rem,6vw,5rem)}.sovra-eyebrow{margin:0 0 .4rem!important;color:#67e8f9;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem}.sovra-heading{margin:0 0 1.3rem!important;color:#fff!important;font-size:clamp(1.6rem,4vw,2.4rem)!important}
+.sovra-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.sovra-card,.sovra-soc-block{--card-color:var(--cyan);position:relative;overflow:hidden;min-height:175px;padding:1.25rem;border:1px solid #ffffff1f;border-radius:18px;color:#e2e8f0!important;background:linear-gradient(145deg,#ffffff10,#ffffff06);text-decoration:none!important;backdrop-filter:blur(14px);transition:transform .25s ease,border-color .25s ease,background .25s ease}.sovra-card::after,.sovra-soc-block::after{content:"";position:absolute;width:120px;height:120px;right:-45px;bottom:-55px;border-radius:50%;background:var(--card-color);filter:blur(36px);opacity:.32}.sovra-card:hover,.sovra-soc-block:hover{transform:translateY(-6px);border-color:var(--card-color);background:#ffffff14}.sovra-card:nth-child(2){--card-color:var(--violet)}.sovra-card:nth-child(3){--card-color:var(--pink)}
+.sovra-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:1rem;border-radius:12px;background:#ffffff18;font-size:1.25rem}.sovra-card strong{display:block;margin-bottom:.35rem;color:#fff;font-size:1.05rem}.sovra-card small{color:#94a3b8;line-height:1.55}
+.sovra-flow{display:grid;grid-template-columns:repeat(8,minmax(80px,1fr));align-items:center;overflow-x:auto;padding:.6rem .25rem 1rem;scrollbar-color:#7c3aed #ffffff0d}.sovra-node{position:relative;padding-right:1rem;text-align:center;color:#cbd5e1;font-size:.72rem;font-weight:700}.sovra-node::before{content:"";display:block;width:34px;height:34px;margin:0 auto .6rem;border:5px solid #151a35;border-radius:50%;background:var(--node);box-shadow:0 0 20px var(--node)}.sovra-node::after{content:"→";position:absolute;top:7px;right:-.25rem;color:#64748b;font-size:1.1rem}.sovra-node:last-child::after{display:none}.sovra-node:nth-child(4n+1){--node:#22d3ee}.sovra-node:nth-child(4n+2){--node:#8b5cf6}.sovra-node:nth-child(4n+3){--node:#ec4899}.sovra-node:nth-child(4n+4){--node:#f59e0b}
+.sovra-footer{margin-top:3.5rem;padding:1.1rem 1.25rem;border:1px solid #ffffff1a;border-radius:16px;color:#94a3b8;background:#02061755;text-align:center}
+@media(max-width:800px){.sovra-grid{grid-template-columns:1fr}.sovra-card{min-height:auto}}@media(prefers-reduced-motion:reduce){.sovra-orb{animation:none}.sovra-card,.sovra-soc-block,.sovra-actions a{transition:none}}
+</style>
 
-Cổng tài liệu kỹ thuật mô tả toàn bộ hệ thống từ kiến trúc silicon đến phần mềm vận hành sản phẩm.
+<style>
+.sovra-image{margin:2rem 0 0}
+.sovra-image figcaption{margin-top:.75rem;color:#94a3b8;font-size:.85rem;text-align:center}
+.sovra-tagline{max-width:680px;margin:1.25rem 0 0!important;color:#e2e8f0;font-size:clamp(1.2rem,3vw,1.8rem);line-height:1.4}
+.sovra-section-copy{max-width:720px;margin:0 0 1.5rem;color:#cbd5e1;line-height:1.8}
+.sovra-home a:focus-visible{outline:2px solid #67e8f9;outline-offset:4px}
+.sovra-segments{overflow-x:auto;border:1px solid #ffffff1f;border-radius:16px;scrollbar-color:#7c3aed #111735}
+.sovra-segments table{display:table;width:100%;min-width:850px;margin:0;border-collapse:collapse;font-size:.85rem;color:#e2e8f0}
+.sovra-segments table th,.sovra-segments table td{padding:.9rem 1rem;border:0;border-bottom:1px solid #ffffff1f;text-align:left;vertical-align:top}
+.sovra-segments table thead tr{background:#ffffff10;color:#67e8f9}
+.sovra-segments table tbody tr{background:transparent}
+.sovra-segments table tbody tr:nth-child(even){background:#ffffff05}
+.sovra-segments table tbody tr:last-child td{border-bottom:0}
+.sovra-segments table td:first-child{white-space:nowrap;font-weight:700;color:#fff}
+.sovra-segments .sovra-star{color:#fbbf24}
+.sovra-roadmap table{min-width:0;table-layout:fixed;font-size:.8rem}
+.sovra-roadmap table th,.sovra-roadmap table td{padding:.6rem .5rem;white-space:normal;overflow-wrap:anywhere}
+.sovra-roadmap table th:first-child,.sovra-roadmap table td:first-child{width:18%;white-space:normal}
+.sovra-image img{display:block;width:100%;height:auto;border:1px solid #ffffff1f;border-radius:16px}
+.sovra-applications{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sovra-applications .sovra-card{padding:0;background:#081629;min-width:0}
+.sovra-applications .sovra-card::after{display:none}
+.sovra-applications .sovra-card img{display:block;width:100%;max-width:none;height:auto;aspect-ratio:3/2;object-fit:contain;margin:0;border-bottom:1px solid #22d3ee33;background:#061426}
+.sovra-application-copy{padding:1.15rem 1.25rem 1.4rem}
+.sovra-application-copy strong{color:#b9efff}
+.sovra-application-copy small{display:block;color:#a9bdd1}
+.sovra-applications .sovra-card:nth-child(4){--card-color:var(--amber)}
+.sovra-soc{margin-top:2rem}
+.sovra-soc h3{margin:0 0 1rem;color:#b9efff;font-size:1.2rem}
+.sovra-soc-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:.75rem}
+.sovra-soc-block{grid-column:span 3;min-width:0;min-height:auto;padding:1.1rem;line-height:1.6}
+.sovra-soc-block:nth-child(2),.sovra-soc-block:nth-child(7){--card-color:var(--violet)}
+.sovra-soc-block strong{display:block;margin-bottom:.4rem;color:#fff;font-size:1rem}
+.sovra-soc-block p{margin:0;color:#94a3b8;font-size:.85rem}
+.sovra-soc-block--cpu,.sovra-soc-block--isp{--card-color:var(--cyan)}
+.sovra-soc-block--lpu{--card-color:#34d399}
+.sovra-soc-block--dsp{--card-color:var(--amber)}
+.sovra-soc-block--wireless{--card-color:#fb923c}
+.sovra-soc-block--wide{grid-column:span 4}
+.sovra-soc-block--aux{--card-color:var(--pink)}
+.sovra-soc-block--bus,.sovra-soc-block--memory{grid-column:1/-1;text-align:center;--card-color:var(--cyan)}
+.sovra-soc-block--memory{--card-color:var(--violet)}
+@media(max-width:1100px){.sovra-soc-block{grid-column:span 6}.sovra-soc-block--bus,.sovra-soc-block--memory{grid-column:1/-1}}
+@media(max-width:600px){.sovra-soc-grid{grid-template-columns:1fr}.sovra-soc-block{grid-column:1/-1}}
+@media(max-width:800px){.sovra-applications{grid-template-columns:1fr}}
+</style>
 
-## Luồng hệ thống
+<div class="sovra-home">
+  <div class="sovra-orb"></div>
+  <section>
+      <div class="sovra-kicker">Technical knowledge portal</div><div class="sovra-kicker sovra-kicker--internal">Tài liệu chỉ lưu hành nội bộ</div>
+    <h1 class="sovra-title"><span>SOVRA</span><br> System </h1>
+    <p class="sovra-tagline">Nền tảng tự chủ công nghệ tương lai</p>
+    <p class="sovra-lead">SOVRA là tên gọi theo Sovereign RISC-V Architecture, là nền tảng xử lý kết hợp năng lực tính toán AI và DSP, hướng đến phát triển đáp ứng những nhu cầu khác nhau về xử lý tín hiệu và công suất cụ thể như UAV, camera thông minh, robot, kết nối 5G/RedCap và Edge compute.</p>
+    <div class="sovra-actions">
+      <a href="#sovra-segments-title">Khám phá dòng sản phẩm <span>→</span></a>
+      <a href="#sovra-applications-title">Ứng dụng SOVRA <span>↗</span></a>
+    </div>
+    <figure class="sovra-image">
+      <img src="images/VT_SOVRA_CVA6.png" alt="VT SOVRA CVA6" decoding="async">
+      <figcaption>SoM VT SOVRA CVA6</figcaption>
+    </figure>
+  </section>
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Nền tảng SOVRA</p>
+    <h2 class="sovra-heading">Tính toán, AI và xử lý tín hiệu</h2>
+    <p class="sovra-section-copy">Dòng sản phẩm SOVRA có cấu hình từ 2 đến 8 nhân CVA6/BOOM/XiangSang, năng lực AI từ 2 đến 16 TOPS và các lựa chọn DSP theo ứng dụng. Mức công suất khoảng 4–15W tùy phân khúc giúp định hình cấu hình phù hợp cho từng thiết bị.</p>
+    <section class="sovra-soc" aria-labelledby="sovra-soc-title">
+      <h3 id="sovra-soc-title">SOVRA SoC (N28 baseline)</h3>
+      <div class="sovra-soc-grid">
+        <div class="sovra-soc-block sovra-soc-block--cpu"><strong>CPU Cluster</strong><p>4× CVA6 RV64GC<br>MMU + Debug</p></div>
+        <div class="sovra-soc-block"><strong>NPU (Vision AI)</strong><p>2 TOPS INT8<br>8× 32×32 Gemmini<br>YOLO v8 · MobileNet</p></div>
+        <div class="sovra-soc-block sovra-soc-block--lpu"><strong>LPU (Language)</strong><p>2 TOPS INT8<br>Mảng systolic 50×50<br>GPT-2 124M</p></div>
+        <div class="sovra-soc-block sovra-soc-block--dsp"><strong>DSP (Vector)</strong><p>4× CVA6+Ara<br>RVV 1.0 · 4 lane<br>FFT/Eq/FEC bằng phần mềm</p></div>
+        <div class="sovra-soc-block sovra-soc-block--bus"><strong>NoC — Constellation TileLink Mesh</strong><p>2×2 baseline → 4×4 Brain/silicon · DMA 8 kênh · AXI4 256-bit</p></div>
+        <div class="sovra-soc-block sovra-soc-block--wide sovra-soc-block--isp"><strong>ISP HD v1.3</strong><p>250 MHz · 1080p@30<br>Bayer → YUV → BBox</p></div>
+        <div class="sovra-soc-block sovra-soc-block--wide"><strong>FEC Subsystem</strong><p>LDPC (5G NR)<br>Polar · Turbo · RS</p></div>
+        <div class="sovra-soc-block sovra-soc-block--wide sovra-soc-block--wireless"><strong>Wireless</strong><p>Wideband 20 MHz LTE V2X<br>WiFi 4 + 802.11s Mesh<br>BLE (Lite)</p></div>
+        <div class="sovra-soc-block sovra-soc-block--wide sovra-soc-block--aux"><strong>Video Codec</strong><p>H.264/H.265</p></div>
+        <div class="sovra-soc-block sovra-soc-block--wide sovra-soc-block--aux"><strong>Sensor Hub</strong><p>Dành cho Brain/Sky</p></div>
+        <div class="sovra-soc-block sovra-soc-block--wide sovra-soc-block--aux"><strong>Motor Control</strong><p>Dành cho Brain</p></div>
+        <div class="sovra-soc-block sovra-soc-block--memory"><strong>Bộ nhớ và ngoại vi</strong><p>LPDDR4X / LPDDR5 + SRAM trên chip (LPU 3 MB · NPU 2.5 MB · L2 4 MB) + Peripherals</p></div>
+      </div>
+    </section>
+  </section>
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Lĩnh vực ứng dụng</p>
+    <h2 class="sovra-heading" id="sovra-applications-title">SOVRA trong các hệ thống công nghệ</h2>
+    <div class="sovra-grid sovra-applications">
+      <div class="sovra-card"><img src="images/applications/uav-blueprint.png" alt="" width="1536" height="1024" loading="lazy" decoding="async"><div class="sovra-application-copy"><strong>UAV</strong><small>Điều khiển bay, xử lý dữ liệu cảm biến và thị giác máy tính trên thiết bị bay không người lái.</small></div></div>
+      <div class="sovra-card"><img src="images/applications/camera-blueprint.png" alt="" width="1536" height="1024" loading="lazy" decoding="async"><div class="sovra-application-copy"><strong>Camera thông minh</strong><small>Xử lý hình ảnh, nhận diện đối tượng và phân tích video ngay tại thiết bị.</small></div></div>
+      <div class="sovra-card"><img src="images/applications/robot-blueprint.png" alt="" width="1536" height="1024" loading="lazy" decoding="async"><div class="sovra-application-copy"><strong>Robot</strong><small>Phối hợp cảm biến, điều khiển chuyển động và xử lý tác vụ tự động.</small></div></div>
+      <div class="sovra-card"><img src="images/applications/5g-blueprint.png" alt="" width="1536" height="1024" loading="lazy" decoding="async"><div class="sovra-application-copy"><strong>5G/RedCap</strong><small>Kết nối và trao đổi dữ liệu cho thiết bị IoT và các hệ thống nhúng.</small></div></div>
+      <div class="sovra-card"><img src="images/applications/iot-blueprint.png" alt="" width="1536" height="1024" loading="lazy" decoding="async"><div class="sovra-application-copy"><strong>IoT</strong><small>Kết nối cảm biến, thu thập dữ liệu và giám sát thiết bị trong các hệ thống Internet vạn vật, Edge compute</small></div></div>
+    </div>
+  </section>
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Dòng sản phẩm</p>
+    <h2 class="sovra-heading" id="sovra-segments-title">Các phân khúc SOVRA</h2>
+    <div class="sovra-segments" role="region" aria-labelledby="sovra-segments-title" tabindex="0">
+      <table>
+        <thead>
+          <tr><th scope="col">Phân khúc</th><th scope="col">Công nghệ</th><th scope="col">CPU</th><th scope="col">AI</th><th scope="col">DSP</th><th scope="col">Ứng dụng</th><th scope="col">Công suất</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SOVRA-Lite</td><td>N65</td><td>2× CVA6</td><td>2 TOPS</td><td>1 DSP</td><td>Remote ID, IoT</td><td>~4W</td></tr>
+          <tr><td>SOVRA-Sky <span class="sovra-star">★</span></td><td>N28</td><td>4× CVA6</td><td>8 TOPS</td><td>Cluster<br>500–1K tok/s</td><td>Swarm UAV, BBSoC</td><td>~8W</td></tr>
+          <tr><td>SOVRA-Eye <span class="sovra-star">★</span></td><td>N28</td><td>4× CVA6</td><td>16 TOPS</td><td>Cluster nhỏ</td><td>Smart / AI Camera</td><td>~12W</td></tr>
+          <tr><td>SOVRA-Brain</td><td>N28+</td><td>8× CVA6</td><td>16 TOPS</td><td>Full + 2K tok/s</td><td>Robotic, Edge Server</td><td>~15W</td></tr>
+          <tr><td>SOVRA-5G</td><td>N28</td><td>4× CVA6</td><td>2 TOPS</td><td>Cluster + FEC</td><td>5G / RedCap modem</td><td>~4W</td></tr>
+          <tr><td>BBSoC</td><td>N28</td><td>sub-class</td><td>8 TOPS</td><td>Sky/Brain + Wideband BB</td><td>UAV Tactical, C2</td><td>~8W</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Roadmap</p>
+    <h2 class="sovra-heading" id="sovra-roadmap-title">Lộ trình phát triển SOVRA</h2>
+    <div class="sovra-segments sovra-roadmap" role="region" aria-labelledby="sovra-roadmap-title" tabindex="0">
+      <table>
+        <thead>
+          <tr><th scope="col">Thành phần</th><th scope="col">2026</th><th scope="col">2028</th><th scope="col">2030</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Node</td><td>N28</td><td>N16</td><td>N7</td></tr>
+          <tr><td>CPU</td><td>CVA6 ≈ A55</td><td>BOOM v3 ≈ A75</td><td>XiangShan ≈ A78</td></tr>
+          <tr><td>NPU</td><td>2–16 TOPS INT8</td><td>32 TOPS INT8/FP8</td><td>64+ TOPS</td></tr>
+          <tr><td>LPU</td><td>2 TOPS GPT-2 124M</td><td>3+ TOPS Llama 1B</td><td>15 TOPS Llama 3B</td></tr>
+          <tr><td>ISP</td><td>1080p@30</td><td>2K@30 HDR</td><td>4K@30 neural</td></tr>
+          <tr><td>NoC</td><td>4×4 coherent</td><td>8×8 mixed</td><td>4–64 cores</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="sovra-section">
+    <p class="sovra-eyebrow">Tài liệu kỹ thuật</p>
+    <h2 class="sovra-heading">Tìm hiểu cách hệ thống vận hành</h2>
+    <p class="sovra-section-copy">Khám phá luồng khởi động và vai trò của các thành phần trong hệ thống.</p>
+    <div class="sovra-actions">
+      <a href="bootflow/">Xem Boot Flow <span>→</span></a>
+      <a href="bootflow/PMU/">Tìm hiểu PMU <span>↗</span></a>
+    </div>
+  </section>
 
-~~~mermaid
-flowchart LR
-    A[Power On] --> B[BootROM]
-    B --> C[CSU / Secure Boot]
-    C --> D[OpenSBI]
-    D --> E[U-Boot]
-    E --> F[Linux Kernel]
-    F --> G[Root Filesystem]
-    G --> H[Applications]
-~~~
-
-## Cây tài liệu
-
-1. [RISC-V Architecture](01-architecture/)
-2. [Boot Flow](02-boot/)
-3. [Interrupt & Timer](03-interrupt-timer/)
-4. [Memory System](04-memory/)
-5. [Interconnect & DMA](05-interconnect/)
-6. [Peripherals](06-peripherals/)
-7. [Storage](07-storage/)
-8. [Network](08-network/)
-9. [Linux Software Stack](09-linux-software/)
-10. [Security & Secure Boot](10-security/)
-11. [Debug & Test](11-debug-test/)
-12. [Firmware, RTOS & IPC](12-rtos-ipc/)
-13. [System Management](13-system-management/)
-
-## Phạm vi
-
-- Hardware: CPU, accelerator, memory, bus và peripheral.
-- Boot firmware: BootROM, CSU, OpenSBI và U-Boot.
-- Operating systems: Linux, bare-metal, FreeRTOS và Zephyr.
-- Product lifecycle: secure boot, update, recovery, logging và diagnostics.
+  <div class="sovra-footer">SOVRA · Nền tảng tự chủ công nghệ tương lai</div>
+</div>

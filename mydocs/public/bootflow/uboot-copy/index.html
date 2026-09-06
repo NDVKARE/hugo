@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="U-Boot là bootloader chạy sau FSBL và OpenSBI, có nhiệm vụ chuẩn bị môi trường rồi nạp Linux kernel, Device Tree và root filesystem. Đội Nhúng thực hiện phần này. Đặc điểm: -Chạy ở S-mode; -Vị trí thực thi: DDR; -Cần các khối phần cứng phục vụ việc tìm, đọc và khởi động Linux. Các câu hỏi: -Đội phần cứng cần cung cấp các IP và tài liệu để bring-up các IP phục vụ việc tìm, đọc và khởi động Linux (ví dụ UART, eMMC, Ethernet). (Q-06) -Có cần Ethernet trong SoC SOVRA không? Thông thường đội phát triển cần Ethernet để thuận lợi cho việc nạp và gỡ lỗi firmware; sau khi phát hành sản phẩm thì không cần, trừ khi sản phẩm yêu cầu. Nếu có, cần chốt Ethernet chỉ dùng cho phát triển hay được phép dùng làm đường boot trong sản xuất. (Q-07)
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/bootflow/uboot-copy/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="U-boot - Univeral bootloader">
+	<meta property="og:description" content="U-Boot là bootloader chạy sau FSBL và OpenSBI, có nhiệm vụ chuẩn bị môi trường rồi nạp Linux kernel, Device Tree và root filesystem. Đội Nhúng thực hiện phần này. Đặc điểm: -Chạy ở S-mode; -Vị trí thực thi: DDR; -Cần các khối phần cứng phục vụ việc tìm, đọc và khởi động Linux. Các câu hỏi: -Đội phần cứng cần cung cấp các IP và tài liệu để bring-up các IP phục vụ việc tìm, đọc và khởi động Linux (ví dụ UART, eMMC, Ethernet). (Q-06) -Có cần Ethernet trong SoC SOVRA không? Thông thường đội phát triển cần Ethernet để thuận lợi cho việc nạp và gỡ lỗi firmware; sau khi phát hành sản phẩm thì không cần, trừ khi sản phẩm yêu cầu. Nếu có, cần chốt Ethernet chỉ dùng cho phát triển hay được phép dùng làm đường boot trong sản xuất. (Q-07)">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="U-boot - Univeral bootloader">
+	<meta itemprop="description" content="U-Boot là bootloader chạy sau FSBL và OpenSBI, có nhiệm vụ chuẩn bị môi trường rồi nạp Linux kernel, Device Tree và root filesystem. Đội Nhúng thực hiện phần này. Đặc điểm: -Chạy ở S-mode; -Vị trí thực thi: DDR; -Cần các khối phần cứng phục vụ việc tìm, đọc và khởi động Linux. Các câu hỏi: -Đội phần cứng cần cung cấp các IP và tài liệu để bring-up các IP phục vụ việc tìm, đọc và khởi động Linux (ví dụ UART, eMMC, Ethernet). (Q-06) -Có cần Ethernet trong SoC SOVRA không? Thông thường đội phát triển cần Ethernet để thuận lợi cho việc nạp và gỡ lỗi firmware; sau khi phát hành sản phẩm thì không cần, trừ khi sản phẩm yêu cầu. Nếu có, cần chốt Ethernet chỉ dùng cho phát triển hay được phép dùng làm đường boot trong sản xuất. (Q-07)">
+	<meta itemprop="wordCount" content="147">
+
+<title>U-boot - Univeral bootloader • SOVRA Portal</title>
+<link rel="icon" href="../../favicon.png" >
+<link rel="manifest" href="../../manifest.json">
+<link rel="canonical" href="//localhost:1313/bootflow/uboot-copy/">
+<link rel="stylesheet" href="../../book.min.ff94c41f2c8536f928f6b30b868d29681dabb2880bb56153ecf2104f879e37d5.css" integrity="sha256-/5TEHyyFNvko9rMLho0paB2rsogLtWFT7PIQT4eeN9U=" crossorigin="anonymous">
+
+
+<script type="module" src="../../en.search.min.be9508eff85c3896f0a6f5339a167854676d33a69664f3001e6c705573e6c4e6.js" integrity="sha256-vpUI7/hcOJbwpvUzmhZ4VGdtM6aWZPMAHmxwVXPmxOY=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/bootflow/uboot-copy/index.xml" title="U-boot - Univeral bootloader" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-bootflow">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../"><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/" class="">
+      Boot flow - Quá trình khởi động</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/pmu/" class="">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/csu/" class="">
+      CSU - Control and Security Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/fsbl/" class="">
+      FSBL - First state bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/opensbi/" class="">
+      OpenSBI - Open serial binary interface</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/uboot-copy/" class="active">
+      U-boot - Univeral bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/uboot/" class="">
+      U-boot - Univeral bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/linux/" class="">
+      Linux</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>U-boot - Univeral bootloader</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents"></nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><p>U-Boot là bootloader chạy sau FSBL và OpenSBI, có nhiệm vụ chuẩn bị môi trường rồi nạp Linux kernel, Device Tree và root filesystem. Đội Nhúng thực hiện phần này.
+Đặc điểm:
+-Chạy ở S-mode;
+-Vị trí thực thi: DDR;
+-Cần các khối phần cứng phục vụ việc tìm, đọc và khởi động Linux.
+Các câu hỏi:
+-Đội phần cứng cần cung cấp các IP và tài liệu để bring-up các IP phục vụ việc tìm, đọc và khởi động Linux (ví dụ UART, eMMC, Ethernet). (Q-06)
+-Có cần Ethernet trong SoC SOVRA không? Thông thường đội phát triển cần Ethernet để thuận lợi cho việc nạp và gỡ lỗi firmware; sau khi phát hành sản phẩm thì không cần, trừ khi sản phẩm yêu cầu. Nếu có, cần chốt Ethernet chỉ dùng cho phát triển hay được phép dùng làm đường boot trong sản xuất. (Q-07)</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../bootflow/opensbi/" class="flex align-center">
+        <img src="../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>OpenSBI - Open serial binary interface</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../bootflow/uboot/" class="flex align-center">
+        <span>U-boot - Univeral bootloader</span>
+        <img src="../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents"></nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,25 @@
+.diagram-open,.diagram-toolbar button{padding:.5rem .8rem;border:1px solid #64748b;border-radius:6px;background:#1e293b;color:#fff;cursor:pointer}
+.diagram-open{margin:.5rem 0}
+.diagram-viewer{box-sizing:border-box;width:96vw;max-width:none;height:94vh;max-height:none;padding:0;border:1px solid #64748b;border-radius:12px;background:var(--body-background,#fff);color:var(--body-font-color,#111)}
+.diagram-viewer::backdrop{background:#000b}
+.diagram-viewer[open]{display:flex;flex-direction:column}
+.diagram-toolbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.75rem;border-bottom:1px solid #64748b}
+.diagram-toolbar output{min-width:3.5rem;text-align:center}
+.diagram-viewport{flex:1;min-height:0;overflow:auto;padding:20px}
+.diagram-viewport svg{display:block;margin:auto}
+.diagram-open:focus-visible,.diagram-toolbar button:focus-visible{outline:2px solid #06b6d4;outline-offset:3px}
+
+/* Match text code blocks with a dark gray background and yellow comments. */
+.markdown .highlight pre:has(code[data-lang="c"]),
+.markdown .highlight code[data-lang="c"] {
+  background: #272822;
+  color: #f8f8f2;
+}
+
+.highlight code[data-lang="c"] .cm {
+  color: #facc15;
+}
+
 /* Smooth expansion for the collapsible Hugo Book navigation tree. */
 :root {
   interpolate-size: allow-keywords;
