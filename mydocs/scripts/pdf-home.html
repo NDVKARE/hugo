@@ -1,0 +1,79 @@
+{{ define "pdf-toc" }}
+<ul>{{ range .Pages.ByWeight }}<li><a href="#page-{{ .RelPermalink | anchorize }}">{{ .Title }}</a>{{ if .IsSection }}{{ template "pdf-toc" . }}{{ end }}</li>{{ end }}</ul>
+{{ end }}
+{{ define "pdf-pages" }}
+{{ range .Pages.ByWeight }}
+<article class="pdf-chapter" id="page-{{ .RelPermalink | anchorize }}" data-url="{{ .RelPermalink }}">
+<h1 class="pdf-chapter-title">{{ .Title }}</h1>
+{{ .Content }}
+</article>
+{{ if .IsSection }}{{ template "pdf-pages" . }}{{ end }}
+{{ end }}
+{{ end }}
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><title>{{ .Site.Title }}</title>
+<style>
+@page { size: A4; margin: 18mm 15mm 20mm; @bottom-center { content: counter(page); font-size: 9pt; color: #64748b; } }
+* { box-sizing: border-box; }
+body { font: 10pt/1.55 Arial, sans-serif; color: #172033; margin: 0; }
+.pdf-cover { padding-top: 65mm; min-height: 240mm; break-after: page; }
+.pdf-cover h1 { font-size: 34pt; color: #173b65; }
+.pdf-toc { break-after: page; }
+.pdf-toc ul { padding-left: 22px; }
+.pdf-toc li { margin: 5px 0; }
+.pdf-chapter { break-before: page; }
+h1,h2,h3,h4 { break-after: avoid; line-height: 1.3; }
+.pdf-chapter-title { border-bottom: 2px solid #3a82c9; padding-bottom: 10px; }
+a { color: #18588c; text-decoration: none; overflow-wrap: anywhere; }
+img,svg { max-width: 100% !important; height: auto; }
+img { max-height: 225mm; object-fit: contain; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 8pt; padding: 10px; background: #f1f5f9; }
+pre.mermaid { background: white; padding: 0; text-align: center; break-inside: avoid; }
+pre.mermaid svg { max-height: 225mm; }
+table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+th,td { border: 1px solid #cbd5e1; padding: 6px; overflow-wrap: anywhere; }
+thead { display: table-header-group; }
+tr,figure { break-inside: avoid; }
+details > * { display: block; }
+@media print {
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .sovra-questions { margin: 0 !important; padding: 10px !important; box-shadow: none !important; }
+  .sovra-segments { overflow: visible !important; }
+}
+</style></head>
+<body id="sovra-pdf-document">
+<section class="pdf-cover"><p>DOCUMENTATION</p><h1>{{ .Site.Title }}</h1><p>{{ now.Format "2006-01-02" }}</p></section>
+<nav class="pdf-toc"><h1>Mục lục</h1><a href="#overview">{{ .Title }}</a>{{ template "pdf-toc" . }}</nav>
+<article id="overview" class="pdf-chapter" data-url="{{ .RelPermalink }}">{{ .Content }}</article>
+{{ template "pdf-pages" . }}
+<script>
+const root = new URL('./', location.href);
+const chapters = [...document.querySelectorAll('article[data-url]')];
+for (const chapter of chapters) {
+  const pageUrl = new URL(chapter.dataset.url.replace(/^\//, ''), root);
+  const ids = new Map();
+  for (const node of chapter.querySelectorAll('[id]')) {
+    const old = node.id; node.id = chapter.id + '-' + old; ids.set(old, node.id);
+  }
+  chapter._ids = ids;
+  for (const img of chapter.querySelectorAll('img[src]')) {
+    const src = img.getAttribute('src');
+    img.src = src.startsWith('/') ? new URL(src.slice(1), root) : new URL(src, pageUrl);
+    img.loading = 'eager';
+  }
+  for (const a of chapter.querySelectorAll('a[href]')) {
+    const href = a.getAttribute('href');
+    a.dataset.printTarget = (href.startsWith('/') ? new URL(href.slice(1), root) : new URL(href, pageUrl)).href;
+  }
+}
+for (const a of document.querySelectorAll('a[data-print-target]')) {
+  const target = new URL(a.dataset.printTarget);
+  const chapter = chapters.find(c => new URL(c.dataset.url.replace(/^\//, ''), root).pathname === target.pathname);
+  if (chapter) a.href = '#' + (chapter._ids.get(decodeURIComponent(target.hash.slice(1))) || chapter.id);
+  else a.href = target.href;
+}
+document.querySelectorAll('details').forEach(d => d.open = true);
+</script>
+<script src="mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad: true, theme: 'default', securityLevel: 'loose'});</script>
+</body></html>

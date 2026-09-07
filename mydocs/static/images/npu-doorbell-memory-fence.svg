@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="435" height="293" viewBox="0 0 435 293" role="img" aria-labelledby="title desc">
+  <title id="title">Thứ tự ghi dữ liệu, memory fence và doorbell</title>
+  <desc id="desc">Sơ đồ theo hình mẫu: chuẩn bị dữ liệu, hàng rào bộ nhớ fence rw, w, ghi thanh ghi doorbell bằng mmio_write32(addr, value), thiết bị bắt đầu xử lý. Đường nét đứt đỏ với dấu X minh họa thao tác bị fence chặn.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1L8 5L1 9" fill="none" stroke="#8c9086" stroke-width="1.2"/>
+    </marker>
+  </defs>
+  <rect width="435" height="293" fill="#fff"/>
+  <g fill="none" stroke="#8c9086" stroke-width="1.2" marker-end="url(#arrow)">
+    <path d="M256 70V87"/>
+    <path d="M256 134V151"/>
+    <path d="M256 202V219"/>
+  </g>
+  <rect x="121.5" y="20.5" width="269" height="49.5" rx="7" fill="#e1f4ed" stroke="#83c2b1"/>
+  <rect x="95.5" y="88" width="322" height="46" rx="7" fill="#fbefd9" stroke="#cba16c" stroke-dasharray="5 4"/>
+  <rect x="121.5" y="152" width="269" height="50" rx="7" fill="#fbece7" stroke="#df9b85"/>
+  <rect x="121.5" y="220" width="269" height="49.5" rx="7" fill="#f1efe8" stroke="#b7b7ad"/>
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <g font-size="12.5" font-weight="600">
+      <text x="256" y="45" fill="#236e5e">Chuẩn bị dữ liệu</text>
+      <text x="256" y="108" fill="#86551d">Hàng rào bộ nhớ — fence rw, w</text>
+      <text x="256" y="177" fill="#994529">Ghi thanh ghi doorbell</text>
+      <text x="256" y="245" fill="#5c5f56">Thiết bị bắt đầu xử lý</text>
+    </g>
+    <g font-size="11">
+      <text x="256" y="60" fill="#389780">Ghi descriptor, buffer, cấu hình</text>
+      <text x="256" y="125" fill="#a77835">Ghi trước phải hoàn tất</text>
+      <text x="256" y="193" fill="#bb7055">mmio_write32(addr, value)</text>
+      <text x="256" y="261" fill="#818478">Đọc dữ liệu đã hiển thị</text>
+    </g>
+    <text x="44" y="114" font-size="10" fill="#74766f">Bị fence chặn</text>
+  </g>
+  <path d="M121 172C81 168 50 161 50 143" fill="none" stroke="#ff565b" stroke-dasharray="3 3"/>
+  <path d="M44 133L56 146 M56 133L44 146" fill="none" stroke="#ff565b" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

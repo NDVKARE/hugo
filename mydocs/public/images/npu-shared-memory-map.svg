@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="513" height="427" viewBox="0 0 513 427" role="img" aria-labelledby="title desc">
+  <title id="title">Shared Memory Region · bản đồ địa chỉ</title>
+  <desc id="desc">Startup code at 0x8000_0000, 64 KB. NPU queue at 0x8001_0000, 64 KB. Command buffer at 0x8002_0000, 960 KB. Tensor arena starts at 0x8011_0000 and contains input, weights, activation and output. Block heights follow the reference and are not proportional to memory size.</desc>
+  <rect width="513" height="427" fill="#fff"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="265" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#30312e">Shared Memory Region · bản đồ địa chỉ</text>
+    <rect x="128" y="52.5" width="273.5" height="51" fill="#f1efe8" stroke="#b6b5ad"/>
+    <rect x="128" y="103.5" width="273.5" height="51" fill="#eeecfc" stroke="#9385ec"/>
+    <rect x="128" y="154.5" width="273.5" height="76.5" fill="#e5f1fd" stroke="#8bb7e9"/>
+    <rect x="128" y="231" width="273.5" height="182.5" fill="#e1f4ed" stroke="#8cbdad"/>
+    <rect x="146.5" y="271.5" width="237" height="56" rx="6" fill="#f6f5ed" stroke="#cdd7cd"/>
+    <rect x="146.5" y="339" width="237" height="56" rx="6" fill="#f6f5ed" stroke="#cdd7cd"/>
+    <g text-anchor="middle" font-size="12.5" font-weight="600">
+      <text x="265" y="78" fill="#575950">Startup code</text>
+      <text x="265" y="129" fill="#5344aa">NPU queue</text>
+      <text x="265" y="186" fill="#205c97">Command buffer area</text>
+      <text x="265" y="257" fill="#236d5f">Tensor arena</text>
+      <text x="265" y="298" fill="#30312c">input / weights</text>
+      <text x="265" y="365" fill="#30312c">activation / output</text>
+    </g>
+    <g text-anchor="middle" font-size="11">
+      <text x="265" y="94" fill="#77786f">reset vector · boot / init</text>
+      <text x="265" y="145" fill="#7962d7">head / tail · job descriptors</text>
+      <text x="265" y="205" fill="#327dc6">CMD_CONV2D · CMD_RELU · CMD_END</text>
+      <text x="265" y="316" fill="#77786f">đầu vào · trọng số</text>
+      <text x="265" y="382" fill="#77786f">activation trung gian · kết quả</text>
+    </g>
+    <path d="M113.5 52.5H128 M113.5 103.5H128 M113.5 154.5H128 M113.5 231H128 M113.5 413.5H128" stroke="#73766f" fill="none"/>
+    <g text-anchor="end" font-family="Consolas, monospace" font-style="italic" font-size="12" fill="#30312d">
+      <text x="108" y="57">0x8000_0000</text>
+      <text x="108" y="108">0x8001_0000</text>
+      <text x="108" y="159">0x8002_0000</text>
+      <text x="108" y="236">0x8011_0000</text>
+    </g>
+    <g font-size="11" fill="#666860">
+      <text x="414" y="83">64 KB</text>
+      <text x="414" y="134">64 KB</text>
+      <text x="414" y="198">960 KB</text>
+      <text x="414" y="327">vùng lớn nhất</text>
+      <text x="108" y="418" text-anchor="end">+ arena_size</text>
+    </g>
+  </g>
+</svg>

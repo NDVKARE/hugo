@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>4.6.5 Model Artifact on SOVRA Portal</title>
+		<link>//localhost:1313/4.component-design/4.6--lpu-driver-design/5.model-artifact/</link>
+		<description>Recent content in 4.6.5 Model Artifact on SOVRA Portal</description>
+		<generator>Hugo</generator>
+		<language>vi-VN</language>
+		
+		
+		
+		
+			<atom:link href="//localhost:1313/4.component-design/4.6--lpu-driver-design/5.model-artifact/index.xml" rel="self" type="application/rss+xml" />
+	</channel>
+</rss>

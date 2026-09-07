@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="438" height="746" viewBox="0 0 438 746" role="img" aria-labelledby="title desc">
+  <title id="title">Boot Flow Design</title>
+  <desc id="desc">Power-on / Reset → BootROM → FSBL / SPL → OpenSBI → U-Boot → Linux kernel → init / systemd. Legend: gray for Hardware, gold for M-mode, blue for S-mode, green for U-mode, following the reference diagram.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 12" refX="9" refY="6" markerWidth="8" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0L10 6L0 12Z" fill="#9ca3aa"/>
+    </marker>
+  </defs>
+  <rect width="438" height="746" fill="#fff"/>
+  <g fill="none" stroke="#9ca3aa" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M228.5 81V116"/>
+    <path d="M228.5 182V217"/>
+    <path d="M228.5 283V318"/>
+    <path d="M228.5 384V419"/>
+    <path d="M228.5 486V521"/>
+    <path d="M228.5 587V622"/>
+  </g>
+  <g stroke="#fff" stroke-opacity=".2">
+    <rect x="74.5" y="21" width="308" height="57.5" rx="9" fill="#6b7280"/>
+    <rect x="74.5" y="122" width="308" height="57.5" rx="9" fill="#ca8805"/>
+    <rect x="74.5" y="223.5" width="308" height="57.5" rx="9" fill="#ca8805"/>
+    <rect x="74.5" y="324.5" width="308" height="57.5" rx="9" fill="#ca8805"/>
+    <rect x="74.5" y="426" width="308" height="57.5" rx="9" fill="#2f6ea7"/>
+    <rect x="74.5" y="527" width="308" height="57.5" rx="9" fill="#2f6ea7"/>
+    <rect x="74.5" y="628.5" width="308" height="57.5" rx="9" fill="#2d7e55"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="middle">
+    <text x="228.5" y="50">Power-on / Reset</text>
+    <text x="228.5" y="151">BootROM</text>
+    <text x="228.5" y="252.5">FSBL / SPL</text>
+    <text x="228.5" y="353.5">OpenSBI</text>
+    <text x="228.5" y="455">U-Boot</text>
+    <text x="228.5" y="556">Linux kernel</text>
+    <text x="228.5" y="657.5">init / systemd</text>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#6b7280">
+    <rect x="19.5" y="718.5" width="14" height="14" rx="2" fill="#6b7280"/>
+    <text x="40" y="730.5">Hardware</text>
+    <rect x="129.5" y="718.5" width="14" height="14" rx="2" fill="#ca8805"/>
+    <text x="150" y="730.5">M-mode</text>
+    <rect x="239.5" y="718.5" width="14" height="14" rx="2" fill="#2f6ea7"/>
+    <text x="260" y="730.5">S-mode</text>
+    <rect x="349.5" y="718.5" width="14" height="14" rx="2" fill="#2d7e55"/>
+    <text x="370" y="730.5">U-mode</text>
+  </g>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="858" height="640" viewBox="0 0 858 640" role="img" aria-labelledby="title desc">
+  <title id="title">3.4.2 DRAM Boot Image Layout</title>
+  <desc id="desc">DRAM layout from BASE_ADDRESS upward: OpenSBI, U-Boot, reserved space, Device Tree, reserved space, Linux kernel Image, reserved space, initrd / rootfs, and kernel general RAM. Addresses and sizes follow the reference diagram. Block heights are not to scale.</desc>
+  <rect width="858" height="640" fill="#fff"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="26" y="31" font-size="22" fill="#111">3.4.2 DRAM Boot Image Layout</text>
+    <rect x="61" y="83" width="775" height="545" rx="18" fill="#f4f4f1" stroke="#e7e7e3"/>
+    <g stroke-width="1">
+      <rect x="308" y="104" width="409" height="59" rx="5" fill="#d3e6f7" stroke="#b3d5f5"/>
+      <rect x="308" y="163" width="409" height="56" rx="5" fill="#d3edda" stroke="#aeddbb"/>
+      <rect x="308" y="219" width="409" height="42" rx="5" fill="#ddddda" stroke="#cececa"/>
+      <rect x="308" y="261" width="409" height="56" rx="5" fill="#d3e6f7" stroke="#b3d5f5"/>
+      <rect x="308" y="317" width="409" height="42" rx="5" fill="#ddddda" stroke="#cececa"/>
+      <rect x="308" y="359" width="409" height="51" rx="5" fill="#d3edda" stroke="#aeddbb"/>
+      <rect x="308" y="410" width="409" height="42" rx="5" fill="#ddddda" stroke="#cececa"/>
+      <rect x="308" y="452" width="409" height="52" rx="5" fill="#d3e6f7" stroke="#b3d5f5"/>
+      <rect x="308" y="504" width="409" height="56" rx="5" fill="#fce5bf" stroke="#f3ce94"/>
+    </g>
+    <g fill="#292b29" font-size="16" text-anchor="middle" dominant-baseline="middle">
+      <text x="512.5" y="135" font-weight="600">Kernel general RAM</text>
+      <text x="512.5" y="193" font-weight="600">initrd / rootfs</text>
+      <text x="512.5" y="242">Reserved / free</text>
+      <text x="512.5" y="291" font-weight="600">Linux kernel Image</text>
+      <text x="512.5" y="340">Reserved / free</text>
+      <text x="512.5" y="386" font-weight="600">Device Tree (DTB)</text>
+      <text x="512.5" y="433">Reserved / free</text>
+      <text x="512.5" y="480" font-weight="600">U-Boot</text>
+      <text x="512.5" y="534" font-weight="600">OpenSBI</text>
+    </g>
+    <path d="M298 163h10 M298 219h10 M298 261h10 M298 317h10 M298 359h10 M298 410h10 M298 452h10 M298 504h10 M298 560h10" fill="none" stroke="#c8c8c4"/>
+    <g fill="#4b4d4a" font-size="14" text-anchor="end">
+      <text x="297" y="106">end of DRAM</text>
+      <text x="297" y="169">BASE_ADDRESS + 0x0C000000</text>
+      <text x="297" y="225">BASE_ADDRESS + 0x08000000</text>
+      <text x="297" y="267">BASE_ADDRESS + 0x06000000</text>
+      <text x="297" y="323">BASE_ADDRESS + 0x04000000</text>
+      <text x="297" y="365">BASE_ADDRESS + 0x02100000</text>
+      <text x="297" y="416">BASE_ADDRESS + 0x02000000</text>
+      <text x="297" y="458">BASE_ADDRESS + 0x00400000</text>
+      <text x="297" y="510">BASE_ADDRESS + 0x00200000</text>
+      <text x="297" y="567" font-size="16" font-weight="600" fill="#111">BASE_ADDRESS</text>
+    </g>
+    <g fill="#4b4d4a" font-size="14">
+      <text x="732" y="140">rest of DRAM</text>
+      <text x="732" y="197">≤ 64 MB</text>
+      <text x="732" y="295">≤ 32 MB</text>
+      <text x="732" y="391">1 MB</text>
+      <text x="732" y="484">~2 MB</text>
+      <text x="732" y="538">2 MB</text>
+      <rect x="116" y="592" width="16" height="17" rx="4" fill="#fce5bf" stroke="#f3ce94"/>
+      <text x="138" y="606">Firmware (M)</text>
+      <rect x="259" y="592" width="17" height="17" rx="4" fill="#d3e6f7" stroke="#b3d5f5"/>
+      <text x="282" y="606">Kernel / Boot (S)</text>
+      <rect x="448" y="592" width="17" height="17" rx="4" fill="#d3edda" stroke="#aeddbb"/>
+      <text x="471" y="606">Data</text>
+      <rect x="532" y="592" width="17" height="17" rx="4" fill="#ddddda" stroke="#cececa"/>
+      <text x="555" y="606">Reserved / free</text>
+    </g>
+  </g>
+</svg>

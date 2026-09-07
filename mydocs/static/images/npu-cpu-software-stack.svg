@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="636" height="560" viewBox="0 0 636 560" role="img" aria-labelledby="title desc">
+<title id="title">CPU Software Stack Design</title>
+<desc id="desc">Application loads a .sovra artifact through Parser into a static Op and Tensor table. For each inference, Application invokes Runtime, which reads the table and calls Operator HAL, Low-Level Driver, Shared Queue with MMIO doorbell, and NPU hardware. Parser, the table and Runtime form the runtime layer.</desc>
+<defs>
+<marker id="load" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#cf7e12" stroke-width="1.2"/></marker>
+<marker id="run" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#348ff4" stroke-width="1.2"/></marker>
+<marker id="gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#969790" stroke-width="1.2"/></marker>
+</defs><rect width="636" height="560" fill="#fff"/><g font-family="Arial, Helvetica, sans-serif">
+<circle cx="38.5" cy="29.5" r="5" fill="#bc7815"/><circle cx="599" cy="29.5" r="5" fill="#348be8"/>
+<text x="94" y="34" text-anchor="middle" font-size="12" fill="#64655f">LOAD · một lần</text>
+<text x="529" y="34" text-anchor="middle" font-size="12" fill="#64655f">INFERENCE · mỗi lần</text>
+<path d="M268 134.5H34.5V302.5H383.5V220.5H610V134.5H373" fill="none" stroke="#8275f6" stroke-width="1.3" stroke-dasharray="7 5"/>
+<text x="322" y="141" text-anchor="middle" font-size="14" fill="#333530" font-weight="600">Lớp runtime</text>
+<rect x="219" y="50" width="206" height="52" rx="9" fill="#f1efe7" stroke="#aaa9a2" stroke-width=".8"/>
+<text x="322" y="73" text-anchor="middle" font-size="14" fill="#555650" font-weight="600">Application</text>
+<text x="322" y="91" text-anchor="middle" font-size="12" fill="#777870">yêu cầu inference</text>
+<rect x="55" y="151" width="185" height="53" rx="9" fill="#fbefda" stroke="#c69c60" stroke-width=".8"/>
+<text x="147.5" y="174" text-anchor="middle" font-size="14" fill="#855118" font-weight="600">Parser</text>
+<text x="147.5" y="192" text-anchor="middle" font-size="12" fill="#9b641c">đọc .sovra</text>
+<rect x="55" y="233" width="185" height="53" rx="9" fill="#fbefda" stroke="#c69c60" stroke-width=".8"/>
+<text x="147.5" y="256" text-anchor="middle" font-size="14" fill="#855118" font-weight="600">Op + Tensor table</text>
+<text x="147.5" y="274" text-anchor="middle" font-size="12" fill="#9b641c">mô tả tĩnh</text>
+<rect x="404" y="151" width="185" height="53" rx="9" fill="#e6f1fc" stroke="#75a9e8" stroke-width=".8"/>
+<text x="496.5" y="174" text-anchor="middle" font-size="14" fill="#205a92" font-weight="600">Runtime</text>
+<text x="496.5" y="192" text-anchor="middle" font-size="12" fill="#297bd0">lập lịch · thực thi</text>
+<rect x="404" y="233" width="185" height="53" rx="9" fill="#e6f1fc" stroke="#75a9e8" stroke-width=".8"/>
+<text x="496.5" y="256" text-anchor="middle" font-size="14" fill="#205a92" font-weight="600">Operator HAL</text>
+<text x="496.5" y="274" text-anchor="middle" font-size="12" fill="#297bd0">op → lệnh NPU</text>
+<rect x="404" y="315" width="185" height="54" rx="9" fill="#e6f1fc" stroke="#75a9e8" stroke-width=".8"/>
+<text x="496.5" y="338" text-anchor="middle" font-size="14" fill="#205a92" font-weight="600">Low-Level Driver</text>
+<text x="496.5" y="356" text-anchor="middle" font-size="12" fill="#297bd0">command buffer</text>
+<rect x="404" y="397" width="185" height="54" rx="9" fill="#e6f1fc" stroke="#75a9e8" stroke-width=".8"/>
+<text x="496.5" y="420" text-anchor="middle" font-size="14" fill="#205a92" font-weight="600">Shared Queue</text>
+<text x="496.5" y="438" text-anchor="middle" font-size="12" fill="#297bd0">+ MMIO doorbell</text>
+<rect x="429.5" y="479" width="134" height="52" rx="9" fill="#f1efe7" stroke="#aaa9a2" stroke-width=".8"/>
+<text x="496.5" y="502" text-anchor="middle" font-size="14" fill="#555650" font-weight="600">NPU</text>
+<text x="496.5" y="520" text-anchor="middle" font-size="12" fill="#777870">phần cứng</text>
+<path d="M281 104L160 149" fill="none" stroke="#cf7e12" stroke-width="1.6" marker-end="url(#load)"/>
+<path d="M363 104L484 149" fill="none" stroke="#348ff4" stroke-width="1.6" marker-end="url(#run)"/>
+<path d="M147.5 205V231" fill="none" stroke="#cf7e12" stroke-width="1.6" marker-end="url(#load)"/>
+<path d="M241 260L402 181" fill="none" stroke="#969790" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#gray)"/>
+<path d="M496.5 205V231" fill="none" stroke="#348ff4" stroke-width="1.6" marker-end="url(#run)"/>
+<path d="M496.5 287V313" fill="none" stroke="#348ff4" stroke-width="1.6" marker-end="url(#run)"/>
+<path d="M496.5 370V395" fill="none" stroke="#348ff4" stroke-width="1.6" marker-end="url(#run)"/>
+<path d="M496.5 452V477" fill="none" stroke="#969790" stroke-width="1.6" marker-end="url(#gray)"/>
+<text x="314" y="214" text-anchor="middle" font-size="12" fill="#777870">đọc table</text>
+</g></svg>

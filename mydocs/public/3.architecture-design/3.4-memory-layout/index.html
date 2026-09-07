@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="3.4.1 Overview Toàn bộ software stack dùng một memory map cố định.Tất cả địa chỉ nạp của OpenSBI, U-Boot, Linux kernel, DTB và rootfs đều được cấu hình thông qua Device Tree và biến môi trường U-Boot. Các địa chỉ này không được hardcode trong mã nguồn, giúp đảm bảo tính linh hoạt, khả năng tái sử dụng binary và đơn giản hóa quá trình chuyển đổi giữa các nền tảng FPGA và ASIC.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/3.architecture-design/3.4-memory-layout/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="4. Memory Layout">
+	<meta property="og:description" content="3.4.1 Overview Toàn bộ software stack dùng một memory map cố định.Tất cả địa chỉ nạp của OpenSBI, U-Boot, Linux kernel, DTB và rootfs đều được cấu hình thông qua Device Tree và biến môi trường U-Boot. Các địa chỉ này không được hardcode trong mã nguồn, giúp đảm bảo tính linh hoạt, khả năng tái sử dụng binary và đơn giản hóa quá trình chuyển đổi giữa các nền tảng FPGA và ASIC.">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="4. Memory Layout">
+	<meta itemprop="description" content="3.4.1 Overview Toàn bộ software stack dùng một memory map cố định.Tất cả địa chỉ nạp của OpenSBI, U-Boot, Linux kernel, DTB và rootfs đều được cấu hình thông qua Device Tree và biến môi trường U-Boot. Các địa chỉ này không được hardcode trong mã nguồn, giúp đảm bảo tính linh hoạt, khả năng tái sử dụng binary và đơn giản hóa quá trình chuyển đổi giữa các nền tảng FPGA và ASIC.">
+	<meta itemprop="wordCount" content="285">
+
+<title>4. Memory Layout • SOVRA Portal</title>
+<link rel="icon" href="../../images/icon.jpg" >
+<link rel="manifest" href="../../manifest.json">
+<link rel="canonical" href="//localhost:1313/3.architecture-design/3.4-memory-layout/">
+<link rel="stylesheet" href="../../book.min.9c37bdf3cf8a886ecee2142706b66cbe3e65a2b68f4ddffbb6734bac14789248.css" integrity="sha256-nDe988&#43;KiG7O4hQnBrZsvj5loraPTd/7tnNLrBR4kkg=" crossorigin="anonymous">
+
+
+<script type="module" src="../../en.search.min.ab3d12aa4ebe84c9bc52b2d902f46921e40ec12a3d05055c50da81f3d2ea267d.js" integrity="sha256-qz0Sqk6&#43;hMm8UrLZAvRpIeQOwSo9BQVcUNqB89LqJn0=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/3.architecture-design/3.4-memory-layout/index.xml" title="4. Memory Layout" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-3.architecture-design">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../"><img src="../../images/icon.jpg" alt="Logo" /><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e337a60e49b887367dc7f2c4c4cab23a" class="toggle" checked />
+    <label for="section-e337a60e49b887367dc7f2c4c4cab23a" class="flex">
+      <a role="button" class="">
+        3. Architecture</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../3.architecture-design/3.1--architecture-overview/" class="">
+      1. Architecture Overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../3.architecture-design/3.2--layer-decomposition/" class="">
+      2. Layer Decomposition</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../3.architecture-design/3.3--boot-flow-design/" class="">
+      3. Boot Flow Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../3.architecture-design/3.4-memory-layout/" class="active">
+      4. Memory Layout</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../3.architecture-design/3.5-device-tree-design/" class="">
+      5 Device tree design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-320f41d85ca807d6090b38cb9b1fe2a7" class="toggle"  />
+    <label for="section-320f41d85ca807d6090b38cb9b1fe2a7" class="flex">
+      <a role="button" class="">
+        4. Component Design</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.1-fsbl/" class="">
+      4.1 FSBL (First Stage Bootloader)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.2--opensbi/" class="">
+      4.2  OpenSBI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.3--u-boot/" class="">
+      4.3 Uboot</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.4--linux-kernel/" class="">
+      4.4 Linux Kernel</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1fe7b435fb4d7d0bc48ff4cbb4e0bf7d" class="toggle"  />
+    <label for="section-1fe7b435fb4d7d0bc48ff4cbb4e0bf7d" class="flex">
+      <a role="button" class="">
+        4.5  NPU Driver Design</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/1.purpose/" class="">
+      4.5.1 Purpose</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/2.architect-overview/" class="">
+      4.5.2 Architect overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/3.roles/" class="">
+      4.5.3 Roles and Responsibilities</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/4.communication/" class="">
+      4.5.4 Communication flow</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/5.model-artifact/" class="">
+      4.5.5 Model Artifact</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/6.design-principle/" class="">
+      4.5.6 Design Principle</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/7.cpu-software-stack-design/" class="">
+      4.5.7 CPU Software Stack Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/8.command-abi/" class="">
+      4.5.8 Command ABI Between CPU and NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.5--npu-driver-design/9.command-abi-specification/" class="">
+      4.5.9 Command ABI Specification</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/" class="">
+      4.6  LPU Driver Design</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/1.purpose/" class="">
+      4.6.1 Purpose</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/2.architect-overview/" class="">
+      4.6.2 Architect overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/3.roles/" class="">
+      4.6.3 Roles and Responsibilities</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/4.communication/" class="">
+      4.6.4 Communication flow</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/5.model-artifact/" class="">
+      4.5.5 Model Artifact</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/6.design-principle/" class="">
+      4.5.6 Design Principle</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.6--lpu-driver-design/7.cpu-software-stack-design/" class="">
+      4.5.7 CPU Software Stack Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../4.component-design/4.7--isp-design/" class="">
+      4.7  ISP Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>4. Memory Layout</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#341-overview">3.4.1 Overview</a></li>
+    <li><a href="#342-dram-boot-image-layout">3.4.2 DRAM Boot Image Layout</a></li>
+    <li><a href="#343-reserved-regions">3.4.3 Reserved Regions</a></li>
+    <li><a href="#344-mmio--peripheral-address-space">3.4.4 MMIO / Peripheral Address Space</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h2 id="341-overview">3.4.1 Overview<a class="anchor" href="#341-overview"></a></h2>
+<p>Toàn bộ software stack dùng một memory map cố định.Tất cả địa chỉ nạp của OpenSBI, U-Boot, Linux kernel, DTB và rootfs đều được cấu hình thông qua Device Tree và biến môi trường U-Boot. Các địa chỉ này không được hardcode trong mã nguồn, giúp đảm bảo tính linh hoạt, khả năng tái sử dụng binary và đơn giản hóa quá trình chuyển đổi giữa các nền tảng FPGA và ASIC.</p>
+<h2 id="342-dram-boot-image-layout">3.4.2 DRAM Boot Image Layout<a class="anchor" href="#342-dram-boot-image-layout"></a></h2>
+<p><img src="../../images/dram-boot-image-layout.svg" alt="DRAM Boot Image Layout: OpenSBI, U-Boot, Device Tree (DTB), Linux kernel Image, initrd / rootfs, Kernel general RAM." /></p>
+<h2 id="343-reserved-regions">3.4.3 Reserved Regions<a class="anchor" href="#343-reserved-regions"></a></h2>
+<p>Các vùng kernel không được cấp phát tự do được khai báo qua node <code>/reserved-memory</code> trong DTB:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Vùng</th>
+					<th>Base</th>
+					<th>Kích thước</th>
+					<th>Mục đích</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>OpenSBI runtime</strong></td>
+					<td><code>0x8000_0000</code></td>
+					<td>2 MB</td>
+					<td>Firmware M-mode còn cư trú để phục vụ SBI call; bảo vệ thêm bằng PMP.</td>
+			</tr>
+			<tr>
+					<td><strong>Accelerator DMA pool (CMA)</strong></td>
+					<td>Theo ICD</td>
+					<td>128–256 MB</td>
+					<td>Buffer contiguous cho DMA-BUF zero-copy ISP → NPU → LPU.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>OpenSBI runtime:</strong> Vùng này phải được đánh dấu reserved; nếu không, kernel có thể ghi đè firmware và gây crash khi gọi SBI.</p>
+<p><strong>DMA pool:</strong> Buffer phải liên tục trong bộ nhớ vật lý (contiguous) vì accelerator truy cập DRAM qua AXI bằng địa chỉ vật lý, không qua MMU. Kích thước được chốt theo yêu cầu buffer của NPU/LPU/ISP trong ICD.</p>
+<h2 id="344-mmio--peripheral-address-space">3.4.4 MMIO / Peripheral Address Space<a class="anchor" href="#344-mmio--peripheral-address-space"></a></h2>
+<p>Không gian MMIO tách biệt với DRAM (địa chỉ thấp). Mọi base address và IRQ do HW team định nghĩa trong ICD-CVA6-HW-001 và khai báo trong DTB; bảng dưới chỉ là các block chuẩn:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Block</th>
+					<th>Base (typ)</th>
+					<th>DTS compatible</th>
+					<th>Ghi chú</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>CLINT</strong></td>
+					<td><code>0x0200_0000</code></td>
+					<td><code>riscv,clint0</code></td>
+					<td>M-mode timer + IPI</td>
+			</tr>
+			<tr>
+					<td><strong>PLIC</strong></td>
+					<td><code>0x0C00_0000</code></td>
+					<td><code>riscv,plic0</code></td>
+					<td>External interrupt controller</td>
+			</tr>
+			<tr>
+					<td><strong>UART (console)</strong></td>
+					<td>ICD-defined</td>
+					<td><code>ns16550a</code></td>
+					<td><code>stdout-path</code> trong <code>chosen</code></td>
+			</tr>
+			<tr>
+					<td><strong>NPU / LPU / ISP</strong></td>
+					<td>ICD-defined</td>
+					<td>custom</td>
+					<td>Register bank + IRQ từ ICD</td>
+			</tr>
+	</tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../3.architecture-design/3.3--boot-flow-design/" class="flex align-center">
+        <img src="../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>3. Boot Flow Design</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../3.architecture-design/3.5-device-tree-design/" class="flex align-center">
+        <span>5 Device tree design</span>
+        <img src="../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#341-overview">3.4.1 Overview</a></li>
+    <li><a href="#342-dram-boot-image-layout">3.4.2 DRAM Boot Image Layout</a></li>
+    <li><a href="#343-reserved-regions">3.4.3 Reserved Regions</a></li>
+    <li><a href="#344-mmio--peripheral-address-space">3.4.4 MMIO / Peripheral Address Space</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+<script>
+(() => {
+  const diagrams = document.querySelectorAll('pre.mermaid');
+  if (!diagrams.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-viewer';
+  dialog.setAttribute('aria-label', 'Xem sơ đồ phóng to');
+  dialog.innerHTML = '<div class="diagram-toolbar"><button type="button" data-action="out" aria-label="Thu nhỏ">−</button><output aria-live="polite"></output><button type="button" data-action="in" aria-label="Phóng to">+</button><button type="button" data-action="fit">Vừa màn hình</button><button type="button" data-action="close">Đóng (Esc)</button></div><div class="diagram-viewport" tabindex="0" aria-label="Sơ đồ, cuộn để xem các phần"></div>';
+  document.body.append(dialog);
+  const viewport = dialog.querySelector('.diagram-viewport');
+  const output = dialog.querySelector('output');
+  let active, origin, oldStyle, zoom = 1, width = 1, height = 1;
+  function resize(next) {
+    zoom = Math.max(0.1, Math.min(4, next));
+    active.style.width = `${width * zoom}px`;
+    active.style.height = `${height * zoom}px`;
+    active.style.maxWidth = 'none';
+    output.textContent = `${Math.round(zoom * 100)}%`;
+  }
+  function fit() {
+    resize(Math.min((viewport.clientWidth - 40) / width, (viewport.clientHeight - 40) / height, 1));
+  }
+  diagrams.forEach(diagram => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'diagram-open';
+    button.textContent = '⛶ Phóng to sơ đồ';
+    diagram.before(button);
+    button.addEventListener('click', () => {
+      const svg = diagram.querySelector('svg');
+      if (!svg) return;
+      active = svg;
+      origin = diagram;
+      oldStyle = svg.getAttribute('style');
+      width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      height = svg.viewBox.baseVal.height || svg.getBoundingClientRect().height;
+      viewport.append(svg);
+      dialog.showModal();
+      fit();
+    });
+  });
+  dialog.addEventListener('click', event => {
+    const action = event.target.closest('button')?.dataset.action;
+    if (!active) return;
+    if (action === 'in') resize(zoom * 1.25);
+    if (action === 'out') resize(zoom / 1.25);
+    if (action === 'fit') fit();
+    if (action === 'close') dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (!active) return;
+    if (oldStyle === null) active.removeAttribute('style');
+    else active.setAttribute('style', oldStyle);
+    origin.append(active);
+    active = null;
+  });
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

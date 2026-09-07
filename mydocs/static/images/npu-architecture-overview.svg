@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1100" viewBox="0 0 1000 1100" role="img" aria-labelledby="title desc">
+<title id="title">NPU Architecture Overview</title>
+<desc id="desc">Model artifact loaded into the CPU cluster. CPU application, graph executor, HAL and low-level driver communicate with shared memory. Doorbell and completion IRQ connect the CPU and NPU subsystem, containing MMIO registers, Rocket firmware and Gemmini backend.</desc>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#245c87"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#308568"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#bd3e36"/></marker><marker id="gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#d99c24"/></marker><marker id="purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#695096"/></marker></defs>
+<rect width="1000" height="1100" fill="white"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<rect x="236" y="23" width="731" height="433" rx="14" fill="#e8f0fc" stroke="#accdf6" stroke-width="1.5"/>
+<text x="601.5" y="52" text-anchor="middle" font-size="20" fill="#245c87" font-weight="700">CPU Cluster</text>
+<rect x="259" y="71" width="685" height="62" rx="9" fill="#fbfaf6" stroke="#d7d5cc" stroke-width="1.5"/>
+<text x="601.5" y="96" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">Application</text>
+<text x="601.5" y="116" text-anchor="middle" font-size="12" fill="#727570">camera capture · gọi model runtime (rung doorbell NPU) · display output · OTA</text>
+<rect x="259" y="144" width="685" height="62" rx="9" fill="#fbfaf6" stroke="#d7d5cc" stroke-width="1.5"/>
+<text x="601.5" y="169" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">Model Runtime / Graph Executor</text>
+<text x="601.5" y="189" text-anchor="middle" font-size="12" fill="#727570">load model · parse graph · memory plan (arena) · schedule · CPU fallback · operator fusion</text>
+<rect x="259" y="217" width="685" height="62" rx="9" fill="#fbfaf6" stroke="#d7d5cc" stroke-width="1.5"/>
+<text x="601.5" y="242" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU HAL API</text>
+<text x="601.5" y="262" text-anchor="middle" font-size="12" fill="#727570">sovra_npu_* · query caps · load/create context · build cmd buffer · run</text>
+<rect x="259" y="290" width="685" height="62" rx="9" fill="#fbfaf6" stroke="#d7d5cc" stroke-width="1.5"/>
+<text x="601.5" y="315" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU Low-Level Driver (LLD)</text>
+<text x="601.5" y="335" text-anchor="middle" font-size="12" fill="#727570">sole MMIO owner · cache flush/invalidate · doorbell · IRQ · submit / wait</text>
+<text x="601" y="439" text-anchor="middle" font-size="11" fill="#778493" font-style="italic">Mỗi frame, CPU chỉ ghi vài thanh ghi + đọc một IRQ (không chạm pixel, không duyệt detection)</text>
+<rect x="25" y="76" width="169" height="241" rx="13" fill="#fff5df" stroke="#efa923" stroke-width="1.5"/>
+<text x="109.5" y="102" text-anchor="middle" font-size="16" fill="#a86b00" font-weight="700">Model Artifact</text>
+<text x="109.5" y="120" text-anchor="middle" font-size="12" fill="#a86b00" font-weight="700">(.sovra)</text>
+<rect x="37" y="144" width="145" height="21" rx="4" fill="#fffcf5" stroke="#eed8a8" stroke-width="1.5"/>
+<text x="109.5" y="159" text-anchor="middle" font-size="11" fill="#997d42">header / checksum</text>
+<rect x="37" y="171" width="145" height="21" rx="4" fill="#fffcf5" stroke="#eed8a8" stroke-width="1.5"/>
+<text x="109.5" y="186" text-anchor="middle" font-size="11" fill="#997d42">tensor table</text>
+<rect x="37" y="198" width="145" height="21" rx="4" fill="#fffcf5" stroke="#eed8a8" stroke-width="1.5"/>
+<text x="109.5" y="213" text-anchor="middle" font-size="11" fill="#997d42">operator / cmd stream</text>
+<rect x="37" y="225" width="145" height="21" rx="4" fill="#fffcf5" stroke="#eed8a8" stroke-width="1.5"/>
+<text x="109.5" y="240" text-anchor="middle" font-size="11" fill="#997d42">weights (quantized)</text>
+<rect x="37" y="252" width="145" height="21" rx="4" fill="#fffcf5" stroke="#eed8a8" stroke-width="1.5"/>
+<text x="109.5" y="267" text-anchor="middle" font-size="11" fill="#997d42">quant meta</text>
+<rect x="37" y="279" width="145" height="21" rx="4" fill="#fffcf5" stroke="#eed8a8" stroke-width="1.5"/>
+<text x="109.5" y="294" text-anchor="middle" font-size="11" fill="#997d42">I/O + preprocess meta</text>
+<path d="M195 196L235 196" fill="none" stroke="#d99c24" stroke-width="2.2" marker-end="url(#gold)"/>
+<text x="214" y="189" text-anchor="middle" font-size="11" fill="#bb871b" font-style="italic">load</text>
+<rect x="236" y="504" width="731" height="193" rx="14" fill="#e2f3ed" stroke="#96d5bf" stroke-width="1.5"/>
+<text x="601.5" y="531" text-anchor="middle" font-size="20" fill="#308568" font-weight="700">Shared Memory Region</text>
+<text x="601.5" y="549" text-anchor="middle" font-size="12" fill="#5a9687" font-style="italic">shared DDR / SRAM — tham chiếu bằng địa chỉ vật lý / offset arena</text>
+<rect x="254" y="566" width="221" height="54" rx="9" fill="#f3fbf8" stroke="#b9e5d6" stroke-width="1.5"/>
+<text x="364.5" y="591" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU Job Queue</text>
+<text x="364.5" y="611" text-anchor="middle" font-size="12" fill="#727570">SPSC ring · CPU=tail, NPU=head</text>
+<rect x="492" y="566" width="221" height="54" rx="9" fill="#f3fbf8" stroke="#b9e5d6" stroke-width="1.5"/>
+<text x="602.5" y="591" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU Command Buffer</text>
+<text x="602.5" y="611" text-anchor="middle" font-size="12" fill="#727570">versioned ABI · CMD_*</text>
+<rect x="730" y="566" width="220" height="54" rx="9" fill="#f3fbf8" stroke="#b9e5d6" stroke-width="1.5"/>
+<text x="840" y="591" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">Weight DMA Buffer</text>
+<text x="840" y="611" text-anchor="middle" font-size="12" fill="#727570">trọng số NPU đọc được</text>
+<rect x="372" y="634" width="221" height="54" rx="9" fill="#f3fbf8" stroke="#b9e5d6" stroke-width="1.5"/>
+<text x="482.5" y="659" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">Tensor Arena</text>
+<text x="482.5" y="679" text-anchor="middle" font-size="12" fill="#727570">activation · reuse theo liveness</text>
+<rect x="610" y="634" width="221" height="54" rx="9" fill="#f3fbf8" stroke="#b9e5d6" stroke-width="1.5"/>
+<text x="720.5" y="659" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU Input / Output Tensor</text>
+<text x="720.5" y="679" text-anchor="middle" font-size="12" fill="#727570">I/O của inference</text>
+<path d="M534 457L534 503" fill="none" stroke="#245c87" stroke-width="2.2" marker-end="url(#blue)"/>
+<text x="429" y="484" text-anchor="middle" font-size="11" fill="#245c87">fill descriptor / cmd /</text>
+<text x="429" y="498" text-anchor="middle" font-size="11" fill="#245c87">weights / input · flush</text>
+<path d="M669 503L669 457" fill="none" stroke="#308568" stroke-width="2.2" marker-end="url(#green)"/>
+<text x="780" y="484" text-anchor="middle" font-size="11" fill="#308568">read output</text>
+<text x="780" y="498" text-anchor="middle" font-size="11" fill="#308568">sau invalidate</text>
+<rect x="332" y="750" width="540" height="346" rx="14" fill="#eee9fa" stroke="#bca7ef" stroke-width="1.5"/>
+<text x="602" y="779" text-anchor="middle" font-size="20" fill="#6640aa" font-weight="700">NPU Subsystem</text>
+<path d="M544 697L544 749" fill="none" stroke="#245c87" stroke-width="2.2" marker-end="url(#blue)"/>
+<text x="458" y="724" text-anchor="middle" font-size="11" fill="#245c87" font-weight="700">DOORBELL</text>
+<text x="458" y="739" text-anchor="middle" font-size="10" fill="#245c87" font-style="italic">(CPU→NPU, MMIO level)</text>
+<path d="M660 749L660 697" fill="none" stroke="#bd3e36" stroke-width="2.2" marker-end="url(#red)"/>
+<text x="746" y="724" text-anchor="middle" font-size="11" fill="#bd3e36" font-weight="700">IRQ</text>
+<text x="746" y="739" text-anchor="middle" font-size="10" fill="#bd3e36" font-style="italic">(NPU→CPU, completion)</text>
+<rect x="361" y="797" width="482" height="54" rx="9" fill="#f7f4fd" stroke="#d6c9f5" stroke-width="1.5"/>
+<text x="602" y="822" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU_CTRL MMIO (AXI4-Lite)</text>
+<text x="602" y="842" text-anchor="middle" font-size="12" fill="#727570">DOORBELL · STATUS · IRQ_* · NPU_ACK/DONE · QUEUE_BASE · VERSION · CAPS</text>
+<rect x="361" y="866" width="482" height="68" rx="9" fill="#f7f4fd" stroke="#d6c9f5" stroke-width="1.5"/>
+<text x="602" y="891" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">NPU Rocket FW (bare-metal)</text>
+<text x="602" y="911" text-anchor="middle" font-size="12" fill="#727570">queue reader · command parser · op dispatcher · ABI version check</text>
+<path d="M602 934L602 963" fill="none" stroke="#695096" stroke-width="2.2" marker-end="url(#purple)"/>
+<text x="644" y="955" text-anchor="middle" font-size="11" fill="#695096" font-style="italic">RoCC</text>
+<rect x="361" y="965" width="482" height="68" rx="9" fill="#f7f4fd" stroke="#d6c9f5" stroke-width="1.5"/>
+<text x="602" y="990" text-anchor="middle" font-size="16" fill="#20252b" font-weight="700">Gemmini Backend</text>
+<text x="602" y="1010" text-anchor="middle" font-size="12" fill="#727570">conv / matmul · tiled compute · requantize int32→int8</text>
+<text x="602" y="1080" text-anchor="middle" font-size="11" fill="#82768e" font-style="italic">Firmware KHÔNG chứa model / trọng số tĩnh</text>
+</g>
+</svg>

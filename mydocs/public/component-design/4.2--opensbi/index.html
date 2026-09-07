@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="4.2 OpenSBI 4.2.1 Purpose &amp; Responsibility OpenSBI chạy ở M-mode — tầng firmware đặc quyền cao nhất. Cung cấp SBI (Supervisor Binary Interface) cho Linux kernel dùng để gọi các dịch vụ hardware mà kernel không được phép trực tiếp truy cập.
+4.2.2 Internal Design SBI Extension Mô tả Kernel dùng để Timer (sbi_set_timer) Set timer interrupt cho mỗi HART Scheduler tick, process timeslice IPI (sbi_send_ipi) Gửi inter-processor interrupt Wakeup HART khác khi có task mới Remote fence Broadcast cache/TLB flush Sync icache giữa các core HSM (hart_start) Khởi động HART đang offline SMP boot: bring up core 1/2/3 HSM (hart_stop) Dừng HART CPU hotplug, power saving System Reset Reset / poweroff chip Linux shutdown / reboot 4.2.3 Design Rationale PLATFORM=generic: OpenSBI đọc địa chỉ CLINT/PLIC/UART từ DTB lúc runtime. Lợi ích: cùng binary chạy được trên FPGA (địa chỉ Xilinx MIG) và ASIC (địa chỉ custom) mà không cần rebuild.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/component-design/4.2--opensbi/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="4.2  OpenSBI">
+	<meta property="og:description" content="4.2 OpenSBI 4.2.1 Purpose &amp; Responsibility OpenSBI chạy ở M-mode — tầng firmware đặc quyền cao nhất. Cung cấp SBI (Supervisor Binary Interface) cho Linux kernel dùng để gọi các dịch vụ hardware mà kernel không được phép trực tiếp truy cập.
+4.2.2 Internal Design SBI Extension Mô tả Kernel dùng để Timer (sbi_set_timer) Set timer interrupt cho mỗi HART Scheduler tick, process timeslice IPI (sbi_send_ipi) Gửi inter-processor interrupt Wakeup HART khác khi có task mới Remote fence Broadcast cache/TLB flush Sync icache giữa các core HSM (hart_start) Khởi động HART đang offline SMP boot: bring up core 1/2/3 HSM (hart_stop) Dừng HART CPU hotplug, power saving System Reset Reset / poweroff chip Linux shutdown / reboot 4.2.3 Design Rationale PLATFORM=generic: OpenSBI đọc địa chỉ CLINT/PLIC/UART từ DTB lúc runtime. Lợi ích: cùng binary chạy được trên FPGA (địa chỉ Xilinx MIG) và ASIC (địa chỉ custom) mà không cần rebuild.">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="4.2  OpenSBI">
+	<meta itemprop="description" content="4.2 OpenSBI 4.2.1 Purpose &amp; Responsibility OpenSBI chạy ở M-mode — tầng firmware đặc quyền cao nhất. Cung cấp SBI (Supervisor Binary Interface) cho Linux kernel dùng để gọi các dịch vụ hardware mà kernel không được phép trực tiếp truy cập.
+4.2.2 Internal Design SBI Extension Mô tả Kernel dùng để Timer (sbi_set_timer) Set timer interrupt cho mỗi HART Scheduler tick, process timeslice IPI (sbi_send_ipi) Gửi inter-processor interrupt Wakeup HART khác khi có task mới Remote fence Broadcast cache/TLB flush Sync icache giữa các core HSM (hart_start) Khởi động HART đang offline SMP boot: bring up core 1/2/3 HSM (hart_stop) Dừng HART CPU hotplug, power saving System Reset Reset / poweroff chip Linux shutdown / reboot 4.2.3 Design Rationale PLATFORM=generic: OpenSBI đọc địa chỉ CLINT/PLIC/UART từ DTB lúc runtime. Lợi ích: cùng binary chạy được trên FPGA (địa chỉ Xilinx MIG) và ASIC (địa chỉ custom) mà không cần rebuild.">
+	<meta itemprop="wordCount" content="151">
+
+<title>4.2  OpenSBI • SOVRA Portal</title>
+<link rel="icon" href="../../images/icon.jpg" >
+<link rel="manifest" href="../../manifest.json">
+<link rel="canonical" href="//localhost:1313/component-design/4.2--opensbi/">
+<link rel="stylesheet" href="../../book.min.9c37bdf3cf8a886ecee2142706b66cbe3e65a2b68f4ddffbb6734bac14789248.css" integrity="sha256-nDe988&#43;KiG7O4hQnBrZsvj5loraPTd/7tnNLrBR4kkg=" crossorigin="anonymous">
+
+
+<script type="module" src="../../en.search.min.292dbba370abe11c3b0b475bc0bde189a3c884a4c73b14888d9d2369118b3a7c.js" integrity="sha256-KS27o3Cr4Rw7C0dbwL3hiaPIhKTHOxSIjZ0jaRGLOnw=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/component-design/4.2--opensbi/index.xml" title="4.2  OpenSBI" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-component-design">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../"><img src="../../images/icon.jpg" alt="Logo" /><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-935102a5a12a343b559186d022e6ca08" class="toggle"  />
+    <label for="section-935102a5a12a343b559186d022e6ca08" class="flex">
+      <a href="../../bootflow/" class="">
+        1. Boot flow - Quá trình khởi động</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/pmu/" class="">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/csu/" class="">
+      CSU - Control and Security Unit</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/csu/rot/" class="">
+      ROT - Root of trust</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/fsbl/" class="">
+      FSBL - First state bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/opensbi/" class="">
+      OpenSBI - Open serial binary interface</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/uboot/" class="">
+      U-boot - Univeral bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/linux/" class="">
+      Linux - Operating System</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../bootflow/rpu/" class="">
+      RPU - Real time processor unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-50b5a22373eed49abd0aa2d2f1888b03" class="toggle"  />
+    <label for="section-50b5a22373eed49abd0aa2d2f1888b03" class="flex">
+      <a role="button" class="">
+        3. Architecture</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../architecture-design/3.1--architecture-overview/" class="">
+      1. Architecture Overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../architecture-design/3.2--layer-decomposition/" class="">
+      2. Layer Decomposition</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../architecture-design/3.3--boot-flow-design/" class="">
+      3. Boot Flow Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../architecture-design/3.4-memory-layout/" class="">
+      4. Memory Layout</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../architecture-design/3.5-device-tree-design/" class="">
+      5 Device tree design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cada3d5d1ada336d1a4c76d399920754" class="toggle" checked />
+    <label for="section-cada3d5d1ada336d1a4c76d399920754" class="flex">
+      <a role="button" class="">
+        4. Component Design</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.1-fsbl/" class="">
+      4.1 FSBL (First Stage Bootloader)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.3--u-boot/" class="">
+      4.3 Uboot</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.4--linux-kernel/" class="">
+      4.4 Linux Kernel</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.2--opensbi/" class="active">
+      4.2  OpenSBI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d0c575b5b1009e0a051e7498694f4f89" class="toggle"  />
+    <label for="section-d0c575b5b1009e0a051e7498694f4f89" class="flex">
+      <a role="button" class="">
+        4.5  NPU Driver Design</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.5--npu-driver-design/roles/" class="">
+      3 Roles and Responsibilities</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.5--npu-driver-design/7.cpu-software-stack-design/" class="">
+      7 CPU Software Stack Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.5--npu-driver-design/8.command-abi/" class="">
+      8 Command ABI Between CPU and NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.5--npu-driver-design/9.command-abi-specification/" class="">
+      9 Command ABI Specification</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../component-design/4.6--lpu-driver-design/" class="">
+      4.6  LPU Driver Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-aa63412394048b972c434aecf347fb2d" class="toggle"  />
+    <label for="section-aa63412394048b972c434aecf347fb2d" class="flex">
+      <a href="../../processing/" class="">
+        2. Sub module - DSP, NPU, LPU</a>
+      <img src="../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../processing/dsp/" class="">
+      DSP</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../processing/npu/" class="">
+      NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../processing/lpu/" class="">
+      LPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../questions/" class="">
+      3. Câu hỏi vướng mắc</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>4.2  OpenSBI</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#42--opensbi">4.2  OpenSBI</a>
+      <ul>
+        <li><a href="#421-purpose--responsibility">4.2.1 Purpose &amp; Responsibility</a></li>
+        <li><a href="#422-internal-design">4.2.2 Internal Design</a></li>
+        <li><a href="#423-design-rationale">4.2.3 Design Rationale</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h2 id="42--opensbi">4.2  OpenSBI<a class="anchor" href="#42--opensbi"></a></h2>
+<h3 id="421-purpose--responsibility">4.2.1 Purpose &amp; Responsibility<a class="anchor" href="#421-purpose--responsibility"></a></h3>
+<p>OpenSBI chạy ở M-mode — tầng firmware đặc quyền cao nhất. Cung cấp SBI (Supervisor Binary Interface) cho Linux kernel dùng để gọi các dịch vụ hardware mà kernel không được phép trực tiếp truy cập.</p>
+<h3 id="422-internal-design">4.2.2 Internal Design<a class="anchor" href="#422-internal-design"></a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>SBI Extension</th>
+					<th>Mô tả</th>
+					<th>Kernel dùng để</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Timer</strong> (<code>sbi_set_timer</code>)</td>
+					<td>Set timer interrupt cho mỗi HART</td>
+					<td>Scheduler tick, process timeslice</td>
+			</tr>
+			<tr>
+					<td><strong>IPI</strong> (<code>sbi_send_ipi</code>)</td>
+					<td>Gửi inter-processor interrupt</td>
+					<td>Wakeup HART khác khi có task mới</td>
+			</tr>
+			<tr>
+					<td><strong>Remote fence</strong></td>
+					<td>Broadcast cache/TLB flush</td>
+					<td>Sync icache giữa các core</td>
+			</tr>
+			<tr>
+					<td><strong>HSM</strong> (<code>hart_start</code>)</td>
+					<td>Khởi động HART đang offline</td>
+					<td>SMP boot: bring up core 1/2/3</td>
+			</tr>
+			<tr>
+					<td><strong>HSM</strong> (<code>hart_stop</code>)</td>
+					<td>Dừng HART</td>
+					<td>CPU hotplug, power saving</td>
+			</tr>
+			<tr>
+					<td><strong>System Reset</strong></td>
+					<td>Reset / poweroff chip</td>
+					<td>Linux shutdown / reboot</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="423-design-rationale">4.2.3 Design Rationale<a class="anchor" href="#423-design-rationale"></a></h3>
+<p><code>PLATFORM=generic</code>: OpenSBI đọc địa chỉ CLINT/PLIC/UART từ DTB lúc runtime. Lợi ích: cùng binary chạy được trên FPGA (địa chỉ Xilinx MIG) và ASIC (địa chỉ custom) mà không cần rebuild.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../component-design/4.4--linux-kernel/" class="flex align-center">
+        <img src="../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>4.4 Linux Kernel</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../component-design/4.5--npu-driver-design/roles/" class="flex align-center">
+        <span>3 Roles and Responsibilities</span>
+        <img src="../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#42--opensbi">4.2  OpenSBI</a>
+      <ul>
+        <li><a href="#421-purpose--responsibility">4.2.1 Purpose &amp; Responsibility</a></li>
+        <li><a href="#422-internal-design">4.2.2 Internal Design</a></li>
+        <li><a href="#423-design-rationale">4.2.3 Design Rationale</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+<script>
+(() => {
+  const diagrams = document.querySelectorAll('pre.mermaid');
+  if (!diagrams.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-viewer';
+  dialog.setAttribute('aria-label', 'Xem sơ đồ phóng to');
+  dialog.innerHTML = '<div class="diagram-toolbar"><button type="button" data-action="out" aria-label="Thu nhỏ">−</button><output aria-live="polite"></output><button type="button" data-action="in" aria-label="Phóng to">+</button><button type="button" data-action="fit">Vừa màn hình</button><button type="button" data-action="close">Đóng (Esc)</button></div><div class="diagram-viewport" tabindex="0" aria-label="Sơ đồ, cuộn để xem các phần"></div>';
+  document.body.append(dialog);
+  const viewport = dialog.querySelector('.diagram-viewport');
+  const output = dialog.querySelector('output');
+  let active, origin, oldStyle, zoom = 1, width = 1, height = 1;
+  function resize(next) {
+    zoom = Math.max(0.1, Math.min(4, next));
+    active.style.width = `${width * zoom}px`;
+    active.style.height = `${height * zoom}px`;
+    active.style.maxWidth = 'none';
+    output.textContent = `${Math.round(zoom * 100)}%`;
+  }
+  function fit() {
+    resize(Math.min((viewport.clientWidth - 40) / width, (viewport.clientHeight - 40) / height, 1));
+  }
+  diagrams.forEach(diagram => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'diagram-open';
+    button.textContent = '⛶ Phóng to sơ đồ';
+    diagram.before(button);
+    button.addEventListener('click', () => {
+      const svg = diagram.querySelector('svg');
+      if (!svg) return;
+      active = svg;
+      origin = diagram;
+      oldStyle = svg.getAttribute('style');
+      width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      height = svg.viewBox.baseVal.height || svg.getBoundingClientRect().height;
+      viewport.append(svg);
+      dialog.showModal();
+      fit();
+    });
+  });
+  dialog.addEventListener('click', event => {
+    const action = event.target.closest('button')?.dataset.action;
+    if (!active) return;
+    if (action === 'in') resize(zoom * 1.25);
+    if (action === 'out') resize(zoom / 1.25);
+    if (action === 'fit') fit();
+    if (action === 'close') dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (!active) return;
+    if (oldStyle === null) active.removeAttribute('style');
+    else active.setAttribute('style', oldStyle);
+    origin.append(active);
+    active = null;
+  });
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="4.5.7 CPU Software Stack Design Phần này đặc tả ngăn xếp phần mềm phía CPU, từ tầng ứng dụng xuống tới driver chạm thanh ghi phần cứng.
+4.5.7.1 Application Layer Tầng ứng dụng điều phối luồng dữ liệu ở mức cao và không tiếp xúc với chi tiết phần cứng:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/component-design/4.5--npu-driver-design/7.cpu-software-stack-design/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="7 CPU Software Stack Design">
+	<meta property="og:description" content="4.5.7 CPU Software Stack Design Phần này đặc tả ngăn xếp phần mềm phía CPU, từ tầng ứng dụng xuống tới driver chạm thanh ghi phần cứng.
+4.5.7.1 Application Layer Tầng ứng dụng điều phối luồng dữ liệu ở mức cao và không tiếp xúc với chi tiết phần cứng:">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="7 CPU Software Stack Design">
+	<meta itemprop="description" content="4.5.7 CPU Software Stack Design Phần này đặc tả ngăn xếp phần mềm phía CPU, từ tầng ứng dụng xuống tới driver chạm thanh ghi phần cứng.
+4.5.7.1 Application Layer Tầng ứng dụng điều phối luồng dữ liệu ở mức cao và không tiếp xúc với chi tiết phần cứng:">
+	<meta itemprop="wordCount" content="1480">
+
+<title>7 CPU Software Stack Design • SOVRA Portal</title>
+<link rel="icon" href="../../../images/icon.jpg" >
+<link rel="manifest" href="../../../manifest.json">
+<link rel="canonical" href="//localhost:1313/component-design/4.5--npu-driver-design/7.cpu-software-stack-design/">
+<link rel="stylesheet" href="../../../book.min.9c37bdf3cf8a886ecee2142706b66cbe3e65a2b68f4ddffbb6734bac14789248.css" integrity="sha256-nDe988&#43;KiG7O4hQnBrZsvj5loraPTd/7tnNLrBR4kkg=" crossorigin="anonymous">
+
+
+<script type="module" src="../../../en.search.min.292dbba370abe11c3b0b475bc0bde189a3c884a4c73b14888d9d2369118b3a7c.js" integrity="sha256-KS27o3Cr4Rw7C0dbwL3hiaPIhKTHOxSIjZ0jaRGLOnw=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/component-design/4.5--npu-driver-design/7.cpu-software-stack-design/index.xml" title="7 CPU Software Stack Design" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-component-design">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../../"><img src="../../../images/icon.jpg" alt="Logo" /><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-935102a5a12a343b559186d022e6ca08" class="toggle"  />
+    <label for="section-935102a5a12a343b559186d022e6ca08" class="flex">
+      <a href="../../../bootflow/" class="">
+        1. Boot flow - Quá trình khởi động</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/pmu/" class="">
+      PMU - Platform Management Unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/csu/" class="">
+      CSU - Control and Security Unit</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/csu/rot/" class="">
+      ROT - Root of trust</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/fsbl/" class="">
+      FSBL - First state bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/opensbi/" class="">
+      OpenSBI - Open serial binary interface</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/uboot/" class="">
+      U-boot - Univeral bootloader</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/linux/" class="">
+      Linux - Operating System</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../bootflow/rpu/" class="">
+      RPU - Real time processor unit</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-50b5a22373eed49abd0aa2d2f1888b03" class="toggle"  />
+    <label for="section-50b5a22373eed49abd0aa2d2f1888b03" class="flex">
+      <a role="button" class="">
+        3. Architecture</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../architecture-design/3.1--architecture-overview/" class="">
+      1. Architecture Overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../architecture-design/3.2--layer-decomposition/" class="">
+      2. Layer Decomposition</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../architecture-design/3.3--boot-flow-design/" class="">
+      3. Boot Flow Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../architecture-design/3.4-memory-layout/" class="">
+      4. Memory Layout</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../architecture-design/3.5-device-tree-design/" class="">
+      5 Device tree design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cada3d5d1ada336d1a4c76d399920754" class="toggle" checked />
+    <label for="section-cada3d5d1ada336d1a4c76d399920754" class="flex">
+      <a role="button" class="">
+        4. Component Design</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.1-fsbl/" class="">
+      4.1 FSBL (First Stage Bootloader)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.3--u-boot/" class="">
+      4.3 Uboot</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.4--linux-kernel/" class="">
+      4.4 Linux Kernel</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.2--opensbi/" class="">
+      4.2  OpenSBI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d0c575b5b1009e0a051e7498694f4f89" class="toggle" checked />
+    <label for="section-d0c575b5b1009e0a051e7498694f4f89" class="flex">
+      <a role="button" class="">
+        4.5  NPU Driver Design</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.5--npu-driver-design/roles/" class="">
+      3 Roles and Responsibilities</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.5--npu-driver-design/7.cpu-software-stack-design/" class="active">
+      7 CPU Software Stack Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.5--npu-driver-design/8.command-abi/" class="">
+      8 Command ABI Between CPU and NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.5--npu-driver-design/9.command-abi-specification/" class="">
+      9 Command ABI Specification</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../component-design/4.6--lpu-driver-design/" class="">
+      4.6  LPU Driver Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-aa63412394048b972c434aecf347fb2d" class="toggle"  />
+    <label for="section-aa63412394048b972c434aecf347fb2d" class="flex">
+      <a href="../../../processing/" class="">
+        2. Sub module - DSP, NPU, LPU</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../processing/dsp/" class="">
+      DSP</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../processing/npu/" class="">
+      NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../processing/lpu/" class="">
+      LPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../questions/" class="">
+      3. Câu hỏi vướng mắc</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>7 CPU Software Stack Design</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#4571-application-layer">4.5.7.1 Application Layer</a></li>
+    <li><a href="#4572-runtime-layer">4.5.7.2 Runtime Layer</a>
+      <ul>
+        <li><a href="#parse-model-model-descriptor-parser">Parse model (Model Descriptor Parser)</a></li>
+        <li><a href="#tiếp-nhận-model">Tiếp nhận model</a></li>
+        <li><a href="#cấp-phát-bộ-nhớ">Cấp phát bộ nhớ</a></li>
+        <li><a href="#quản-lý-inputoutput">Quản lý input/output</a></li>
+        <li><a href="#phân-tích-graph-và-phân-bổ-thiết-bị">Phân tích graph và phân bổ thiết bị</a></li>
+        <li><a href="#chuẩn-bị-và-submit-job">Chuẩn bị và submit job</a></li>
+      </ul>
+    </li>
+    <li><a href="#4573-npu-hal-api">4.5.7.3 NPU HAL API</a></li>
+    <li><a href="#4574-npu-low-level-driver">4.5.7.4 NPU Low-Level Driver</a></li>
+    <li><a href="#4575-shared-memory">4.5.7.5 Shared Memory</a></li>
+    <li><a href="#4576-job-queue">4.5.7.6 Job Queue</a></li>
+    <li><a href="#4577-mmio-registers">4.5.7.7 MMIO Registers</a></li>
+    <li><a href="#4578-submit-flow">4.5.7.8 Submit Flow</a></li>
+    <li><a href="#4579-cache-synchronization-rules">4.5.7.9 Cache Synchronization Rules</a></li>
+    <li><a href="#45710-runtime-scheduling">4.5.7.10 Runtime Scheduling</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="457-cpu-software-stack-design">4.5.7 CPU Software Stack Design<a class="anchor" href="#457-cpu-software-stack-design"></a></h1>
+<p>Phần này đặc tả ngăn xếp phần mềm phía CPU, từ tầng ứng dụng xuống tới driver chạm thanh ghi phần cứng.</p>
+<p><img src="../../../images/npu-cpu-software-stack.svg" alt="CPU Software Stack: load model một lần qua Parser và Op &#43; Tensor table; mỗi lần inference đi qua Runtime, Operator HAL, Low-Level Driver, Shared Queue và NPU." /></p>
+<h2 id="4571-application-layer">4.5.7.1 Application Layer<a class="anchor" href="#4571-application-layer"></a></h2>
+<p>Tầng ứng dụng điều phối luồng dữ liệu ở mức cao và không tiếp xúc với chi tiết phần cứng:</p>
+<ul>
+<li>Kích hoạt camera capture.</li>
+<li>Nộp job ISP preprocess (raw frame → NPU input tensor).</li>
+<li>Gọi model runtime (qua đó rung doorbell của NPU).</li>
+<li>Nộp job ISP postprocess (<code>npu_output</code> + khung hình camera → khung hiển thị; ISP thực hiện NMS + render).</li>
+<li>Logic hiển thị / mạng / OTA.</li>
+</ul>
+<p><strong>Tầng ứng dụng KHÔNG:</strong> duyệt anchor candidate, chạy vòng lặp NMS/IoU, hay rasterize box/glyph/pixel. Toàn bộ phần này thuộc ISP postprocess. Mỗi khung hình, CPU chỉ ghi một vài thanh ghi và đọc một IRQ.</p>
+<p>Tầng ứng dụng không cần biết: chi tiết tiling của Gemmini, ReRoCC, offset thanh ghi MMIO (NPU hay ISP), bố cục nhị phân của command buffer, thanh ghi từng stage của ISP, hay Bayer pattern/bảng gain riêng của sensor.</p>
+<h2 id="4572-runtime-layer">4.5.7.2 Runtime Layer<a class="anchor" href="#4572-runtime-layer"></a></h2>
+<p>Model Runtime là tầng điều phối chính của quá trình inference ở phía CPU. Runtime không đọc trực tiếp từng byte của file <code>.sovra</code>; thay vào đó, nó sử dụng kết quả đã được Model Descriptor Parser phân tích và kiểm tra để dựng execution plan.</p>
+<p>Nhiệm vụ của Runtime được phân theo các giai đoạn sau:</p>
+<h3 id="parse-model-model-descriptor-parser">Parse model (Model Descriptor Parser)<a class="anchor" href="#parse-model-model-descriptor-parser"></a></h3>
+<ul>
+<li>Đọc và xác thực file, bao gồm kiểm tra magic number và version.</li>
+<li>Deserialize tensor table, op table, command stream và weight metadata.</li>
+<li>Dựng các thông tin cần thiết như Tensor table, Op table…</li>
+</ul>
+<h3 id="tiếp-nhận-model">Tiếp nhận model<a class="anchor" href="#ti%e1%ba%bfp-nh%e1%ba%adn-model"></a></h3>
+<p>Tiếp nhận model object đã parse, gồm tensor table, op table, command stream và weight metadata.</p>
+<h3 id="cấp-phát-bộ-nhớ">Cấp phát bộ nhớ<a class="anchor" href="#c%e1%ba%a5p-ph%c3%a1t-b%e1%bb%99-nh%e1%bb%9b"></a></h3>
+<ul>
+<li>Cấp phát activation arena cho input, output và intermediate tensor — một vùng nhớ được tái sử dụng theo vòng đời tensor nhằm giảm peak memory.</li>
+<li>Cấp phát, hoặc yêu cầu driver cấp, DMA buffer cho command, weight và activation.</li>
+<li>Copy weight section vào weight DMA buffer để NPU truy cập được.</li>
+</ul>
+<h3 id="quản-lý-inputoutput">Quản lý input/output<a class="anchor" href="#qu%e1%ba%a3n-l%c3%bd-inputoutput"></a></h3>
+<p>Quản lý input tensor và output tensor mà application trao đổi với Runtime.</p>
+<h3 id="phân-tích-graph-và-phân-bổ-thiết-bị">Phân tích graph và phân bổ thiết bị<a class="anchor" href="#ph%c3%a2n-t%c3%adch-graph-v%c3%a0-ph%c3%a2n-b%e1%bb%95-thi%e1%ba%bft-b%e1%bb%8b"></a></h3>
+<ul>
+<li>Phân tích graph/operator ở mức execution.</li>
+<li>Quyết định operator nào chạy trên NPU, căn cứ vào capability mà hardware (qua HAL) khai báo.</li>
+<li>Fallback các operator chưa được NPU hỗ trợ về CPU, bảo toàn data dependency tại ranh giới CPU và NPU.</li>
+<li>Fuse các operator tương thích khi có thể, để giảm memory traffic và số lượng command.</li>
+</ul>
+<h3 id="chuẩn-bị-và-submit-job">Chuẩn bị và submit job<a class="anchor" href="#chu%e1%ba%a9n-b%e1%bb%8b-v%c3%a0-submit-job"></a></h3>
+<ul>
+<li>Dựng hoặc cập nhật command buffer thông qua NPU Operator HAL.</li>
+<li>Tạo job descriptor cho mỗi lần inference.</li>
+<li>Gọi NPU Low-Level Driver để submit job xuống NPU.</li>
+</ul>
+<h2 id="4573-npu-hal-api">4.5.7.3 NPU HAL API<a class="anchor" href="#4573-npu-hal-api"></a></h2>
+<p>HAL công khai cung cấp giao diện ổn định, độc lập với model. Cấu trúc năng lực (caps) cho phép runtime truy vấn tập tính năng mà NPU/firmware hỗ trợ.</p>
+<p>Các hàm chính của HAL:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Hàm</th>
+					<th>Chức năng</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>sovra_npu_init</code></td>
+					<td>Khởi tạo thiết bị NPU</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_query_caps</code></td>
+					<td>Truy vấn năng lực phần cứng/firmware</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_load_model</code></td>
+					<td>Nạp model blob</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_create_context</code></td>
+					<td>Tạo ngữ cảnh thực thi từ model</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_set_input</code></td>
+					<td>Gắn buffer dữ liệu vào</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_run</code></td>
+					<td>Chạy suy luận</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_get_output</code></td>
+					<td>Lấy buffer kết quả</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_destroy_context</code>, <code>sovra_npu_unload_model</code></td>
+					<td>Giải phóng tài nguyên</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="4574-npu-low-level-driver">4.5.7.4 NPU Low-Level Driver<a class="anchor" href="#4574-npu-low-level-driver"></a></h2>
+<p>Low-Level Driver (LLD) là tầng phần mềm thấp nhất trong ngăn xếp phía CPU và là thành phần duy nhất được phép truy cập trực tiếp phần cứng NPU. Các tầng phía trên — Application, Model Runtime, NPU HAL — không ghi MMIO trực tiếp mà ủy thác toàn bộ thao tác phần cứng cho LLD.</p>
+<p>Nguyên tắc này khoanh vùng mọi mã phụ thuộc phần cứng (offset thanh ghi, cơ chế doorbell, quản lý cache, ánh xạ địa chỉ) vào một tầng duy nhất; nhờ đó việc chuyển hệ sang SoC hoặc bo mạch khác chỉ tác động đến LLD, và ranh giới kiểm thử của tầng này được xác định rõ ràng.</p>
+<p>Sơ đồ dưới mô tả ba thành phần của LLD: đối tượng driver (cột trái), tập API (cột giữa), và các đích bộ nhớ/phần cứng mà driver điều khiển (cột phải).</p>
+<p><img src="../../../images/npu-low-level-driver.svg" alt="NPU Low-Level Driver: trạng thái sovra_npu_device_t, các hàm init, submit_job, wait_job, reset, close và giao tiếp với Shared Memory, NPU qua doorbell và IRQ." /></p>
+<p>Đối tượng trung tâm của LLD là <code>sovra_npu_device_t</code>. Cấu trúc này lưu trạng thái của thiết bị NPU, bao gồm địa chỉ MMIO base, thông tin Job Queue, Tensor Arena và bộ đếm <code>next_job_id</code>. Các vùng nhớ chia sẻ được lưu đồng thời dưới dạng địa chỉ ảo cho CPU truy cập và địa chỉ vật lý cho NPU truy cập. Nhờ đó, driver đóng vai trò cầu nối giữa không gian địa chỉ của phần mềm CPU và không gian địa chỉ mà phần cứng NPU sử dụng.</p>
+<p>LLD cung cấp năm API chính tương ứng với vòng đời thiết bị:</p>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>Chức năng</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>sovra_npu_driver_init()</code></td>
+					<td>khởi tạo MMIO, queue và arena, đồng thời cấu hình các thanh ghi cần thiết cho NPU.</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_driver_submit_job()</code></td>
+					<td>ghi job descriptor vào Job Queue, đồng bộ cache và phát doorbell để báo cho NPU có job mới.</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_driver_wait_job()</code></td>
+					<td>chờ IRQ hoặc polling trạng thái, xử lý kết quả và invalidate cache vùng output trước khi CPU đọc dữ liệu.</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_driver_reset()</code></td>
+					<td>đưa NPU và queue về trạng thái xác định khi xảy ra timeout hoặc lỗi.</td>
+			</tr>
+			<tr>
+					<td><code>sovra_npu_driver_close()</code></td>
+					<td>giải phóng các tài nguyên đã cấp phát hoặc ánh xạ.</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="4575-shared-memory">4.5.7.5 Shared Memory<a class="anchor" href="#4575-shared-memory"></a></h2>
+<p>Vùng nhớ chia sẻ được phân khu cố định. Ví dụ gốc tại <code>0x8000_0000</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Shared DDR/SRAM base = 0x8000_0000</span></span></code></pre></div><p><img src="../../../images/npu-shared-memory-map.svg" alt="Bản đồ Shared Memory: Startup code tại 0x8000_0000, NPU queue tại 0x8001_0000, Command buffer tại 0x8002_0000 và Tensor arena tại 0x8011_0000." /></p>
+<p>Thiết kế sử dụng fixed memory partition vì CPU cluster và NPU là hai master độc lập trên hệ thống. Hai bên cùng truy cập shared memory, nhưng không dùng chung một dynamic allocator. Do đó, một address map tĩnh giúp cả CPU và NPU thống nhất trước vị trí của từng vùng nhớ như queue, command buffer, weight buffer và activation arena.</p>
+<p>NPU có thể biết chính xác từng region nằm ở đâu mà không cần CPU truyền con trỏ runtime cho mỗi lần inference. Điều này làm cho phần firmware/hardware phía NPU đơn giản hơn, giảm chi phí handshake và giảm rủi ro sai lệch địa chỉ khi trao đổi dữ liệu.</p>
+<p>Tuy nhiên, fixed partition cũng có đánh đổi. Kích thước từng region được chốt cứng theo thiết kế ban đầu, nên hệ thống kém linh hoạt hơn so với dynamic allocation. Nếu model mới có command buffer lớn hơn, weight lớn hơn hoặc activation arena vượt quá kích thước đã cấp, memory layout cần được điều chỉnh lại.</p>
+<h2 id="4576-job-queue">4.5.7.6 Job Queue<a class="anchor" href="#4576-job-queue"></a></h2>
+<p>Hàng đợi vòng tròn (ring buffer) một-producer/một-consumer: CPU là producer (sở hữu tail), NPU là consumer (sở hữu head).</p>
+<p><img src="../../../images/npu-spsc-job-queue.svg" alt="Hàng đợi vòng SPSC: NPU đang xử lý slot 2 tại head, CPU sẽ ghi slot 6 tại tail; các trạng thái FREE, SUBMITTED, RUNNING, DONE và ERROR." /></p>
+<p>Quy tắc trạng thái hàng đợi:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>empty: head == tail
+</span></span><span style="display:flex;"><span>full:  (tail + 1) % size == head</span></span></code></pre></div><p>Vì mỗi phía chỉ ghi con trỏ của riêng mình nên không cần khoá (lock) hay phép toán atomic.</p>
+<p>Để hệ CPU/NPU không cache-coherent hoạt động đúng, nên đặt head, tail và mỗi job descriptor trên các cache line riêng biệt. Nếu head và tail nằm chung một cache line, thao tác flush con trỏ của một phía có thể ghi đè bản sao cũ con trỏ của phía kia và làm hàng đợi mất đồng bộ.</p>
+<h2 id="4577-mmio-registers">4.5.7.7 MMIO Registers<a class="anchor" href="#4577-mmio-registers"></a></h2>
+<p>Khối điều khiển NPU_CTRL là một slave AXI4-Lite.
+Team software cần những thanh ghi được liệt kê trong bảng dưới đây để giao tiếp với NPU (Phần này sẽ được cung cấp bởi team chịu trách nhiệm thiết kế NPU):</p>
+<table>
+	<thead>
+			<tr>
+					<th>Offset</th>
+					<th>Thanh ghi</th>
+					<th>Ý nghĩa</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>0x00</code></td>
+					<td><code>QUEUE_BASE_LO</code></td>
+					<td>Địa chỉ gốc hàng đợi (32 bit thấp)</td>
+			</tr>
+			<tr>
+					<td><code>0x04</code></td>
+					<td><code>QUEUE_BASE_HI</code></td>
+					<td>Địa chỉ gốc hàng đợi (32 bit cao)</td>
+			</tr>
+			<tr>
+					<td><code>0x08</code></td>
+					<td><code>QUEUE_SIZE</code></td>
+					<td>Kích thước hàng đợi</td>
+			</tr>
+			<tr>
+					<td><code>0x0C</code></td>
+					<td><code>DOORBELL</code></td>
+					<td>CPU ghi để đánh thức NPU</td>
+			</tr>
+			<tr>
+					<td><code>0x10</code></td>
+					<td><code>STATUS</code></td>
+					<td>Trạng thái tổng hợp</td>
+			</tr>
+			<tr>
+					<td><code>0x14</code></td>
+					<td><code>IRQ_STATUS</code></td>
+					<td>Bit báo thức cho CPU</td>
+			</tr>
+			<tr>
+					<td><code>0x18</code></td>
+					<td><code>IRQ_CLEAR</code></td>
+					<td>CPU ghi để xoá ngắt</td>
+			</tr>
+			<tr>
+					<td><code>0x1C</code></td>
+					<td><code>NPU_ACK</code></td>
+					<td>NPU ghi để xác nhận đã nhận doorbell</td>
+			</tr>
+			<tr>
+					<td><code>0x20</code></td>
+					<td><code>NPU_DONE</code></td>
+					<td>NPU ghi để báo hoàn thành</td>
+			</tr>
+			<tr>
+					<td><code>0x24</code></td>
+					<td><code>VERSION</code></td>
+					<td>Phiên bản RTL/firmware</td>
+			</tr>
+			<tr>
+					<td><code>0x28</code> / <code>0x2C</code></td>
+					<td><code>CAPS0</code> / <code>CAPS1</code></td>
+					<td>Bit năng lực phần cứng</td>
+			</tr>
+	</tbody>
+</table>
+<p>Truy cập thanh ghi phải dùng con trỏ <code>volatile</code>, hàng rào bộ nhớ (fence) phải đặt ngay trước thao tác ghi doorbell.</p>
+<p><img src="../../../images/npu-doorbell-memory-fence.svg" alt="Thứ tự thao tác: chuẩn bị dữ liệu → hàng rào bộ nhớ fence rw, w → ghi thanh ghi doorbell → thiết bị bắt đầu xử lý." /></p>
+<h2 id="4578-submit-flow">4.5.7.8 Submit Flow<a class="anchor" href="#4578-submit-flow"></a></h2>
+<p><img src="../../../images/npu-submit-job-flow.svg" alt="Luồng submit job: kiểm tra hàng đợi → điền descriptor → flush dữ liệu chia sẻ → fence → cập nhật tail → ghi doorbell → NPU đọc và chạy job; trả về -1 nếu hàng đợi đầy." /></p>
+<h2 id="4579-cache-synchronization-rules">4.5.7.9 Cache Synchronization Rules<a class="anchor" href="#4579-cache-synchronization-rules"></a></h2>
+<p>Khi CPU và NPU không cache-coherent, phải tuân thủ trình tự flush/invalidate sau:</p>
+<ul>
+<li><strong>Trước doorbell:</strong> flush command buffer, job descriptor, tail, input tensor, và trọng số nếu vừa cập nhật; đặt fence; rồi mới ghi <code>DOORBELL</code>.</li>
+<li><strong>Sau khi hoàn thành:</strong> invalidate job descriptor, output tensor, và vùng activation/output nếu cần.</li>
+</ul>
+<p><img src="../../../images/npu-cache-coherency.svg" alt="Đồng bộ cache: CPU flush input, weight, cmd_buf, job và tail vào DRAM chia sẻ trước khi fence và ghi DOORBELL; NPU ghi kết quả, CPU invalidate output và job trước khi đọc." /></p>
+<h2 id="45710-runtime-scheduling">4.5.7.10 Runtime Scheduling<a class="anchor" href="#45710-runtime-scheduling"></a></h2>
+<p>Scheduler duyệt đồ thị: gom các op NPU hỗ trợ vào command buffer khi gặp op không hỗ trợ thì flush command buffer hiện tại xuống NPU, chạy op đó trên CPU, rồi tiếp tục.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>for each graph node:
+</span></span><span style="display:flex;"><span>    if op NPU hỗ trợ:
+</span></span><span style="display:flex;"><span>        append lệnh NPU
+</span></span><span style="display:flex;"><span>    else:
+</span></span><span style="display:flex;"><span>        flush command buffer hiện tại xuống NPU
+</span></span><span style="display:flex;"><span>        chạy node trên CPU (fallback)</span></span></code></pre></div><p><img src="../../../images/npu-runtime-scheduling.svg" alt="Runtime scheduling: conv2d và relu thuộc NPU job 1, resize chạy CPU fallback; conv2d thuộc NPU job 2, detect/NMS chạy CPU fallback. Flush command buffer trước mỗi CPU fallback." /></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../../component-design/4.5--npu-driver-design/roles/" class="flex align-center">
+        <img src="../../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>3 Roles and Responsibilities</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../../component-design/4.5--npu-driver-design/8.command-abi/" class="flex align-center">
+        <span>8 Command ABI Between CPU and NPU</span>
+        <img src="../../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#4571-application-layer">4.5.7.1 Application Layer</a></li>
+    <li><a href="#4572-runtime-layer">4.5.7.2 Runtime Layer</a>
+      <ul>
+        <li><a href="#parse-model-model-descriptor-parser">Parse model (Model Descriptor Parser)</a></li>
+        <li><a href="#tiếp-nhận-model">Tiếp nhận model</a></li>
+        <li><a href="#cấp-phát-bộ-nhớ">Cấp phát bộ nhớ</a></li>
+        <li><a href="#quản-lý-inputoutput">Quản lý input/output</a></li>
+        <li><a href="#phân-tích-graph-và-phân-bổ-thiết-bị">Phân tích graph và phân bổ thiết bị</a></li>
+        <li><a href="#chuẩn-bị-và-submit-job">Chuẩn bị và submit job</a></li>
+      </ul>
+    </li>
+    <li><a href="#4573-npu-hal-api">4.5.7.3 NPU HAL API</a></li>
+    <li><a href="#4574-npu-low-level-driver">4.5.7.4 NPU Low-Level Driver</a></li>
+    <li><a href="#4575-shared-memory">4.5.7.5 Shared Memory</a></li>
+    <li><a href="#4576-job-queue">4.5.7.6 Job Queue</a></li>
+    <li><a href="#4577-mmio-registers">4.5.7.7 MMIO Registers</a></li>
+    <li><a href="#4578-submit-flow">4.5.7.8 Submit Flow</a></li>
+    <li><a href="#4579-cache-synchronization-rules">4.5.7.9 Cache Synchronization Rules</a></li>
+    <li><a href="#45710-runtime-scheduling">4.5.7.10 Runtime Scheduling</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+<script>
+(() => {
+  const diagrams = document.querySelectorAll('pre.mermaid');
+  if (!diagrams.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-viewer';
+  dialog.setAttribute('aria-label', 'Xem sơ đồ phóng to');
+  dialog.innerHTML = '<div class="diagram-toolbar"><button type="button" data-action="out" aria-label="Thu nhỏ">−</button><output aria-live="polite"></output><button type="button" data-action="in" aria-label="Phóng to">+</button><button type="button" data-action="fit">Vừa màn hình</button><button type="button" data-action="close">Đóng (Esc)</button></div><div class="diagram-viewport" tabindex="0" aria-label="Sơ đồ, cuộn để xem các phần"></div>';
+  document.body.append(dialog);
+  const viewport = dialog.querySelector('.diagram-viewport');
+  const output = dialog.querySelector('output');
+  let active, origin, oldStyle, zoom = 1, width = 1, height = 1;
+  function resize(next) {
+    zoom = Math.max(0.1, Math.min(4, next));
+    active.style.width = `${width * zoom}px`;
+    active.style.height = `${height * zoom}px`;
+    active.style.maxWidth = 'none';
+    output.textContent = `${Math.round(zoom * 100)}%`;
+  }
+  function fit() {
+    resize(Math.min((viewport.clientWidth - 40) / width, (viewport.clientHeight - 40) / height, 1));
+  }
+  diagrams.forEach(diagram => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'diagram-open';
+    button.textContent = '⛶ Phóng to sơ đồ';
+    diagram.before(button);
+    button.addEventListener('click', () => {
+      const svg = diagram.querySelector('svg');
+      if (!svg) return;
+      active = svg;
+      origin = diagram;
+      oldStyle = svg.getAttribute('style');
+      width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      height = svg.viewBox.baseVal.height || svg.getBoundingClientRect().height;
+      viewport.append(svg);
+      dialog.showModal();
+      fit();
+    });
+  });
+  dialog.addEventListener('click', event => {
+    const action = event.target.closest('button')?.dataset.action;
+    if (!active) return;
+    if (action === 'in') resize(zoom * 1.25);
+    if (action === 'out') resize(zoom / 1.25);
+    if (action === 'fit') fit();
+    if (action === 'close') dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (!active) return;
+    if (oldStyle === null) active.removeAttribute('style');
+    else active.setAttribute('style', oldStyle);
+    origin.append(active);
+    active = null;
+  });
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="455" height="690" viewBox="0 0 455 690" role="img" aria-labelledby="title desc">
+  <title id="title">Device Tree hierarchy</title>
+  <desc id="desc">Root / contains cpus, memory@80000000, chosen and soc. cpus contains cpu@0 through cpu@3. soc contains clint, plic, uart, dma and project-specific accelerators npu, isp and lpu.</desc>
+  <rect width="455" height="690" fill="#fff"/>
+  <g fill="none" stroke="#a6afbf" stroke-width="1.2">
+    <path d="M45.5 49V350.5H85 M45.5 73.5H85 M45.5 271.5H85 M45.5 311H85"/>
+    <path d="M103.5 89V231.5H153 M103.5 112.5H153 M103.5 152.5H153 M103.5 192H153"/>
+    <path d="M103.5 366V628H153 M103.5 390H153 M103.5 429.5H153 M103.5 469.5H153 M103.5 509H153 M103.5 548.5H153 M103.5 588H153"/>
+  </g>
+  <rect x="24.5" y="18.5" width="54" height="30.5" rx="7" fill="#d6deeb" stroke="#3d5583" stroke-width="1.3"/>
+  <g fill="#cfe4f9" stroke="#3a82c9" stroke-width="1.3">
+    <rect x="85" y="58" width="222" height="31" rx="7"/>
+    <rect x="85" y="335.5" width="222" height="30.5" rx="7"/>
+  </g>
+  <g fill="#e9eff6" stroke="#bec9d7">
+    <rect x="153" y="97.5" width="210" height="31" rx="6"/>
+    <rect x="153" y="137.5" width="210" height="30.5" rx="6"/>
+    <rect x="153" y="177" width="210" height="30.5" rx="6"/>
+    <rect x="153" y="216.5" width="210" height="30.5" rx="6"/>
+    <rect x="85" y="256" width="222" height="31" rx="6"/>
+    <rect x="85" y="295.5" width="222" height="31" rx="6"/>
+    <rect x="153" y="375" width="210" height="30.5" rx="6"/>
+    <rect x="153" y="414.5" width="210" height="30.5" rx="6"/>
+    <rect x="153" y="454" width="210" height="31" rx="6"/>
+    <rect x="153" y="493.5" width="210" height="31" rx="6"/>
+  </g>
+  <g fill="#fce5b6" stroke="#efb448">
+    <rect x="153" y="533.5" width="210" height="30.5" rx="6"/>
+    <rect x="153" y="573" width="210" height="30.5" rx="6"/>
+    <rect x="153" y="612.5" width="210" height="30.5" rx="6"/>
+  </g>
+  <g font-family="'DejaVu Sans Mono', Consolas, monospace" font-size="13" fill="#111" dominant-baseline="middle">
+    <text x="51.5" y="34" text-anchor="middle" font-size="17" font-weight="700">/</text>
+    <text x="99" y="74">cpus</text>
+    <text x="167" y="113">cpu@0</text>
+    <text x="167" y="153">cpu@1</text>
+    <text x="167" y="192.5">cpu@2</text>
+    <text x="167" y="232">cpu@3</text>
+    <text x="99" y="272">memory@80000000</text>
+    <text x="99" y="311.5">chosen</text>
+    <text x="99" y="351">soc</text>
+    <text x="167" y="390.5">clint</text>
+    <text x="167" y="430">plic</text>
+    <text x="167" y="469.5">uart</text>
+    <text x="167" y="509">dma</text>
+    <text x="167" y="549">npu</text>
+    <text x="167" y="588.5">isp</text>
+    <text x="167" y="628">lpu</text>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#222">
+    <rect x="85" y="658" width="14" height="14" rx="3" fill="#cfe4f9" stroke="#3a82c9"/>
+    <text x="106" y="670">subsystem</text>
+    <rect x="223" y="658" width="14" height="14" rx="3" fill="#fce5b6" stroke="#efb448"/>
+    <text x="244" y="670">accelerator (project-specific)</text>
+  </g>
+</svg>

@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="vi-VN" dir="ltr" data-theme="auto">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="4.6.7 CPU Software Stack Design Phần mềm phía CPU cho LPU được tổ chức theo nhiều lớp, từ tầng ứng dụng đến low-level driver. Ứng dụng chỉ gửi yêu cầu sinh text và nhận kết quả. LLM Runtime chịu trách nhiệm quản lý generation loop, bao gồm prompt context, số token tối đa, stop rule và quá trình sinh token lặp lại. Tokenizer / Prompt Builder chuyển đổi text thành token ID trước khi gửi cho LPU và chuyển output token về text sau khi hoàn thành.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="//localhost:1313/4.component-design/4.6--lpu-driver-design/7.cpu-software-stack-design/">
+	<meta property="og:site_name" content="SOVRA Portal">
+	<meta property="og:title" content="4.6.7 CPU Software Stack Design">
+	<meta property="og:description" content="4.6.7 CPU Software Stack Design Phần mềm phía CPU cho LPU được tổ chức theo nhiều lớp, từ tầng ứng dụng đến low-level driver. Ứng dụng chỉ gửi yêu cầu sinh text và nhận kết quả. LLM Runtime chịu trách nhiệm quản lý generation loop, bao gồm prompt context, số token tối đa, stop rule và quá trình sinh token lặp lại. Tokenizer / Prompt Builder chuyển đổi text thành token ID trước khi gửi cho LPU và chuyển output token về text sau khi hoàn thành.">
+	<meta property="og:locale" content="vi_VN">
+	<meta property="og:type" content="website">
+
+
+	<meta itemprop="name" content="4.6.7 CPU Software Stack Design">
+	<meta itemprop="description" content="4.6.7 CPU Software Stack Design Phần mềm phía CPU cho LPU được tổ chức theo nhiều lớp, từ tầng ứng dụng đến low-level driver. Ứng dụng chỉ gửi yêu cầu sinh text và nhận kết quả. LLM Runtime chịu trách nhiệm quản lý generation loop, bao gồm prompt context, số token tối đa, stop rule và quá trình sinh token lặp lại. Tokenizer / Prompt Builder chuyển đổi text thành token ID trước khi gửi cho LPU và chuyển output token về text sau khi hoàn thành.">
+	<meta itemprop="wordCount" content="2238">
+
+<title>4.6.7 CPU Software Stack Design • SOVRA Portal</title>
+<link rel="icon" href="../../../images/icon.jpg" >
+<link rel="manifest" href="../../../manifest.json">
+<link rel="canonical" href="//localhost:1313/4.component-design/4.6--lpu-driver-design/7.cpu-software-stack-design/">
+<link rel="stylesheet" href="../../../book.min.9c37bdf3cf8a886ecee2142706b66cbe3e65a2b68f4ddffbb6734bac14789248.css" integrity="sha256-nDe988&#43;KiG7O4hQnBrZsvj5loraPTd/7tnNLrBR4kkg=" crossorigin="anonymous">
+
+
+<script type="module" src="../../../en.search.min.b4e0249bfcd8f4f2fcfb1cfcf7cc8aaee80e47d01e6c46719cfe3dd720e47b81.js" integrity="sha256-tOAkm/zY9PL8&#43;xz898yKrugOR9AebEZxnP491yDke4E=" crossorigin="anonymous"></script><link rel="alternate" type="application/rss+xml" href="//localhost:1313/4.component-design/4.6--lpu-driver-design/7.cpu-software-stack-design/index.xml" title="4.6.7 CPU Software Stack Design" />
+
+  
+</head>
+<body dir="ltr" class="book-kind-section book-type-4.component-design">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="../../../"><img src="../../../images/icon.jpg" alt="Logo" /><span>SOVRA Portal</span>
+  </a>
+</h2>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e337a60e49b887367dc7f2c4c4cab23a" class="toggle"  />
+    <label for="section-e337a60e49b887367dc7f2c4c4cab23a" class="flex">
+      <a role="button" class="">
+        3. Architecture</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../3.architecture-design/3.1--architecture-overview/" class="">
+      1. Architecture Overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../3.architecture-design/3.2--layer-decomposition/" class="">
+      2. Layer Decomposition</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../3.architecture-design/3.3--boot-flow-design/" class="">
+      3. Boot Flow Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../3.architecture-design/3.4-memory-layout/" class="">
+      4. Memory Layout</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../3.architecture-design/3.5-device-tree-design/" class="">
+      5 Device tree design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-320f41d85ca807d6090b38cb9b1fe2a7" class="toggle" checked />
+    <label for="section-320f41d85ca807d6090b38cb9b1fe2a7" class="flex">
+      <a role="button" class="">
+        4. Component Design</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.1-fsbl/" class="">
+      4.1 FSBL (First Stage Bootloader)</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.2--opensbi/" class="">
+      4.2  OpenSBI</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.3--u-boot/" class="">
+      4.3 Uboot</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.4--linux-kernel/" class="">
+      4.4 Linux Kernel</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1fe7b435fb4d7d0bc48ff4cbb4e0bf7d" class="toggle"  />
+    <label for="section-1fe7b435fb4d7d0bc48ff4cbb4e0bf7d" class="flex">
+      <a role="button" class="">
+        4.5  NPU Driver Design</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/1.purpose/" class="">
+      4.5.1 Purpose</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/2.architect-overview/" class="">
+      4.5.2 Architect overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/3.roles/" class="">
+      4.5.3 Roles and Responsibilities</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/4.communication/" class="">
+      4.5.4 Communication flow</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/5.model-artifact/" class="">
+      4.5.5 Model Artifact</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/6.design-principle/" class="">
+      4.5.6 Design Principle</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/7.cpu-software-stack-design/" class="">
+      4.5.7 CPU Software Stack Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/8.command-abi/" class="">
+      4.5.8 Command ABI Between CPU and NPU</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.5--npu-driver-design/9.command-abi-specification/" class="">
+      4.5.9 Command ABI Specification</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0c51173f3f43bfd5e3acb9e39606a497" class="toggle" checked />
+    <label for="section-0c51173f3f43bfd5e3acb9e39606a497" class="flex">
+      <a role="button" class="">
+        4.6  LPU Driver Design</a>
+      <img src="../../../icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/1.purpose/" class="">
+      4.6.1 Purpose</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/2.architect-overview/" class="">
+      4.6.2 Architect overview</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/3.roles/" class="">
+      4.6.3 Roles and Responsibilities</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/4.communication/" class="">
+      4.6.4 Communication flow</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/5.model-artifact/" class="">
+      4.6.5 Model Artifact</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/6.design-principle/" class="">
+      4.6.6 Design Principle</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.6--lpu-driver-design/7.cpu-software-stack-design/" class="active">
+      4.6.7 CPU Software Stack Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="../../../4.component-design/4.7--isp-design/" class="">
+      4.7  ISP Design</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="../../../icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>4.6.7 CPU Software Stack Design</h3>
+
+  <label for="toc-control">
+    
+    <img src="../../../icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#4671-application-layer">4.6.7.1 Application Layer</a></li>
+    <li><a href="#4672-llm-runtime--generation-controller">4.6.7.2 LLM Runtime / Generation Controller</a>
+      <ul>
+        <li><a href="#parse-model">Parse model</a></li>
+        <li><a href="#prepare-prompt--input">Prepare prompt / input</a></li>
+        <li><a href="#cấp-phát-bộ-nhớ">Cấp phát bộ nhớ</a></li>
+        <li><a href="#manage-inputoutput-tensors">Manage input/output tensors</a></li>
+        <li><a href="#phân-tích-graph-và-phân-bổ-task">Phân tích graph và phân bổ task</a></li>
+        <li><a href="#chuẩn-bị-và-submit-job">Chuẩn bị và submit job</a></li>
+      </ul>
+    </li>
+    <li><a href="#4673-tokenizer--prompt-builder">4.6.7.3 Tokenizer / Prompt Builder</a></li>
+    <li><a href="#4674-lpu-model-artifact-parser">4.6.7.4 LPU Model Artifact Parser</a></li>
+    <li><a href="#4675-lpu-hal-api">4.6.7.5 LPU HAL API</a></li>
+    <li><a href="#4676-lpu-low-level-driver">4.6.7.6 LPU Low Level Driver</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="467-cpu-software-stack-design">4.6.7 CPU Software Stack Design<a class="anchor" href="#467-cpu-software-stack-design"></a></h1>
+<p>Phần mềm phía CPU cho LPU được tổ chức theo nhiều lớp, từ tầng ứng dụng đến low-level driver. Ứng dụng chỉ gửi yêu cầu sinh text và nhận kết quả. LLM Runtime chịu trách nhiệm quản lý generation loop, bao gồm prompt context, số token tối đa, stop rule và quá trình sinh token lặp lại. Tokenizer / Prompt Builder chuyển đổi text thành token ID trước khi gửi cho LPU và chuyển output token về text sau khi hoàn thành.</p>
+<p><img src="image.png" alt="Ngăn xếp phần mềm phía CPU cho LPU" /></p>
+<h2 id="4671-application-layer">4.6.7.1 Application Layer<a class="anchor" href="#4671-application-layer"></a></h2>
+<p>Tầng ứng dụng điều phối luồng dữ liệu ở mức cao và không tiếp xúc trực tiếp với phần cứng:</p>
+<ul>
+<li>Nhận yêu cầu từ user command, mission logic, hoặc kết quả từ NPU.</li>
+<li>Tạo yêu cầu sinh text / sinh quyết định / sinh phản hồi.</li>
+<li>Gọi LLM runtime để chạy inference trên LPU.</li>
+<li>Nhận kết quả cuối cùng dưới dạng text, token hoặc decision.</li>
+<li>Gửi kết quả cho tầng ứng dụng, UI, robot controller hoặc module tiếp theo.</li>
+</ul>
+<p><strong>Tầng ứng dụng KHÔNG:</strong></p>
+<ul>
+<li>Không trực tiếp quản lý token buffer.</li>
+<li>Không trực tiếp thao tác KV cache.</li>
+<li>Không ghi MMIO doorbell.</li>
+<li>Không xử lý command stream.</li>
+<li>Không biết chi tiết MatMul, Attention, MLP, LayerNorm, Softmax.</li>
+<li>Không biết offset thanh ghi, cache flush, IRQ hoặc layout bộ nhớ LPU.</li>
+</ul>
+<h2 id="4672-llm-runtime--generation-controller">4.6.7.2 LLM Runtime / Generation Controller<a class="anchor" href="#4672-llm-runtime--generation-controller"></a></h2>
+<p>LLM Runtime là tầng điều phối chính của quá trình inference ở phía CPU. Runtime không trực tiếp thực hiện từng phép toán của Transformer, mà chịu trách nhiệm load model artifact, quản lý prompt/token, chuẩn bị buffer, tạo job descriptor và gọi LPU thực thi các bước inference.
+Nhiệm vụ chính của Runtime được phân theo các giai đoạn sau:</p>
+<h3 id="parse-model">Parse model<a class="anchor" href="#parse-model"></a></h3>
+<ul>
+<li>Đọc và xác thực artifact header, bao gồm magic number, version, model ID và checksum.</li>
+<li>Parse model config như số layer, hidden size, vocab size, number of heads, context length và precision.</li>
+<li>Deserialize tokenizer/vocab, tensor table, operator/layer schedule, quantization metadata và weight metadata.</li>
+<li>Dựng các thông tin cần thiết để Runtime biết model cần chạy như thế nào trên LPU.</li>
+</ul>
+<h3 id="prepare-prompt--input">Prepare prompt / input<a class="anchor" href="#prepare-prompt--input"></a></h3>
+<ul>
+<li>Nhận prompt text hoặc mission context từ application.</li>
+<li>Gọi tokenizer để chuyển text thành token IDs.</li>
+<li>Chuẩn bị input token buffer, position ID, attention mask nếu cần.</li>
+<li>Khởi tạo decode state, bao gồm current token index, max new tokens, stop rule và output buffer.</li>
+</ul>
+<h3 id="cấp-phát-bộ-nhớ">Cấp phát bộ nhớ<a class="anchor" href="#c%e1%ba%a5p-ph%c3%a1t-b%e1%bb%99-nh%e1%bb%9b"></a></h3>
+<ul>
+<li>Cấp phát / ánh xạ vùng nhớ cho input tokens, output tokens, logits, intermediate tensor và scratch buffer.</li>
+<li>Cấp phát vùng nhớ cho weights đã được pack/quantize.</li>
+<li>Cấp phát và quản lý KV cache cho quá trình autoregressive decoding.</li>
+<li>Đảm bảo buffer address phù hợp với memory plan trong model artifact và có thể được LPU firmware truy cập.</li>
+</ul>
+<h3 id="manage-inputoutput-tensors">Manage input/output tensors<a class="anchor" href="#manage-inputoutput-tensors"></a></h3>
+<ul>
+<li>Quản lý input tensor và output tensor mà application trao đổi với Runtime.</li>
+<li>Theo dõi output logits hoặc output token do LPU trả về.</li>
+<li>Cập nhật token mới vào context sau mỗi decode step.</li>
+<li>Quản lý output cuối cùng dưới dạng text, JSON hoặc Mission DSL command.</li>
+</ul>
+<h3 id="phân-tích-graph-và-phân-bổ-task">Phân tích graph và phân bổ task<a class="anchor" href="#ph%c3%a2n-t%c3%adch-graph-v%c3%a0-ph%c3%a2n-b%e1%bb%95-task"></a></h3>
+<ul>
+<li>Phân tích operator/layer schedule ở mức execution.</li>
+<li>Quyết định operator hoặc layer nào chạy trên LPU, operator nào fallback về CPU nếu phần cứng chưa hỗ trợ.</li>
+<li>Fuse các operator tương thích nếu có thể để giảm số lượng command và giảm traffic memory.</li>
+<li>Bảo toàn data dependency giữa các layer Transformer, KV cache và output logits.</li>
+</ul>
+<h3 id="chuẩn-bị-và-submit-job">Chuẩn bị và submit job<a class="anchor" href="#chu%e1%ba%a9n-b%e1%bb%8b-v%c3%a0-submit-job"></a></h3>
+<ul>
+<li>Điều khiển vòng sinh token autoregressive.</li>
+<li>Sau mỗi lần LPU trả logits/token, Runtime thực hiện sampling policy nếu sampling nằm phía CPU, ví dụ greedy, top-k, top-p hoặc temperature.</li>
+<li>Kiểm tra điều kiện dừng như max_new_tokens, eos_token hoặc stop sequence.</li>
+<li>Append token mới vào context và tiếp tục gọi LPU cho đến khi hoàn thành.</li>
+<li>Decode token thành text/JSON và trả kết quả cuối cùng cho application.</li>
+</ul>
+<h2 id="4673-tokenizer--prompt-builder">4.6.7.3 Tokenizer / Prompt Builder<a class="anchor" href="#4673-tokenizer--prompt-builder"></a></h2>
+<p>Tokenizer / Prompt Builder chịu trách nhiệm chuyển đổi giữa text và token. Tầng này tạo prompt từ user command, mission logic, NPU result và system context, sau đó chuyển prompt thành token ID trước khi gửi cho LPU.</p>
+<ul>
+<li>Thêm special token nếu cần: BOS (Beginning Of Sequence), EOS (End Of Sequence), PAD (Padding), UNK (Unknown).</li>
+<li>Cắt hoặc nén context nếu vượt context_length.</li>
+<li>Chuyển output token ID thành text sau khi LPU trả kết quả.</li>
+<li>Đọc tokenizer type, vocab/merge table, special token ID và output token format từ metadata trong artifact.</li>
+</ul>
+<h2 id="4674-lpu-model-artifact-parser">4.6.7.4 LPU Model Artifact Parser<a class="anchor" href="#4674-lpu-model-artifact-parser"></a></h2>
+<p>LPU Model Artifact Parser load và kiểm tra model.sovra, bao gồm header, tensor/buffer table, command stream, weights và metadata. Parser không chạy model; nó chỉ biến artifact thành runtime model handle để HAL sử dụng.</p>
+<ul>
+<li>Kiểm tra magic, version, model_id và checksum.</li>
+<li>Kiểm tra target_lpu_version và command ABI compatibility.</li>
+<li>Parse tensor/buffer table, command stream, weights, quantization meta, tokenizer meta và KV cache layout.</li>
+<li>Tạo model handle chứa pointer/offset tới các section cần dùng khi tạo context và job descriptor.</li>
+</ul>
+<h2 id="4675-lpu-hal-api">4.6.7.5 LPU HAL API<a class="anchor" href="#4675-lpu-hal-api"></a></h2>
+<p>HAL cung cấp giao diện ổn định, độc lập với từng model cụ thể. Runtime phía CPU gọi HAL để load model artifact, tạo context, bind input/output buffer, bind KV cache và submit job xuống LPU.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Hàm</th>
+					<th>Chức năng</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>sovra_lpu_init</code></td>
+					<td>Khởi tạo thiết bị LPU</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_query_caps</code></td>
+					<td>Truy vấn năng lực phần cứng/firmware</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_load_model</code></td>
+					<td>Nạp LPU model artifact</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_create_context</code></td>
+					<td>Tạo runtime context từ model</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_reset_kv_cache</code></td>
+					<td>Reset KV cache khi bắt đầu prompt mới</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_set_input_tokens</code></td>
+					<td>Gán input token buffer</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_run</code></td>
+					<td>Chạy một inference job hoặc decode step</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_get_output</code></td>
+					<td>Lấy logits/token output</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_destroy_context</code></td>
+					<td>Giải phóng context</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_unload_model</code></td>
+					<td>Gỡ model khỏi runtime</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="4676-lpu-low-level-driver">4.6.7.6 LPU Low Level Driver<a class="anchor" href="#4676-lpu-low-level-driver"></a></h2>
+<p>LPU Low-Level Driver là tầng giao tiếp trực tiếp với phần cứng LPU. Tầng này không hiểu model và không xử lý logic LLM. Nhiệm vụ của driver là cung cấp các thao tác cơ bản như map thanh ghi MMIO, cấp phát shared memory, submit job descriptor vào shared queue, flush/invalidate cache, rung doorbell, xử lý completion IRQ và đọc status/error code.
+Driver nhận job descriptor đã được HAL chuẩn bị sẵn. Descriptor này chứa địa chỉ vật lý hoặc offset của command stream, input token buffer, output logits/token buffer, weights, KV cache và scratch buffer. Sau khi ghi descriptor vào shared queue, driver flush cache, cập nhật queue tail và ghi MMIO doorbell để đánh thức LPU. Khi LPU hoàn thành, driver nhận IRQ, clear interrupt, invalidate output/status buffer và trả kết quả về HAL.</p>
+<p>Các hàm chính:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Hàm</th>
+					<th>Chức năng</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>sovra_lpu_driver_init(dev)</code></td>
+					<td>Map MMIO, cấp phát/map shared queue + arena, reset next_job_id, cấu hình queue base cho LPU</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_driver_submit_job(dev, desc)</code></td>
+					<td>Gán job_id, ghi job descriptor vào shared queue, flush cache, update queue tail, ghi thanh ghi LPU_DOORBELL</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_driver_wait_job(dev, job_id, timeout_ms)</code></td>
+					<td>Chờ IRQ hoặc poll status, đọc DONE/ERROR, clear IRQ, invalidate output/status buffer</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_driver_reset(dev)</code></td>
+					<td>Reset LPU hoặc reset queue khi timeout/hang</td>
+			</tr>
+			<tr>
+					<td><code>sovra_lpu_driver_close(dev)</code></td>
+					<td>Unmap MMIO, giải phóng queue/arena</td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="image-1.png" alt="alt text" /></p>
+<p>4.6.7.7  Shared Memory
+Vùng nhớ chia sẻ được phân khu cố định để CPU và LPU cùng thống nhất vị trí của queue, descriptor, command stream, weights, input/output buffer, KV cache và scratch buffer. Descriptor và command stream nên dùng địa chỉ vật lý hoặc offset trong arena thay vì con trỏ ảo của CPU.</p>
+<p>Giả dụ gốc tại 0x8000_0000:</p>
+<p><img src="image-2.png" alt="alt text" /></p>
+<p>4.6.7.8  Job Queue<br>
+Hàng đợi là ring buffer một-producer/một-consumer: CPU là producer, LPU là consumer.
+CPU sở hữu tail, LPU sở hữu head. Queue cần tránh đặt head, tail và descriptor trên cùng cache line.
+<img src="image-3.png" alt="alt text" /></p>
+<p>4.6.7.9  MMIO Registers</p>
+<p>Khối điều khiển LPU_CTRL là một slave AXI4-Lite, tương tự như NPU.
+Team software cần những thanh ghi được liệt kê trong bảng dưới đây để giao tiếp với LPU (Phần này sẽ được cung cấp bởi team chịu trách nhiệm thiết kế LPU):</p>
+<p>Offset
+Thanh ghi
+Ý nghĩa
+0x00
+QUEUE_BASE_LO
+Địa chỉ gốc hàng đợi (32 bit thấp)
+0x04
+QUEUE_BASE_HI
+Địa chỉ gốc hàng đợi (32 bit cao)
+0x08
+QUEUE_SIZE
+Kích thước hàng đợi
+0x0C
+DOORBELL
+CPU ghi để đánh thức NPU
+0x10
+STATUS
+Trạng thái tổng hợp
+0x14
+IRQ_STATUS
+Bit báo thức cho CPU
+0x18
+IRQ_CLEAR
+CPU ghi để xoá ngắt
+0x1C
+NPU_ACK
+NPU ghi để xác nhận đã nhận doorbell
+0x20
+NPU_DONE
+NPU ghi để báo hoàn thành
+0x24
+VERSION
+Phiên bản RTL/firmware</p>
+<p>4.6.7.10  Submit Flow
+Trình tự nộp job: điền descriptor -&gt; flush dữ liệu chia sẻ -&gt; fence -&gt; cập nhật tail -&gt; ghi doorbell. Thứ tự này là bắt buộc để LPU không đọc phải descriptor, input token hoặc command stream cũ.
+<img src="image-4.png" alt="alt text" /></p>
+<p>4.6.7.11  Cache Synchronization Rules
+Khi CPU và LPU không cache-coherent, phải tuân thủ trình tự flush/invalidate sau:
+Trước doorbell: flush job descriptor, command stream, input token buffer, tail pointer, weights nếu vừa cập nhật và KV cache nếu CPU vừa ghi.
+Đặt memory fence sau flush và trước khi ghi DOORBELL.
+Sau khi hoàn thành: invalidate job descriptor/status, output logits/token buffer và KV cache nếu LPU vừa cập nhật.
+Không đặt head, tail và descriptor dùng chung trên cùng một cache line
+4.6.7.12  Runtime Scheduling
+Với LPU, scheduler không duyệt pixel/frame như NPU vision pipeline mà điều phối prefill/decode loop. Runtime quyết định lúc nào chạy PREFILL để tạo KV cache, lúc nào chạy DECODE_STEP để sinh token tiếp theo, và lúc nào dừng theo eos_token, max_new_tokens hoặc stop rule.
+<img src="image-5.png" alt="alt text" /></p>
+<p>4.6.7.13  LPU Execution Modes
+LPU inference được chia thành hai chế độ chính:</p>
+<ol>
+<li>PREFILL
+Xử lý toàn bộ prompt/input tokens ban đầu.
+Tạo hidden states và khởi tạo KV cache cho tất cả layer.
+Thường có sequence length dài hơn, workload lớn hơn decode step.</li>
+<li>DECODE_STEP
+Xử lý token mới nhất dựa trên KV cache đã có.
+Cập nhật KV cache bằng key/value của token mới.
+Sinh logits hoặc output token tiếp theo.
+Lặp lại cho đến khi gặp eos_token, stop sequence hoặc max_new_tokens.
+Runtime phía CPU quyết định khi nào chạy PREFILL, khi nào chạy DECODE_STEP và khi nào dừng generation.
+4.6.8 Job Descriptor Layout</li>
+</ol>
+<p>Field
+Ý nghĩa
+job_id
+ID duy nhất của job
+abi_version
+Phiên bản abi mà descriptor sử dụng
+job_type
+PREFILL / DECODE_STEP / LOAD_WEIGHTS / RESET_KV
+model_id
+Model đang chạy
+command_buffer_addr
+Địa chỉ vật lý / offset command stream
+command_buffer_size
+Kích thước command stream
+input_token_addr
+Buffer chứa token đầu vào
+input_token_count
+Số token đầu vào
+position_start
+Vị trí token bắt đầu trong context
+kv_cache_addr
+Vùng KV cache
+kv_cache_size
+Kích thức KV cache
+weight_base_addr
+Vùng weights đã pack/quantize
+scratch_addr
+Vùng scratch/intermediate
+logits_output_addr
+Buffer logits đầu ra
+Output_token_addr
+Buffer token đầu ra
+status_addr
+Vùng ghi DONE/ERROR/status code</p>
+<p>4.6.10 Command ABI Between CPU and LPU
+Phần này đặc tả Command ABI mà LPU bare-metal firmware tiêu thụ. ABI phải ổn định và được đánh version để CPU runtime, artifact và firmware kiểm tra tương thích trước khi thực thi.</p>
+<p><img src="image-6.png" alt="alt text" /></p>
+<p>4.6.10.1  Command ABI Version
+#define SOVRA_LPU_ABI_VERSION_MAJOR 1
+#define SOVRA_LPU_ABI_VERSION_MINOR 0
+#define SOVRA_LPU_ABI_VERSION     ((SOVRA_LPU_ABI_VERSION_MAJOR &laquo; 16) | SOVRA_LPU_ABI_VERSION_MINOR)</p>
+<p>Lệch MAJOR là lỗi không tương thích. MINOR cao hơn có thể được chấp nhận theo hướng tương thích ngược nếu firmware có thể bỏ qua các field hoặc command extension chưa dùng.
+4.6.10.2  Command List
+typedef enum {
+SOVRA_LPU_CMD_NOP    	  = 0,
+SOVRA_LPU_CMD_DMA_LOAD   = 1,
+SOVRA_LPU_CMD_DMA_STORE  = 2,
+SOVRA_LPU_CMD_EMBEDDING  = 3,
+SOVRA_LPU_CMD_MATMUL 	  = 4,
+SOVRA_LPU_CMD_ATTENTION  = 5,
+SOVRA_LPU_CMD_MLP    	  = 6,
+SOVRA_LPU_CMD_LAYERNORM  = 7,
+SOVRA_LPU_CMD_SOFTMAX	  = 8,
+SOVRA_LPU_CMD_ACTIVATION = 9,
+SOVRA_LPU_CMD_SYNC       = 10,
+SOVRA_LPU_CMD_END    	  = 255,
+} sovra_lpu_cmd_type_t;</p>
+<p>4.6.10.3  Command Header
+Mỗi command có kích thước thay đổi và bắt đầu bằng một header chung. Firmware dịch con trỏ command theo trường size và dừng tại CMD_END.
+typedef struct {
+uint16_t type;
+uint16_t size;  	/* tổng kích thước command, tính bằng byte */
+uint32_t flags;
+} sovra_lpu_cmd_header_t;</p>
+<p>Quy tắc: mọi command mở đầu bằng sovra_lpu_cmd_header_t; firmware tiến con trỏ theo hdr.size; CMD_END kết thúc command buffer.</p>
+<p>4.7  ISP Design
+4.7.1 Tổng quan và phạm vi thiết kế
+Tài liệu này mô tả thiết kế phần mềm cho pipeline xử lý ảnh sử dụng camera IMX219. Hệ thống bao gồm các IP chính như Camera Sensor, MIPI CSI-2 RX, ISP-lite, VIP.
+Phần mềm chịu trách nhiệm cấu hình pipeline, quản lý buffer hình ảnh, xử lý interrupt và đồng bộ luồng dữ liệu giữa các thành phần phần cứng. Mục tiêu là cung cấp một pipeline xử lý ảnh hoàn chỉnh từ thu nhận hình ảnh đến ghi frame vào DDR, sẵn sàng cho NPU đọc
+Hạng mục
+Quyết định thiết kế / quy ước
+Pipeline chính
+IMX219  → MIPI CSI-2 RX → Ram Buffer → ISP-lite → VIP → DDR(output)
+Chức năng phần mềm
+Cấu hình và điều khiển pipeline thông qua V4L2/media-controller; quản lý buffer, format, stream on/off, interrupt và queue dữ liệu.
+Phạm vi tài liệu
+Mô tả kiến trúc phần mềm, luồng dữ liệu, buffer ownership và synchronization points giữa các IP.</p>
+<p>Top architecture of ISP system
+<img src="image-7.png" alt="alt text" /></p>
+<p>4.7.2 2. KIẾN TRÚC CAMERA PIPELINE
+4.7.2.1 Data Path End-to-End
+Data path là đường đi của dữ liệu ảnh từ sensor tới user-space. Với baseline một output, data path được thiết kế như sau:
+<img src="image-8.png" alt="alt text" /></p>
+<p>Khối
+Vai trò trong data path
+Sensor
+Phát RAW Bayer stream qua MIPI CSI-2
+MIPI CSI-2 RX
+Nhận CSI-2 packet và tạo RAW pixel stream nội bộ
+RAW Capture DMA
+Ghi RAW stream xuống DDR RAW buffer
+DDR RAW Buffer
+Boundary giữa capture side và ISP side
+ISP Input DMA
+Đọc RAW buffer và phát stream vào ISP
+ISP-Lite
+Xử lý RAW/Y input thành stream ảnh đã xử lý
+VIP
+Crop/scale/CSC/pack theo output requirement
+Output DMA
+Ghi frame cuối xuống DDR output buffer
+User-space
+Nhận frame qua DQBUF trên output video node</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="../../../4.component-design/4.6--lpu-driver-design/6.design-principle/" class="flex align-center">
+        <img src="../../../icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>4.6.6 Design Principle</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="../../../4.component-design/4.7--isp-design/" class="flex align-center">
+        <span>4.7  ISP Design</span>
+        <img src="../../../icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#4671-application-layer">4.6.7.1 Application Layer</a></li>
+    <li><a href="#4672-llm-runtime--generation-controller">4.6.7.2 LLM Runtime / Generation Controller</a>
+      <ul>
+        <li><a href="#parse-model">Parse model</a></li>
+        <li><a href="#prepare-prompt--input">Prepare prompt / input</a></li>
+        <li><a href="#cấp-phát-bộ-nhớ">Cấp phát bộ nhớ</a></li>
+        <li><a href="#manage-inputoutput-tensors">Manage input/output tensors</a></li>
+        <li><a href="#phân-tích-graph-và-phân-bổ-task">Phân tích graph và phân bổ task</a></li>
+        <li><a href="#chuẩn-bị-và-submit-job">Chuẩn bị và submit job</a></li>
+      </ul>
+    </li>
+    <li><a href="#4673-tokenizer--prompt-builder">4.6.7.3 Tokenizer / Prompt Builder</a></li>
+    <li><a href="#4674-lpu-model-artifact-parser">4.6.7.4 LPU Model Artifact Parser</a></li>
+    <li><a href="#4675-lpu-hal-api">4.6.7.5 LPU HAL API</a></li>
+    <li><a href="#4676-lpu-low-level-driver">4.6.7.6 LPU Low Level Driver</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  <script>
+  document.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest('.book-menu input.toggle + label a');
+    if (!link) {
+      return;
+    }
+
+    const label = link.closest('label');
+    const toggle = label && label.previousElementSibling;
+    if (!toggle || !toggle.matches('input.toggle')) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggle.checked = !toggle.checked;
+  });
+</script>
+<script>
+(() => {
+  const diagrams = document.querySelectorAll('pre.mermaid');
+  if (!diagrams.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-viewer';
+  dialog.setAttribute('aria-label', 'Xem sơ đồ phóng to');
+  dialog.innerHTML = '<div class="diagram-toolbar"><button type="button" data-action="out" aria-label="Thu nhỏ">−</button><output aria-live="polite"></output><button type="button" data-action="in" aria-label="Phóng to">+</button><button type="button" data-action="fit">Vừa màn hình</button><button type="button" data-action="close">Đóng (Esc)</button></div><div class="diagram-viewport" tabindex="0" aria-label="Sơ đồ, cuộn để xem các phần"></div>';
+  document.body.append(dialog);
+  const viewport = dialog.querySelector('.diagram-viewport');
+  const output = dialog.querySelector('output');
+  let active, origin, oldStyle, zoom = 1, width = 1, height = 1;
+  function resize(next) {
+    zoom = Math.max(0.1, Math.min(4, next));
+    active.style.width = `${width * zoom}px`;
+    active.style.height = `${height * zoom}px`;
+    active.style.maxWidth = 'none';
+    output.textContent = `${Math.round(zoom * 100)}%`;
+  }
+  function fit() {
+    resize(Math.min((viewport.clientWidth - 40) / width, (viewport.clientHeight - 40) / height, 1));
+  }
+  diagrams.forEach(diagram => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'diagram-open';
+    button.textContent = '⛶ Phóng to sơ đồ';
+    diagram.before(button);
+    button.addEventListener('click', () => {
+      const svg = diagram.querySelector('svg');
+      if (!svg) return;
+      active = svg;
+      origin = diagram;
+      oldStyle = svg.getAttribute('style');
+      width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      height = svg.viewBox.baseVal.height || svg.getBoundingClientRect().height;
+      viewport.append(svg);
+      dialog.showModal();
+      fit();
+    });
+  });
+  dialog.addEventListener('click', event => {
+    const action = event.target.closest('button')?.dataset.action;
+    if (!active) return;
+    if (action === 'in') resize(zoom * 1.25);
+    if (action === 'out') resize(zoom / 1.25);
+    if (action === 'fit') fit();
+    if (action === 'close') dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    if (!active) return;
+    if (oldStyle === null) active.removeAttribute('style');
+    else active.setAttribute('style', oldStyle);
+    origin.append(active);
+    active = null;
+  });
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

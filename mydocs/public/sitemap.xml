@@ -2,35 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/bootflow/</loc>
+    <loc>//localhost:1313/3.architecture-design/3.1--architecture-overview/</loc>
   </url><url>
-    <loc>//localhost:1313/processing/dsp/</loc>
+    <loc>//localhost:1313/4.component-design/4.1-fsbl/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/1.purpose/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/1.purpose/</loc>
   </url><url>
     <loc>//localhost:1313/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/pmu/</loc>
+    <loc>//localhost:1313/3.architecture-design/3.2--layer-decomposition/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/csu/rot/</loc>
+    <loc>//localhost:1313/4.component-design/4.2--opensbi/</loc>
   </url><url>
-    <loc>//localhost:1313/processing/</loc>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/2.architect-overview/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/csu/</loc>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/2.architect-overview/</loc>
   </url><url>
-    <loc>//localhost:1313/processing/npu/</loc>
+    <loc>//localhost:1313/3.architecture-design/</loc>
   </url><url>
-    <loc>//localhost:1313/questions/</loc>
+    <loc>//localhost:1313/3.architecture-design/3.3--boot-flow-design/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/fsbl/</loc>
+    <loc>//localhost:1313/4.component-design/4.3--u-boot/</loc>
   </url><url>
-    <loc>//localhost:1313/processing/lpu/</loc>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/3.roles/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/opensbi/</loc>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/3.roles/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/uboot/</loc>
+    <loc>//localhost:1313/4.component-design/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/linux/</loc>
+    <loc>//localhost:1313/3.architecture-design/3.4-memory-layout/</loc>
   </url><url>
-    <loc>//localhost:1313/bootflow/rpu/</loc>
+    <loc>//localhost:1313/4.component-design/4.4--linux-kernel/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/4.communication/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/4.communication/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/5.model-artifact/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/5.model-artifact/</loc>
+  </url><url>
+    <loc>//localhost:1313/3.architecture-design/3.5-device-tree-design/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/6.design-principle/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/6.design-principle/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/7.cpu-software-stack-design/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.6--lpu-driver-design/7.cpu-software-stack-design/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.7--isp-design/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/8.command-abi/</loc>
+  </url><url>
+    <loc>//localhost:1313/4.component-design/4.5--npu-driver-design/9.command-abi-specification/</loc>
   </url><url>
     <loc>//localhost:1313/categories/</loc>
   </url><url>
